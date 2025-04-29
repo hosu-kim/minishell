@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   readline_wrapper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/04/29 20:16:20 by hoskim           ###   ########seoul.kr  */
+/*   Created: 2025/04/29 19:52:07 by hoskim            #+#    #+#             */
+/*   Updated: 2025/04/29 19:55:04 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "readline_wrapper.h"
 
 /**
- * Entry point for the minishell program.
- * Sets up signal handlers, initializes environment list,
- * then enters the main read-eval-print loop.
+ * Prompt the user and return the entered line.
+ * If EOF is received (e.g., Ctrl-D), returns NULL.
+ * Non-empty lines are saved in the history list.
+ * Caller must free the returned buffer.
  */
-int	main(int)
+char	*get_input_line(const char *prompt)
+{
+	char	*line;
+
+	line = readline(prompt);
+	if (line == NULL)
+		return (NULL);
+	if (*line != '\0')
+		add_history(line);
+	return (line);
+}

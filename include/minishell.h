@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/04/27 22:27:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/04/29 20:07:29 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,20 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
-// sub-module header includes
+/* Core utilities */
+#include "readline_wrapper.h"
+#include "utils.h"
+
+/* Lexer and parser */
+# include "lexter.h"
 # include "parser.h"
-# include "executor.h"
+
+/* Built-ins and execution */
 # include "builtin.h"
-# include "utils.h"
+# include "executor.h"
 
-// Global structure: Saves the state of the minishell
-typedef struct s_shell
-{
-	char	**envp;	// Copy of the environment variables
-	int		last_exit_status; // The most recent status of end of a command
-}	t_shell;
-
-// Main function definition
-void	minishell_init(t_shell *shell, char **envp);
-void	minishell_cleanup(t_shell *shell);
-void	print_prompt(void);
+/* Signal handling */
+# include "signal.h"
 
 #endif

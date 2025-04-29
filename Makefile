@@ -6,7 +6,7 @@
 #    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/04/27 20:58:31 by hoskim           ###   ########seoul.kr   #
+#    Updated: 2025/04/29 20:13:41 by hoskim           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS = $(SRCS_DIR)/minishell.c \
 		$(BUILTIN_DIR)/builtin.c \
 		$(EXECUTOR_DIR)/executor.c \
 		$(PARSER_DIR)/parser.c \
-		$(UTILS_DIR)/utils.c
+		$(UTILS_DIR)/utils.c \
+		4(UTILS_DIR)/readline_wrapper.c
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -Iincludes
