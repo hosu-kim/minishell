@@ -1,3 +1,4 @@
+```bash
 minishell/                      # Project root directory
 ├── Makefile                    # Build rules (compile & link) and clean targets
 ├── include/                    # Public headers for all modules
@@ -33,3 +34,4 @@ minishell/                      # Project root directory
 │   ├── error.c                 # Error reporting: error_exit, perror wrappers
 │   └── utils.h                 # Prototypes for all utils and shared macros
 └── README.md                   # Project overview
+```
