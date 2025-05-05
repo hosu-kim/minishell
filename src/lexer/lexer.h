@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/04 21:25:08 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 16:31:11 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,33 @@ typedef enum e_token_type
 
 /**
  * @struct s_token
- * @brief A single node definition in a linked list of tokens
- * 
- * @param type The token's type (one of t_token type).
- * @param value The literal string value of the token.
- * @param next Pointer to the next token in the list.
+ * @brief A node in a linked list of tokens
  */
 typedef struct s_token
 {
-	t_token_type	type;
-	char			*value;
-	struct s_token	*next;
+	t_token_type	type;   // token category
+	char			*value; // literal text
+	struct s_token	*next;  // next token in list
 } t_token;
 
-t_token	*tokenize_user_input(const char *input);
-
-t_token *new_token(t_token_type type, const char *start, size_t len);
-void	add_token(t_token **head, t_token **tail, t_token *tok);
+/* Primary lexer interface */
+// Split the input line int a linked list of tokens.
+t_token	*tokenize(const char *input);
+// Free all tokens in the list.
 void	free_tokens(t_token *head);
+
+/* Reader helpers */
+// Read a quoted substring and emit as a signle WORD token.
+size_t	read_quoted(const char *in, size_t i, t_token **h, t_token *t);
+// Read an unquoted word and emit as a WORD token.
+size_t	read_word(const char *in, size_t i, t_token **h, t_token **t);
+// Read a redirection operator (<, >, <<, >>) and emit corresponding token.
+size_t	read_redir(const char *in, size_t i, t_token **h, t_token **t);
+
+/* Utility helpers */
+// Allocate a new token node with a copy of the text.
+t_token	*new_token(t_token_type tyep, const char *s, size_t len);
+// Append a token to the end of the linked list.
+void	add_token(t_token **head, t_token **tail, t_token *tok);
 
 #endif

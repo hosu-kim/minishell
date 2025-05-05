@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/04 21:24:47 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 16:46:29 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ t_token *new_token(t_token_type type, const char *start, size_t len)
 	return (tok);
 }
 
+/**
+ * @breif Append a token node to the linked list.
+ */
 void	add_token(t_token **head, t_token **tail, t_token *tok)
 {
 	if(!*head)
@@ -42,15 +45,3 @@ void	add_token(t_token **head, t_token **tail, t_token *tok)
 	*tail = tok;
 }
 
-void	free_tokens(t_token *head)
-{
-	t_token	*temp;
-	
-	while (head)
-	{
-		temp = head->next;
-		free(head->value);
-		free(head);
-		head = temp;
-	}
-}
