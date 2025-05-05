@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
+#    By: jakand <jakand@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/04/29 20:13:41 by hoskim           ###   ########seoul.kr   #
+#    Updated: 2025/05/04 13:49:05 by jakand           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = clang
+CC = cc
 CFLAGS = -WALL -Wextra -Werror
 
 SRCS_DIR = ./src
@@ -25,7 +25,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 		$(EXECUTOR_DIR)/executor.c \
 		$(PARSER_DIR)/parser.c \
 		$(UTILS_DIR)/utils.c \
-		4(UTILS_DIR)/readline_wrapper.c
+		$(UTILS_DIR)/readline_wrapper.c
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -Iincludes
