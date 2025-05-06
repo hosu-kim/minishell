@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_readers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:31:25 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 17:13:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 20:22:39 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param t     Tail of token list.
  * @return Number of characters consumed (including both quotes).
  */
-size_t	read_quoted(const char *input, size_t i, t_token **h, t_token **t)
+size_t	read_quotes(const char *input, size_t i, t_token **h, t_token **t)
 {
 	char	quote = input[i];
 	size_t	start;

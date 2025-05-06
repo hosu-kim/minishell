@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 17:03:19 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 20:20:54 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ t_token	*tokenize(const char *input)
 
 	while (input[i])
 	{
-		if (isspace((unsigned char)input[i]))
+		if (input[i] == ' ')
 		{
 			++i;
 			continue ;
 		}
 		if (input[i] == '\'' || input[i] == '"')
-			n = read_quoted(input, i, &head, &tail);
+			n = read_quotes(input, i, &head, &tail);
 		else if (input[i] == '|')
 		{
 			add_token(&head, &tail, new_token(TOK_PIPE, "|", 1));
@@ -39,7 +39,7 @@ t_token	*tokenize(const char *input)
 			n = read_word(input, i, &head, &tail);
 		i += n;
 	}
-	add_token(&head, &tail, new_token(TOK_EOF, "" 0));
+	add_token(&head, &tail, new_token(TOK_EOF, "", 0));
 	return (head);
 }
 

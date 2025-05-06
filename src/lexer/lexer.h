@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 16:31:11 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 20:24:24 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stddef.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <string.h>
-# include <ctype.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /**
  * @enum e_token_type
@@ -52,7 +58,7 @@ void	free_tokens(t_token *head);
 
 /* Reader helpers */
 // Read a quoted substring and emit as a signle WORD token.
-size_t	read_quoted(const char *in, size_t i, t_token **h, t_token *t);
+size_t	read_quotes(const char *input, size_t i, t_token **h, t_token **t);
 // Read an unquoted word and emit as a WORD token.
 size_t	read_word(const char *in, size_t i, t_token **h, t_token **t);
 // Read a redirection operator (<, >, <<, >>) and emit corresponding token.

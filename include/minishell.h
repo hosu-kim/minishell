@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 15:57:53 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/05 20:25:40 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /* Core utilities */
 #include "readline_wrapper.h"
