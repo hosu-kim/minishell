@@ -6,52 +6,84 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 20:20:54 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/06 20:32:42 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	i = ft_strlen(s);
+	j = 0;
+	ptr = (char *) malloc((i + 1) * sizeof (char));
+	if (!ptr)
+		return (NULL);
+	while (j < i)
+	{
+		ptr[j] = s[j];
+		j++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
+}
+
 t_token	*tokenize(const char *input)
 {
-	t_token	*head = NULL;
-	t_token	*tail = NULL;
-	size_t	i;
-	size_t	n;
+	t_token		*start;
+	t_token		*new_token;
+	t_token		*current;
 
-	while (input[i])
+	start = NULL;
+	new_token = malloc(sizeof(t_token));
+	if (!new_token)
+		return (NULL);
+	while (*input != '\0')
 	{
-		if (input[i] == ' ')
+		while (*input == ' ')
+			input++;
+		if (*input == '|')
 		{
-			++i;
-			continue ;
+			new_token->type = T_PIPE;
+			new_token->value = ft_strdup("|");
+			new_token->next = NULL;
 		}
-		if (input[i] == '\'' || input[i] == '"')
-			n = read_quotes(input, i, &head, &tail);
-		else if (input[i] == '|')
-		{
-			add_token(&head, &tail, new_token(TOK_PIPE, "|", 1));
-			n = 1;
-		}
-		else if (input[i] == '<' || input[i] == '>')
-			n = read_redir(input, i, &head, &tail);
+		if (!start)
+			start = new_token;
 		else
-			n = read_word(input, i, &head, &tail);
-		i += n;
+		{
+			current = start;
+			while (current->next)
+				current = current->next;
+			current->next = new_token;
+		}
 	}
-	add_token(&head, &tail, new_token(TOK_EOF, "", 0));
-	return (head);
+	return (start);
 }
 
-void	free_tokens(t_token *head)
-{
-	t_token	*tmp;
+// void	free_tokens(t_token *head)
+// {
+// 	t_token	*tmp;
 
-	while (head)
-	{
-		tmp = head->next;
-		free(head->value);
-		free(head);
-		head = tmp;
-	}
-}
+// 	while (head)
+// 	{
+// 		tmp = head->next;
+// 		free(head->value);
+// 		free(head);
+// 		head = tmp;
+// 	}
+// }

@@ -6,12 +6,12 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 20:25:44 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/06 20:23:20 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minishell.h"
-# include "lexer.h"
+# include "lexer/lexer.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>

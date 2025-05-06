@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 20:24:24 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/06 20:34:49 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,28 @@
  * @enum e_token_type
  * @brief Types of tokens produced by the lexer.
  */
-typedef enum e_token_type
-{
-	TOK_WORD,      // a generic word or command name
-	TOK_PIPE,      // |
-	TOK_REDIR_IN,  // <
-	TOK_REDIR_OUT, // >
-	TOK_APPEND,    // >>
-	TOK_HEREDOC,   // <<
-	TOK_EOF,       // End-Of_File marker
-} t_token_type;
+
+ typedef enum e_token_type
+ {
+	T_WORD,			// words or arguments
+	T_PIPE,			// |
+	T_REDIR_IN,		// <
+	T_REDIR_OUT,	//	>
+	T_REDIR_APPEND,	// >>
+	T_HEREDOC		// <<
+ }	t_token_type;
 
 /**
  * @struct s_token
  * @brief A node in a linked list of tokens
  */
-typedef struct s_token
-{
-	t_token_type	type;   // token category
-	char			*value; // literal text
-	struct s_token	*next;  // next token in list
-} t_token;
+
+ typedef struct s_token
+ {
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+ }	t_token;
 
 /* Primary lexer interface */
 // Split the input line int a linked list of tokens.
