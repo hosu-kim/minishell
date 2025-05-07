@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/06 20:34:49 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/07 15:12:03 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,30 @@
 # include <readline/history.h>
 
 /**
- * @enum e_token_type
- * @brief Types of tokens produced by the lexer.
- */
-
- typedef enum e_token_type
- {
+* @enum e_token_type
+* @brief Types of tokens produced by the lexer.
+*/
+typedef enum e_token_type
+{
 	T_WORD,			// words or arguments
 	T_PIPE,			// |
 	T_REDIR_IN,		// <
 	T_REDIR_OUT,	//	>
 	T_REDIR_APPEND,	// >>
 	T_HEREDOC		// <<
- }	t_token_type;
+}	t_token_type;
 
 /**
- * @struct s_token
- * @brief A node in a linked list of tokens
- */
+* @struct s_token
+* @brief A node in a linked list of tokens
+*/
 
- typedef struct s_token
- {
+typedef struct s_token
+{
 	t_token_type		type;
 	char				*value;
 	struct s_token		*next;
- }	t_token;
+}	t_token;
 
 /* Primary lexer interface */
 // Split the input line int a linked list of tokens.
