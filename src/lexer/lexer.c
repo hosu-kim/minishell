@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/06 20:32:42 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/07 23:33:14 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,34 @@ t_token	*tokenize(const char *input)
 	t_token		*current;
 
 	start = NULL;
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
 	while (*input != '\0')
 	{
 		while (*input == ' ')
 			input++;
+		if (*input == '\0')
+			break ;
 		if (*input == '|')
 		{
+			new_token = malloc(sizeof(t_token));
+			if (!new_token)
+				return (NULL);
 			new_token->type = T_PIPE;
 			new_token->value = ft_strdup("|");
 			new_token->next = NULL;
+			if (!start)
+			{
+				start = new_token;
+				current = start;
+			}
+			else
+			{
+				current->next = new_token;
+				current = new_token;
+			}
+			input++;
 		}
-		if (!start)
-			start = new_token;
 		else
-		{
-			current = start;
-			while (current->next)
-				current = current->next;
-			current->next = new_token;
-		}
+			input++;
 	}
 	return (start);
 }

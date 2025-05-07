@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/06 20:23:20 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/07 23:28:37 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,26 @@
  * Sets up signal handlers, initializes environment list,
  * then enters the main read-eval-print loop.
  */
+
+ void	ft_free_token(t_token *token)
+{
+	t_token		*temp;
+
+	while(token)
+	{
+		temp = token;
+		token = token->next;
+		if (temp->value)
+			free(temp->value);
+		if (temp)
+			free(temp);
+	}
+}
+
 int	main(void)
 {
-	t_token	*tokens;
+	t_token	*token;
+	t_token *print_tok;
 	char	*line;
 	// char	*cwd;
 
@@ -44,8 +61,16 @@ int	main(void)
 			break ;
 		if (*line)
 			add_history(line);
-		tokens = tokenize(line);
-		free(line);
+		token = tokenize(line);
+		print_tok = token;
+		while (print_tok)
+		{
+			printf("token type: %d and value: %s\n", print_tok->type, print_tok->value);
+			print_tok = print_tok->next;
+		}
+		ft_free_token(token);
+		if (line)
+			free(line);
 		// parsing and execution logics
 		// free_tokens(token);
 	}
