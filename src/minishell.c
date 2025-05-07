@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/07 23:28:37 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/07 23:37:12 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
-/**
- * Entry point for the minishell program.
- * Sets up signal handlers, initializes environment list,
- * then enters the main read-eval-print loop.
- */
-
  void	ft_free_token(t_token *token)
 {
 	t_token		*temp;
@@ -44,6 +37,13 @@
 			free(temp);
 	}
 }
+
+/**
+ * Entry point for the minishell program.
+ * Sets up signal handlers, initializes environment list,
+ * then enters the main read-eval-print loop.
+ */
+
 
 int	main(void)
 {
