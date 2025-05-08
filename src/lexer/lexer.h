@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/07 15:12:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/07 23:57:00 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ size_t	read_redir(const char *in, size_t i, t_token **h, t_token **t);
 t_token	*new_token(t_token_type tyep, const char *s, size_t len);
 // Append a token to the end of the linked list.
 void	add_token(t_token **head, t_token **tail, t_token *tok);
+
+// Free allocated token memory
+void	ft_free_token(t_token *token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/07 23:37:12 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/07 23:55:46 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,6 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
- void	ft_free_token(t_token *token)
-{
-	t_token		*temp;
-
-	while(token)
-	{
-		temp = token;
-		token = token->next;
-		if (temp->value)
-			free(temp->value);
-		if (temp)
-			free(temp);
-	}
-}
 
 /**
  * Entry point for the minishell program.
