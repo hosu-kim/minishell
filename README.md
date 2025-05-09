@@ -51,7 +51,7 @@ minishell/                      # Project root directory
 |     signal.c        |                          |
 | (Signal Handlers    |                          | (Command Structure)
 |  Definition)        |                          v
-+---------------------+                          +----------+-----------+
++---------------------+                +---------+-----------+
                                       |      expander.c      |
                                       | (Var/Quote Expansion)|
                                       +----------+-----------+
@@ -60,8 +60,8 @@ minishell/                      # Project root directory
                                                    v
                                       +----------+-----------+
                                       |      executor.c      |
-                                      | (Command Execution)  |---+
-                                      +----------+-----------+   |
+                                      | (Command Execution)  |-----+
+                                      +----------+-----------+     |
                                                    |               | (If Built-in)
                                                    | (External Cmd Exec) v
                                                    |            +----------+-----------+
