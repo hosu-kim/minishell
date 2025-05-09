@@ -36,36 +36,36 @@ minishell/                      # Project root directory
 └── README.md                   # Project overview
 ```
 ```bash
-+---------------------+     +----------------------+
-|      main.c         | --> |        lexer.c       |
-| (Input, Prompt,     |     | (Tokenization)       |
-| Signal Handler Reg.)|     +----------+-----------+
-+--------+------------+                |
-         |                            | (Token List)
-         | (Signal -> Handler Call)   v
++---------------------+             +----------------------+
+|      main.c         | ----------> |        lexer.c       |
+| (Input, Prompt,     |             | (Tokenization)       |
+| Signal Handler Reg.)|             +----------+-----------+
++--------+------------+                        |
+         |                                     | (Token List)
+         | (Signal -> Handler Call)            v
          |                          +----------+-----------+
          |                          |       parser.c       |
          |                          | (Syntax Analysis,    |
          |                          |  Structure Creation) |
 +--------v------------+             +----------+-----------+
-|     signal.c        |                          |
-| (Signal Handlers    |                          | (Command Structure)
-|  Definition)        |                          v
-+---------------------+                +---------+-----------+
-                                      |      expander.c      |
-                                      | (Var/Quote Expansion)|
-                                      +----------+-----------+
-                                                   |
-                                                   | (Final Command Struct)
-                                                   v
-                                      +----------+-----------+
-                                      |      executor.c      |
-                                      | (Command Execution)  |-----+
-                                      +----------+-----------+     |
-                                                   |               | (If Built-in)
-                                                   | (External Cmd Exec) v
-                                                   |            +----------+-----------+
-                                                   +----------> |       builtin.c      |
-                                                                | (Built-in Cmd Impl.) |
-                                                                +----------------------+
+|     signal.c        |                        |
+| (Signal Handlers    |                        | (Command Structure)
+|  Definition)        |                        v
++---------------------+             +----------+-----------+
+                                    |      expander.c      |
+                                    | (Var/Quote Expansion)|
+                                    +----------+-----------+
+                                               |
+                                               | (Final Command Struct)
+                                               v
+                                    +----------+-----------+
+                                    |      executor.c      |
+                                    | (Command Execution)  |---------+
+                                    +----------+-----------+         |
+                                               |                     | (If Built-in)
+                                               | (External Cmd Exec) v
+                                               |          +----------+-----------+
+                                               +--------> |       builtin.c      |
+                                                          | (Built-in Cmd Impl.) |
+                                                          +----------------------+
 ```
