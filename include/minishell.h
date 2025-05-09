@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/04/29 20:07:29 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/09 22:52:48 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #include "utils.h"
 
 /* Lexer and parser */
-# include "lexter.h"
+# include "lexer.h"
 # include "parser.h"
 
 /* Built-ins and execution */
