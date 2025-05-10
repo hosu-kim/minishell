@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/05 20:25:40 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/10 20:20:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 /* Built-ins and execution */
 # include "builtin.h"
+# include "parser.h"
 # include "executor.h"
 
 /* Signal handling */
