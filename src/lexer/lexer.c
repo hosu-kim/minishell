@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/08 18:05:32 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/10 18:22:24 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_strdup(const char *s)
 
 	i = ft_strlen(s);
 	j = 0;
-	ptr = (char *) malloc((i + 1) * sizeof (char));
+	ptr = (char *)malloc((i + 1) * sizeof (char));
 	if (!ptr)
 		return (NULL);
 	while (j < i)
@@ -57,6 +57,8 @@ char	*ft_strdup(const char *s)
 	return (ptr);
 }
 
+// name suggestion to 'skip_whitespaces' - Hosu 10/05/2025 16:17:56
+// while (**input == ' ' || ('\t' <= *input && *input <= '\r'))
 int		ft_space(const char **input)
 {
 	while (**input == ' ')
@@ -65,7 +67,7 @@ int		ft_space(const char **input)
 		return (1);
 	return (0);
 }
-
+// name suggestion to 'single_char_tokens' - Hosu 10/05/2025 16:13:54
 void	ft_token_1(const char *input, t_token *new_token)
 {
 	if (*input == '|')
@@ -85,6 +87,7 @@ void	ft_token_1(const char *input, t_token *new_token)
 	}
 }
 
+// name suggestion to 'double_char_tokens' - Hosu 10/05/2025 16:14:25
 void	ft_token_2(const char *input, t_token *new_token)
 {
 	if (input[0] == '<' && input[1] == '<')
@@ -100,6 +103,7 @@ void	ft_token_2(const char *input, t_token *new_token)
 	new_token->next = NULL;
 }
 
+// name suggestion to add_new_token or link_new_token - Hosu 10/05/25 16:35:22
 void	ft_make_token(const char *input, t_token *new_token, t_token **start, t_token **current)
 {
 	ft_token_1(input, new_token);
