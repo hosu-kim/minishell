@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/10 20:35:15 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/11 15:52:56 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,9 @@ void	ft_make_token(const char *input, t_token *new_token, t_token **start, t_tok
 	}
 }
 
-/* Please implement this if condition:
-   if the function finds " or ', it stores the whole string in a node as type T_WORD
+/* Please implement these:
+   1. Tokenizing other words as T_WORD
+   2. If the function finds " or ', it stores the whole string in a node as type T_WORD
    ex) a_node = {type: T_WORD, *value: "this is an example", *next}
    - Hosu 10/05/2025 20:32:55
 */
