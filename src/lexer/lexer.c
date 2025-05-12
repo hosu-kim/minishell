@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/11 15:52:56 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/12 22:20:35 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ t_token	*tokenize(const char *input)
 		{
 			new_token = malloc(sizeof(t_token));
 			ft_make_token(input, new_token, &start, &current);
-			if ((input[0] == '>' && input[1] == '>') || 
-				(input[0] == '<' && input[1] == '<'))
+			if ((input[0] == '>' && input[1] == '>')
+				|| (input[0] == '<' && input[1] == '<'))
 				input += 2;
 			else
 				input++;
