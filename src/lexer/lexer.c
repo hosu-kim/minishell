@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/12 22:20:35 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:32:46 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,46 +68,51 @@ int		ft_space(const char **input)
 	return (0);
 }
 // name suggestion to 'single_char_tokens' - Hosu 10/05/2025 16:13:54
-void	ft_token_1(const char *input, t_token *new_token)
+void	ft_token_1(const char ***input, t_token *new_token)
 {
-	if (*input == '|')
+	if (***input == '|')
 	{
 		new_token->type = T_PIPE;
 		new_token->value = ft_strdup("|");
+		(**input)++;
 	}
-	else if (*input == '<' && input[1] != '<')
+	else if (***input == '<' && (**input)[1] != '<')
 	{
 		new_token->type = T_REDIR_IN;
 		new_token->value = ft_strdup("<");
+		(**input)++;
 	}
-	else if (*input == '>' && input[1] != '>')
+	else if (***input == '>' && (**input)[1] != '>')
 	{
 		new_token->type = T_REDIR_OUT;
 		new_token->value = ft_strdup(">");
+		(**input)++;
 	}
 }
 
 // name suggestion to 'double_char_tokens' - Hosu 10/05/2025 16:14:25
-void	ft_token_2(const char *input, t_token *new_token)
+void	ft_token_2(const char ***input, t_token *new_token)
 {
-	if (input[0] == '<' && input[1] == '<')
+	if (***input == '<' && (**input)[1] == '<')
 	{
 		new_token->type = T_HEREDOC;
 		new_token->value = ft_strdup("<<");
+		(**input) += 2;
 	}
-	else if (input[0] == '>' && input[1] == '>')
+	else if (***input == '>' && (**input)[1] == '>')
 	{
 		new_token->type = T_REDIR_APPEND;
 		new_token->value = ft_strdup(">>");
+		(**input) += 2;
 	}
 	new_token->next = NULL;
 }
 
 // name suggestion to add_new_token or link_new_token - Hosu 10/05/25 16:35:22
-void	ft_make_token(const char *input, t_token *new_token, t_token **start, t_token **current)
+void	ft_make_token(const char **input, t_token *new_token, t_token **start, t_token **current)
 {
-	ft_token_1(input, new_token);
-	ft_token_2(input, new_token);
+	ft_token_1(&input, new_token);
+	ft_token_2(&input, new_token);
 	if (!(*start))
 	{
 		*start = new_token;
@@ -142,12 +147,12 @@ t_token	*tokenize(const char *input)
 		if (*input == '|' || *input == '>' || *input == '<')
 		{
 			new_token = malloc(sizeof(t_token));
-			ft_make_token(input, new_token, &start, &current);
-			if ((input[0] == '>' && input[1] == '>')
-				|| (input[0] == '<' && input[1] == '<'))
-				input += 2;
-			else
-				input++;
+			ft_make_token(&input, new_token, &start, &current);
+			// if ((input[0] == '>' && input[1] == '>')
+			// 	|| (input[0] == '<' && input[1] == '<'))
+			// 	input += 2;
+			// else
+			// 	input++;
 		}
 		else
 			input++;
