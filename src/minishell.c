@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/07 23:55:46 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/14 21:29:55 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	main(void)
 			printf("token type: %d and value: %s\n", print_tok->type, print_tok->value);
 			print_tok = print_tok->next;
 		}
-		ft_free_token(token);
+		if (token)
+			ft_free_token(token);
 		if (line)
 			free(line);
 		// parsing and execution logics

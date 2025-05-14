@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/14 11:33:37 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/14 22:48:39 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strdup(const char *s)
 // while (**input == ' ' || ('\t' <= *input && *input <= '\r'))
 int		ft_space(const char **input)
 {
-	while (**input == ' ')
+	while (**input == ' ' || (**input >= 9 && **input <= 13))
 		(*input)++;
 	if (**input == '\0')
 		return (1);
@@ -116,7 +116,7 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 	return (0);
 }
 
-char	*ft_make_tok(const char ****input, int i)
+char	*ft_make_tok(const char *****input, int i)
 {
 	char	*str;
 	int		j;
@@ -127,43 +127,66 @@ char	*ft_make_tok(const char ****input, int i)
 		return (NULL);
 	while (j < i)
 	{
-		str[j] = (***input)[j];
+		str[j] = (****input)[j];
 		j++;
 	}
 	str[j] = '\0';
-	(***input) += i;
+	(****input) += i;
 	return (str);
 }
 
-void	char_tokens(const char ***input, t_token *new_token)
+void	ft_make_word_token(const char ****input, t_token *new_token, int i)
+{
+	new_token->type = T_WORD;
+	new_token->value = ft_make_tok(&input, i);
+	new_token->next = NULL;
+}
+
+int	ft_quotes(const char ****input, t_token *new_token, int i)
+{
+	(***input)++;
+	i = 0;
+	while ((***input)[i] != 39 && (***input)[i] != '\0')
+		i++;
+	if ((***input)[i] == '\0')
+		return (printf("Missing quote (') in the end\n"), 1);
+	new_token->type = T_WORD;
+	new_token->value = ft_make_tok(&input, i);
+	new_token->next = NULL;
+	(***input)++;
+	return (0);
+}
+
+int	char_tokens(const char ***input, t_token *new_token)
 {
 	int		i;
 
 	i = 0;
-	while ((**input)[i] != 39 && (**input)[i] != 34
-		&& (**input)[i] != ' ' && (**input)[i] != '\0')
+	while ((**input)[i] != 39 && (**input)[i] != 34 && (**input)[i] != ' '
+		&& !((**input)[i] >= 9 && (**input)[i] <= 13) && (**input)[i] != '\0')
+	{
+		if ((**input)[i] == '>' || (**input)[i] == '<' || (**input)[i] == '|')
+		{
+			printf("Missing space\n");
+			return (1);
+		}
 		i++;
+	}
 	if (i != 0)
-	{
-		new_token->type = T_WORD;
-		new_token->value = ft_make_tok(&input, i);
-		new_token->next = NULL;
-		return ;
-	}
+		return (ft_make_word_token(&input, new_token, i), 0);
 	if ((***input) == 39)
-	{
-		ft_quotes(&input);
-		return ;
-	}
+		return (ft_quotes(&input, new_token, i));
+	return (0);
 }
 
 // name suggestion to add_new_token or link_new_token - Hosu 10/05/25 16:35:22
-void	add_new_token(const char **input, t_token *new_token, t_token **start, t_token **current)
+int	add_new_token(const char **input, t_token *new_token, t_token **start, t_token **current)
 {
 	if (!single_char_tokens(&input, new_token))
 	{
 		if (!double_char_tokens(&input, new_token))
-			char_tokens(&input, new_token);
+			if (char_tokens(&input, new_token))
+				return (1);
 	}
 	if (!(*start))
 	{
@@ -175,6 +198,7 @@ void	add_new_token(const char **input, t_token *new_token, t_token **start, t_to
 		(*current)->next = new_token;
 		*current = new_token;
 	}
+	return (0);
 }
 
 /* Please implement these:
@@ -197,7 +221,18 @@ t_token	*tokenize(const char *input)
 		if (ft_space(&input))
 			break ;
 		new_token = malloc(sizeof(t_token));
-		add_new_token(&input, new_token, &start, &current);
+		if (new_token)
+		{
+			new_token->type = 0;
+			new_token->value = NULL;
+			new_token->next = NULL;
+		}
+		if (add_new_token(&input, new_token, &start, &current))
+		{
+			ft_free_token(new_token);
+			ft_free_token(start);
+			return (NULL);
+		}
 	}
 	return (start);
 }
