@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/13 22:09:18 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/14 11:33:37 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,12 @@ void	char_tokens(const char ***input, t_token *new_token)
 		new_token->type = T_WORD;
 		new_token->value = ft_make_tok(&input, i);
 		new_token->next = NULL;
+		return ;
+	}
+	if ((***input) == 39)
+	{
+		ft_quotes(&input);
+		return ;
 	}
 }
 
