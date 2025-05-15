@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/14 22:48:39 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/15 19:23:45 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strdup(const char *s)
 
 // name suggestion to 'skip_whitespaces' - Hosu 10/05/2025 16:17:56
 // while (**input == ' ' || ('\t' <= *input && *input <= '\r'))
-int		ft_space(const char **input)
+int		skip_whitespaces(const char **input)
 {
 	while (**input == ' ' || (**input >= 9 && **input <= 13))
 		(*input)++;
@@ -144,12 +144,21 @@ void	ft_make_word_token(const char ****input, t_token *new_token, int i)
 
 int	ft_quotes(const char ****input, t_token *new_token, int i)
 {
-	(***input)++;
 	i = 0;
-	while ((***input)[i] != 39 && (***input)[i] != '\0')
-		i++;
+	if ((***input)[i] == 39)
+	{
+		(***input)++;
+		while ((***input)[i] != 39 && (***input)[i] != '\0')
+			i++;
+	}
+	else
+	{
+		(***input)++;
+		while ((***input)[i] != 34 && (***input)[i] != '\0')
+			i++;
+	}
 	if ((***input)[i] == '\0')
-		return (printf("Missing quote (') in the end\n"), 1);
+		return (printf("Missing quote\n"), 1);
 	new_token->type = T_WORD;
 	new_token->value = ft_make_tok(&input, i);
 	new_token->next = NULL;
@@ -175,6 +184,8 @@ int	char_tokens(const char ***input, t_token *new_token)
 	if (i != 0)
 		return (ft_make_word_token(&input, new_token, i), 0);
 	if ((***input) == 39)
+		return (ft_quotes(&input, new_token, i));
+	if ((***input) == 34)
 		return (ft_quotes(&input, new_token, i));
 	return (0);
 }
@@ -218,7 +229,7 @@ t_token	*tokenize(const char *input)
 	current = NULL;
 	while (*input != '\0')
 	{
-		if (ft_space(&input))
+		if (skip_whitespaces(&input))
 			break ;
 		new_token = malloc(sizeof(t_token));
 		if (new_token)
