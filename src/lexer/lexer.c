@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 17:18:46 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/16 20:20:59 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,21 +116,27 @@ void	ft_make_word_token(const char ****input, t_token *new_token, int i)
 int	ft_quotes(const char ****input, t_token *new_token, int i)
 {
 	i = 0;
-	if ((***input)[i] == 39)
-	{
-		(***input)++;
-		while ((***input)[i] != 39 && (***input)[i] != '\0')
-			i++;
-	}
-	else
-	{
-		(***input)++;
-		while ((***input)[i] != 34 && (***input)[i] != '\0')
-			i++;
-	}
+	(***input)++;
+	while ((***input)[i] != 39 && (***input)[i] != '\0')
+		i++;
 	if ((***input)[i] == '\0')
 		return (printf("Missing quote\n"), 1);
 	new_token->type = T_WORD;
+	new_token->value = ft_make_tok(&input, i);
+	new_token->next = NULL;
+	(***input)++;
+	return (0);
+}
+
+int	ft_double_quotes(const char ****input, t_token *new_token, int i)
+{
+	i = 0;
+	(***input)++;
+	while ((***input)[i] != 34 && (***input)[i] != '\0')
+		i++;
+	if ((***input)[i] == '\0')
+		return (printf("Missing double quote\n"), 1);
+	new_token->type = T_D_Q_WORD;
 	new_token->value = ft_make_tok(&input, i);
 	new_token->next = NULL;
 	(***input)++;
@@ -142,8 +148,9 @@ int	char_tokens(const char ***input, t_token *new_token)
 	int		i;
 
 	i = 0;
-	while ((**input)[i] != 39 && (**input)[i] != 34 && (**input)[i] != ' '
-		&& !((**input)[i] >= 9 && (**input)[i] <= 13) && (**input)[i] != '\0')
+	while ((**input)[i] != 39 && (**input)[i] != 34 && (**input)[i] != 32
+		&& !((**input)[i] >= 9 && (**input)[i] <= 13) && (**input)[i] != 60
+		&& (**input)[i] != 62 && (**input)[i] != 124 && (**input)[i] != '\0')
 	{
 		if ((**input)[i] == '>' || (**input)[i] == '<' || (**input)[i] == '|')
 		{
@@ -157,7 +164,7 @@ int	char_tokens(const char ***input, t_token *new_token)
 	if ((***input) == 39)
 		return (ft_quotes(&input, new_token, i));
 	if ((***input) == 34)
-		return (ft_quotes(&input, new_token, i));
+		return (ft_double_quotes(&input, new_token, i));
 	return (0);
 }
 
