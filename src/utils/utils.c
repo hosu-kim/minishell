@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline_wrapper.c                                 :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 19:52:07 by hoskim            #+#    #+#             */
-/*   Updated: 2025/04/29 19:55:04 by hoskim           ###   ########seoul.kr  */
+/*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
+/*   Updated: 2025/05/16 11:41:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline_wrapper.h"
+#include "utils.h"
 
-/**
- * Prompt the user and return the entered line.
- * If EOF is received (e.g., Ctrl-D), returns NULL.
- * Non-empty lines are saved in the history list.
- * Caller must free the returned buffer.
- */
-char	*get_input_line(const char *prompt)
+size_t	ft_strlen(const char *s)
 {
-	char	*line;
+	int	i;
 
-	line = readline(prompt);
-	if (line == NULL)
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	i = ft_strlen(s);
+	j = 0;
+	ptr = (char *)malloc((i + 1) * sizeof (char));
+	if (!ptr)
 		return (NULL);
-	if (*line != '\0')
-		add_history(line);
-	return (line);
+	while (j < i)
+	{
+		ptr[j] = s[j];
+		j++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
 }

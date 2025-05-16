@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/10 20:20:12 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/16 11:38:35 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 #include <readline/history.h>
 
 /* Core utilities */
-#include "readline_wrapper.h"
 #include "utils.h"
 
 /* Lexer and parser */

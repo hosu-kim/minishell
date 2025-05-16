@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/15 19:23:45 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:41:39 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,6 @@ void	ft_free_token(t_token *token)
 	}
 }
 
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		i;
-	int		j;
-	char	*ptr;
-
-	i = ft_strlen(s);
-	j = 0;
-	ptr = (char *)malloc((i + 1) * sizeof (char));
-	if (!ptr)
-		return (NULL);
-	while (j < i)
-	{
-		ptr[j] = s[j];
-		j++;
-	}
-	ptr[j] = '\0';
-	return (ptr);
-}
 
 // name suggestion to 'skip_whitespaces' - Hosu 10/05/2025 16:17:56
 // while (**input == ' ' || ('\t' <= *input && *input <= '\r'))
