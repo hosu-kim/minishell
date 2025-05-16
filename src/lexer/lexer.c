@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 11:41:39 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/16 17:18:46 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,11 +210,7 @@ t_token	*tokenize(const char *input)
 			new_token->next = NULL;
 		}
 		if (add_new_token(&input, new_token, &start, &current))
-		{
-			ft_free_token(new_token);
-			ft_free_token(start);
-			return (NULL);
-		}
+			return (ft_free_token(new_token), NULL);
 	}
 	return (start);
 }

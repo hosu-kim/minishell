@@ -35,3 +35,5 @@ minishell/                      # Project root directory
 │   └── utils.h                 # Prototypes for all utils and shared macros
 └── README.md                   # Project overview
 ```
+
+test minishell -  echo $USER "$USER" '$USER' "'$USER'" '"$USER"' qwe$USER $USERaa

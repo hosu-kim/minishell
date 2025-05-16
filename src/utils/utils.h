@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:38:18 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 11:40:31 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/16 16:44:02 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include "lexer.h"
+# include "../lexer/lexer.h"
 
-void	ft_free_token(t_token *token);
+char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *s);
 
 #endif
