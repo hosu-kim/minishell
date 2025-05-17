@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 12:57:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 15:11:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	free_token(t_token *token)
 {
-	t_token		*temp;
+	t_token	*held_token;
 
 	while (token)
 	{
-		temp = token;
+		held_token = token;
 		token = token->next;
-		if (temp->value)
-			free(temp->value);
-		if (temp)
-			free(temp);
+		if (held_token->value)
+			free(held_token->value);
+		if (held_token)
+			free(held_token);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 12:57:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 15:24:24 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@
 # include "../utils/utils.h"
 
 /**
- * @brief Definition of token types stored by the lexer
+ * @brief Token types stored in the linked list.
  * @details
- * Heredoc(<<): Accepts multi-line input until it meets the delimiter
- * 				provided on the right of the operator initionally.
+ * - enum: used to represent a fixed set of named constants.
+ * - Heredoc(<<): Accepts multi-line input until it meets the delimiter
+ * 				  provided on the right of the operator initionally.
  */
 typedef enum e_token_type
 {
@@ -43,20 +44,21 @@ typedef enum e_token_type
 }	t_token_type;
 
 /**
-* @struct s_token
-* @brief A node in a linked list of tokens
+* @brief A node structure to store tokens in a linked list of tokens.`
 */
 
 typedef struct s_token
 {
-	t_token_type		type;
-	char				*value;
-	struct s_token		*next;
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
 }	t_token;
 
 /* Primary lexer interface */
 // Split the input line int a linked list of tokens.
 t_token	*tokenize(const char *input);
+
+/* lexer_utils.h */
 // Skip whitespaces
 int		skip_whitespaces(const char **input);
 // Free all tokens in the list.
