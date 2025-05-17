@@ -3,33 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 17:18:46 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/17 12:45:27 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	ft_free_token(t_token *token)
-{
-	t_token		*temp;
-
-	while (token)
-	{
-		temp = token;
-		token = token->next;
-		if (temp->value)
-			free(temp->value);
-		if (temp)
-			free(temp);
-	}
-}
-
-
-// name suggestion to 'skip_whitespaces' - Hosu 10/05/2025 16:17:56
-// while (**input == ' ' || ('\t' <= *input && *input <= '\r'))
+/**
+ * @brief Skips leading whitespaces from the input string.
+ * @param input A pointer to a pointer to a string 
+ * @return int If OK, returns 1, else return 0
+ */
 int		skip_whitespaces(const char **input)
 {
 	while (**input == ' ' || (**input >= 9 && **input <= 13))
@@ -183,6 +170,21 @@ int	add_new_token(const char **input, t_token *new_token, t_token **start, t_tok
 	return (0);
 }
 
+void	free_token(t_token *token)
+{
+	t_token		*temp;
+
+	while (token)
+	{
+		temp = token;
+		token = token->next;
+		if (temp->value)
+			free(temp->value);
+		if (temp)
+			free(temp);
+	}
+}
+
 /* Please implement these:
    1. Tokenizing other words as T_WORD
    2. If the function finds " or ', it stores the whole string in a node as type T_WORD
@@ -210,7 +212,8 @@ t_token	*tokenize(const char *input)
 			new_token->next = NULL;
 		}
 		if (add_new_token(&input, new_token, &start, &current))
-			return (ft_free_token(new_token), NULL);
+			return (free_token(new_token), NULL);
 	}
 	return (start);
 }
+

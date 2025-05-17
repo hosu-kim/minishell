@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 16:41:26 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/17 12:45:27 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ t_token	*new_token(t_token_type tyep, const char *s, size_t len);
 void	add_token(t_token **head, t_token **tail, t_token *tok);
 
 // Free allocated token memory
-void	ft_free_token(t_token *token);
+void	free_token(t_token *token);
 
 #endif
