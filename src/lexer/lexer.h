@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 15:24:24 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 16:14:12 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 typedef enum e_token_type
 {
 	T_WORD,			// words or arguments
+	T_Q_WORD,		// words in quotes
 	T_D_Q_WORD,		// words in double quotes
 	T_PIPE,			// |
 	T_REDIR_IN,		// <

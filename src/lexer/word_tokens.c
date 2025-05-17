@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/16 20:43:25 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:13:33 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_quotes(const char ****input, t_token *new_token, int i)
 		i++;
 	if ((***input)[i] == '\0')
 		return (printf("Missing quote\n"), 1);
-	new_token->type = T_WORD;
+	new_token->type = T_Q_WORD;
 	new_token->value = ft_make_tok(&input, i);
 	new_token->next = NULL;
 	(***input)++;

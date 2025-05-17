@@ -3,32 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 12:45:27 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 16:17:45 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minishell.h"
 # include "lexer/lexer.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+
 
 /**
  * Entry point for the minishell program.
  * Sets up signal handlers, initializes environment list,
  * then enters the main read-eval-print loop.
  */
-
 
 int	main(void)
 {
