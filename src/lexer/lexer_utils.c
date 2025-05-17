@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 20:43:15 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/17 12:57:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	ft_free_token(t_token *token)
+void	free_token(t_token *token)
 {
 	t_token		*temp;
 

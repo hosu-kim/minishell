@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 12:55:28 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 12:57:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_token	*tokenize(const char *input);
 // Skip whitespaces
 int		skip_whitespaces(const char **input);
 // Free all tokens in the list.
-void	ft_free_token(t_token *token);
+void	free_token(t_token *token);
 // Make word tokens
 int	char_tokens(const char ***input, t_token *new_token);
 
