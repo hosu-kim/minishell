@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   word_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/16 20:43:25 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:21:40 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+/**
+ * @details Used in ft_make_word_token(), ft_quotes(), ft_double_quotes()
+ */
 char	*ft_make_tok(const char *****input, int i)
 {
 	char	*str;
@@ -73,9 +76,9 @@ int	char_tokens(const char ***input, t_token *new_token)
 	int		i;
 
 	i = 0;
-	while ((**input)[i] != 39 && (**input)[i] != 34 && (**input)[i] != 32
-		&& !((**input)[i] >= 9 && (**input)[i] <= 13) && (**input)[i] != 60
-		&& (**input)[i] != 62 && (**input)[i] != 124 && (**input)[i] != '\0')
+	while ((**input)[i] != '\'' && (**input)[i] != '"' && (**input)[i] != ' '
+		&& !((**input)[i] >= '\t' && (**input)[i] <= '\r') && (**input)[i] != '<'
+		&& (**input)[i] != '>' && (**input)[i] != '|' && (**input)[i] != '\0')
 	{
 		if ((**input)[i] == '>' || (**input)[i] == '<' || (**input)[i] == '|')
 		{
@@ -86,9 +89,9 @@ int	char_tokens(const char ***input, t_token *new_token)
 	}
 	if (i != 0)
 		return (ft_make_word_token(&input, new_token, i), 0);
-	if ((***input) == 39)
+	if ((***input) == '\'')
 		return (ft_quotes(&input, new_token, i));
-	if ((***input) == 34)
+	if ((***input) == '"')
 		return (ft_double_quotes(&input, new_token, i));
 	return (0);
 }
