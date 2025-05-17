@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/17 16:13:33 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/18 00:25:33 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,4 @@ int	char_tokens(const char ***input, t_token *new_token)
 		return (ft_double_quotes(&input, new_token, i));
 	return (0);
 }
+

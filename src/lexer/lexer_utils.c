@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 15:11:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 00:25:26 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,4 @@ int	skip_whitespaces(const char **input)
 		return (1);
 	return (0);
 }
+

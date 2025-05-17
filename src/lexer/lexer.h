@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 16:14:12 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/18 00:25:17 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum e_token_type
 	T_REDIR_IN,		// <
 	T_REDIR_OUT,	// >
 	T_REDIR_APPEND,	// >>
-	T_HEREDOC		// <<
+	T_HEREDOC	// <<
 }	t_token_type;
 
 /**
