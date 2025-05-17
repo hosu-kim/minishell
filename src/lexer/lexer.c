@@ -6,26 +6,12 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 12:45:27 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/17 12:55:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-/**
- * @brief Skips leading whitespaces from the input string.
- * @param input A pointer to a pointer to a string 
- * @return int If OK, returns 1, else return 0
- */
-int		skip_whitespaces(const char **input)
-{
-	while (**input == ' ' || (**input >= 9 && **input <= 13))
-		(*input)++;
-	if (**input == '\0')
-		return (1);
-	return (0);
-}
-// name suggestion to 'single_char_tokens' - Hosu 10/05/2025 16:13:54
 int	single_char_tokens(const char ***input, t_token *new_token)
 {
 	if (***input == '|')
@@ -52,7 +38,6 @@ int	single_char_tokens(const char ***input, t_token *new_token)
 	return (0);
 }
 
-// name suggestion to 'double_char_tokens' - Hosu 10/05/2025 16:14:25
 int	double_char_tokens(const char ***input, t_token *new_token)
 {
 	if (***input == '<' && (**input)[1] == '<')
@@ -74,82 +59,8 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 	return (0);
 }
 
-char	*ft_make_tok(const char *****input, int i)
-{
-	char	*str;
-	int		j;
-
-	j = 0;
-	str = malloc((i + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	while (j < i)
-	{
-		str[j] = (****input)[j];
-		j++;
-	}
-	str[j] = '\0';
-	(****input) += i;
-	return (str);
-}
-
-void	ft_make_word_token(const char ****input, t_token *new_token, int i)
-{
-	new_token->type = T_WORD;
-	new_token->value = ft_make_tok(&input, i);
-	new_token->next = NULL;
-}
-
-int	ft_quotes(const char ****input, t_token *new_token, int i)
-{
-	i = 0;
-	if ((***input)[i] == 39)
-	{
-		(***input)++;
-		while ((***input)[i] != 39 && (***input)[i] != '\0')
-			i++;
-	}
-	else
-	{
-		(***input)++;
-		while ((***input)[i] != 34 && (***input)[i] != '\0')
-			i++;
-	}
-	if ((***input)[i] == '\0')
-		return (printf("Missing quote\n"), 1);
-	new_token->type = T_WORD;
-	new_token->value = ft_make_tok(&input, i);
-	new_token->next = NULL;
-	(***input)++;
-	return (0);
-}
-
-int	char_tokens(const char ***input, t_token *new_token)
-{
-	int		i;
-
-	i = 0;
-	while ((**input)[i] != 39 && (**input)[i] != 34 && (**input)[i] != ' '
-		&& !((**input)[i] >= 9 && (**input)[i] <= 13) && (**input)[i] != '\0')
-	{
-		if ((**input)[i] == '>' || (**input)[i] == '<' || (**input)[i] == '|')
-		{
-			printf("Missing space\n");
-			return (1);
-		}
-		i++;
-	}
-	if (i != 0)
-		return (ft_make_word_token(&input, new_token, i), 0);
-	if ((***input) == 39)
-		return (ft_quotes(&input, new_token, i));
-	if ((***input) == 34)
-		return (ft_quotes(&input, new_token, i));
-	return (0);
-}
-
-// name suggestion to add_new_token or link_new_token - Hosu 10/05/25 16:35:22
-int	add_new_token(const char **input, t_token *new_token, t_token **start, t_token **current)
+int	add_new_token(const char **input, t_token *new_token,
+					t_token **start, t_token **current)
 {
 	if (!single_char_tokens(&input, new_token))
 	{
@@ -170,27 +81,6 @@ int	add_new_token(const char **input, t_token *new_token, t_token **start, t_tok
 	return (0);
 }
 
-void	free_token(t_token *token)
-{
-	t_token		*temp;
-
-	while (token)
-	{
-		temp = token;
-		token = token->next;
-		if (temp->value)
-			free(temp->value);
-		if (temp)
-			free(temp);
-	}
-}
-
-/* Please implement these:
-   1. Tokenizing other words as T_WORD
-   2. If the function finds " or ', it stores the whole string in a node as type T_WORD
-   ex) a_node = {type: T_WORD, *value: "this is an example", *next}
-   - Hosu 10/05/2025 20:32:55
-*/
 t_token	*tokenize(const char *input)
 {
 	t_token		*start;
