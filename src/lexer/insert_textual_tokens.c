@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word_tokens.c                                      :+:      :+:    :+:   */
+/*   setup_textual_tokens.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/18 22:47:47 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/19 01:14:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @details Used in ft_make_word_token(), ft_quotes(), ft_double_quotes()
  */
-static char	*copy_token_str(const char *****input, int token_len)
+static char	*extract_token_value(const char *****input, int token_len)
 {
 	char	*token_value;
 	int		i;
@@ -34,10 +34,10 @@ static char	*copy_token_str(const char *****input, int token_len)
 	return (token_value);
 }
 
-void	create_word_token_node(const char ****input, t_token *new_node, int len)
+void	insert_word_token(const char ****input, t_token *new_node, int len)
 {
 	new_node->type = T_WORD;
-	new_node->value = copy_token_str(&input, len);
+	new_node->value = extract_token_value(&input, len);
 	new_node->next = NULL;
 }
 
@@ -48,7 +48,7 @@ void	create_word_token_node(const char ****input, t_token *new_node, int len)
  * 2. Counts qouted_s_len (Length of quoted string) up to '\'' and '\0'.access
  * 3. Sets up the data into a new node 
  */
-static int	create_single_quotes_node(const char ****input, t_token *new_node)
+static int	intert_single_quotes_token(const char ****input, t_token *new_node)
 {
 	int	quoted_s_len;
 
@@ -59,13 +59,13 @@ static int	create_single_quotes_node(const char ****input, t_token *new_node)
 	if ((***input)[quoted_s_len] == '\0')
 		return (printf("Missing quote\n"), 1);
 	new_node->type = T_Q_WORD;
-	new_node->value = copy_token_str(&input, quoted_s_len);
+	new_node->value = extract_token_value(&input, quoted_s_len);
 	new_node->next = NULL;
 	(***input)++;
 	return (0);
 }
 
-static int	create_double_quotes_node(const char ****input, t_token *new_node)
+static int	insert_double_quotes_token(const char ****input, t_token *new_node)
 {
 	int	quoted_s_len;
 
@@ -76,14 +76,14 @@ static int	create_double_quotes_node(const char ****input, t_token *new_node)
 	if ((***input)[quoted_s_len] == '\0')
 		return (printf("Missing closing double quote\n"), 1);
 	new_node->type = T_D_Q_WORD;
-	new_node->value = copy_token_str(&input, quoted_s_len);
+	new_node->value = extract_token_value(&input, quoted_s_len);
 	new_node->next = NULL;
 	(***input)++;
 	return (0);
 }
 
 
-int	create_textual_token_node(const char ***input, t_token *new_token)
+int	insert_textual_token(const char ***input, t_token *new_node)
 {
 	int	i;
 
@@ -100,11 +100,11 @@ int	create_textual_token_node(const char ***input, t_token *new_token)
 		i++;
 	}
 	if (i != 0)
-		return (create_word_token_node(&input, new_token, i), 0);
+		return (insert_word_token(&input, new_node, i), 0);
 	if ((***input) == '\'')
-		return (create_single_quotes_node(&input, new_token));
+		return (intert_single_quotes_token(&input, new_node));
 	if ((***input) == '"')
-		return (create_double_quotes_node(&input, new_token));
+		return (insert_double_quotes_token(&input, new_node));
 	return (0);
 }
 
