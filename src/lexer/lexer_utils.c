@@ -6,15 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/18 16:12:17 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 16:13:45 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
 /**
- * @brief Deallocates every value in a node and node itself
- * 		  in *token linked list.
+ * @brief Deallocates every value in a node and node itself.
  */
 void	free_token(t_token *token)
 {
@@ -35,10 +34,10 @@ void	free_token(t_token *token)
  */
 int	skip_whitespaces(const char **input)
 {
-	while (**input == ' ' || (**input >= 9 && **input <= 13))
+	while (**input == ' ' || (**input >= '\t' && **input <= '\r'))
 		(*input)++;
 	if (**input == '\0')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 

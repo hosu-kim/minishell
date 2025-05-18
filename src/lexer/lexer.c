@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 15:38:09 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/18 16:13:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_token	*tokenize(const char *input)
 	current = NULL;
 	while (*input != '\0')
 	{
-		if (skip_whitespaces(&input))
+		if (!skip_whitespaces(&input))
 			break ;
 		new_token = malloc(sizeof(t_token));
 		if (new_token)
