@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:21:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 20:43:37 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 16:12:17 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,4 @@ int	skip_whitespaces(const char **input)
 		return (1);
 	return (0);
 }
+

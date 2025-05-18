@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/17 15:30:27 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 16:12:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 typedef enum e_token_type
 {
 	T_WORD,			// words or arguments
+	T_Q_WORD,		// words in sigle quotes
 	T_D_Q_WORD,		// words in double quotes
 	T_PIPE,			// |
 	T_REDIR_IN,		// <
@@ -46,7 +47,6 @@ typedef enum e_token_type
 /**
 * @brief A node structure to store tokens in a linked list of tokens.`
 */
-
 typedef struct s_token
 {
 	t_token_type	type;

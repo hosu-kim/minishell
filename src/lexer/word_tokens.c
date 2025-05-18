@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/17 18:21:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 16:11:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_quotes(const char ****input, t_token *new_token, int i)
 		i++;
 	if ((***input)[i] == '\0')
 		return (printf("Missing quote\n"), 1);
-	new_token->type = T_WORD;
+	new_token->type = T_Q_WORD;
 	new_token->value = ft_make_tok(&input, i);
 	new_token->next = NULL;
 	(***input)++;
@@ -95,3 +95,4 @@ int	char_tokens(const char ***input, t_token *new_token)
 		return (ft_double_quotes(&input, new_token, i));
 	return (0);
 }
+
