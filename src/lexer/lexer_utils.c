@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 23:11:38 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/18 23:11:56 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/18 23:12:17 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_token(t_token *token)
 		token = token->next;
 		if (held_token->value)
 			free(held_token->value);
-					free(held_token);
+		free(held_token);
 	}
 }
 
