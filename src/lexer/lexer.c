@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/18 16:13:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 22:45:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	add_new_token(const char **input, t_token *new_token,
 	if (!single_char_tokens(&input, new_token))
 	{
 		if (!double_char_tokens(&input, new_token))
-			if (char_tokens(&input, new_token))
+			if (create_textual_token_node(&input, new_token))
 				return (1);
 	}
 	if (!(*start))

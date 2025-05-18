@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:38:18 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/18 16:16:04 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 21:23:17 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../lexer/lexer.h"
 
-char	*ft_strdup(const char *str);
-size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s);
+size_t	ft_strlen(const char *s);
 
 #endif

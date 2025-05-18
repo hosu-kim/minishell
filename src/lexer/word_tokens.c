@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/18 16:11:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/18 22:47:47 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,77 @@
 /**
  * @details Used in ft_make_word_token(), ft_quotes(), ft_double_quotes()
  */
-char	*ft_make_tok(const char *****input, int i)
+static char	*copy_token_str(const char *****input, int token_len)
 {
-	char	*str;
-	int		j;
-
-	j = 0;
-	str = malloc((i + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	while (j < i)
-	{
-		str[j] = (****input)[j];
-		j++;
-	}
-	str[j] = '\0';
-	(****input) += i;
-	return (str);
-}
-
-void	ft_make_word_token(const char ****input, t_token *new_token, int i)
-{
-	new_token->type = T_WORD;
-	new_token->value = ft_make_tok(&input, i);
-	new_token->next = NULL;
-}
-
-int	ft_quotes(const char ****input, t_token *new_token, int i)
-{
-	i = 0;
-	(***input)++;
-	while ((***input)[i] != 39 && (***input)[i] != '\0')
-		i++;
-	if ((***input)[i] == '\0')
-		return (printf("Missing quote\n"), 1);
-	new_token->type = T_Q_WORD;
-	new_token->value = ft_make_tok(&input, i);
-	new_token->next = NULL;
-	(***input)++;
-	return (0);
-}
-
-int	ft_double_quotes(const char ****input, t_token *new_token, int i)
-{
-	i = 0;
-	(***input)++;
-	while ((***input)[i] != 34 && (***input)[i] != '\0')
-		i++;
-	if ((***input)[i] == '\0')
-		return (printf("Missing double quote\n"), 1);
-	new_token->type = T_D_Q_WORD;
-	new_token->value = ft_make_tok(&input, i);
-	new_token->next = NULL;
-	(***input)++;
-	return (0);
-}
-
-int	char_tokens(const char ***input, t_token *new_token)
-{
+	char	*token_value;
 	int		i;
+
+	i = 0;
+	token_value = (char *)malloc((token_len + 1) * sizeof(char));
+	if (!token_value)
+		return (NULL);
+	while (i < token_len)
+	{
+		token_value[i] = (****input)[i];
+		i++;
+	}
+	token_value[i] = '\0';
+	(****input) += token_len;
+	return (token_value);
+}
+
+void	create_word_token_node(const char ****input, t_token *new_node, int len)
+{
+	new_node->type = T_WORD;
+	new_node->value = copy_token_str(&input, len);
+	new_node->next = NULL;
+}
+
+/**
+ * @brief Stores sigle quote token data into a new node.
+ * @details
+ * 1. Skips first sigle quote character.
+ * 2. Counts qouted_s_len (Length of quoted string) up to '\'' and '\0'.access
+ * 3. Sets up the data into a new node 
+ */
+static int	create_single_quotes_node(const char ****input, t_token *new_node)
+{
+	int	quoted_s_len;
+
+	quoted_s_len = 0;
+	(***input)++;
+	while ((***input)[quoted_s_len] != '\'' && (***input)[quoted_s_len] != '\0')
+		quoted_s_len++;
+	if ((***input)[quoted_s_len] == '\0')
+		return (printf("Missing quote\n"), 1);
+	new_node->type = T_Q_WORD;
+	new_node->value = copy_token_str(&input, quoted_s_len);
+	new_node->next = NULL;
+	(***input)++;
+	return (0);
+}
+
+static int	create_double_quotes_node(const char ****input, t_token *new_node)
+{
+	int	quoted_s_len;
+
+	quoted_s_len = 0;
+	(***input)++;
+	while ((***input)[quoted_s_len] != 34 && (***input)[quoted_s_len] != '\0')
+		quoted_s_len++;
+	if ((***input)[quoted_s_len] == '\0')
+		return (printf("Missing closing double quote\n"), 1);
+	new_node->type = T_D_Q_WORD;
+	new_node->value = copy_token_str(&input, quoted_s_len);
+	new_node->next = NULL;
+	(***input)++;
+	return (0);
+}
+
+
+int	create_textual_token_node(const char ***input, t_token *new_token)
+{
+	int	i;
 
 	i = 0;
 	while ((**input)[i] != '\'' && (**input)[i] != '"' && (**input)[i] != ' '
@@ -88,11 +100,11 @@ int	char_tokens(const char ***input, t_token *new_token)
 		i++;
 	}
 	if (i != 0)
-		return (ft_make_word_token(&input, new_token, i), 0);
+		return (create_word_token_node(&input, new_token, i), 0);
 	if ((***input) == '\'')
-		return (ft_quotes(&input, new_token, i));
+		return (create_single_quotes_node(&input, new_token));
 	if ((***input) == '"')
-		return (ft_double_quotes(&input, new_token, i));
+		return (create_double_quotes_node(&input, new_token));
 	return (0);
 }
 
