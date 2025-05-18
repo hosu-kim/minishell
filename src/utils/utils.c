@@ -3,41 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/16 16:42:01 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/18 15:22:01 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-size_t	ft_strlen(const char *s)
+/**
+ * @brief Counts the length of the provided string.
+ */
+size_t	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strdup(const char *s)
+/**
+ * @brief Copies provided string to the duplicate and return it.
+ */
+char	*ft_strdup(const char *str)
 {
+	int		str_len;
 	int		i;
-	int		j;
-	char	*ptr;
+	char	*dup;
 
-	i = ft_strlen(s);
-	j = 0;
-	ptr = (char *)malloc((i + 1) * sizeof (char));
-	if (!ptr)
+	str_len = ft_strlen(str);
+	dup = (char *)malloc((str_len + 1) * sizeof(char));
+	if (!dup)
 		return (NULL);
-	while (j < i)
+	i = 0;
+	while (i < str_len)
 	{
-		ptr[j] = s[j];
-		j++;
+		dup[i] = str[i];
+		i++;
 	}
-	ptr[j] = '\0';
-	return (ptr);
+	dup[i] = '\0';
+	return (dup);
 }
