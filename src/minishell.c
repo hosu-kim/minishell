@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/18 23:04:36 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/19 21:51:18 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,17 @@ int	main(void)
 			i = 0;
 			while (print_tok->args[i])
 			{
-				printf("value: %s\n", print_tok->args[i]);
+				printf("argument[%i]: %s\n", i, print_tok->args[i]);
 				i++;
 			}
 			printf("next\n");
 			print_redir = print_tok->input_redir;
+			while (print_redir)
+			{
+				printf("type: %d value: %s\n", print_redir->type, print_redir->target);
+				print_redir = print_redir->next;
+			}
+			print_redir = print_tok->output_redir;
 			while (print_redir)
 			{
 				printf("type: %d value: %s\n", print_redir->type, print_redir->target);
