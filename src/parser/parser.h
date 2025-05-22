@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/18 14:01:17 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:09:16 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ typedef struct s_command
 }   t_command;
 
 t_command	*parser(t_token *start);
+void	free_token_parsed(t_command *token_parsed);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/21 22:58:25 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:27:43 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 void    free_command(t_command *cmd)
 {
@@ -53,6 +52,7 @@ void    free_command(t_command *cmd)
 
 int     pars_words(t_token *lex_start, t_token **lex_token, t_command *new_token, int i)
 {
+    if (*lex_token)
     while (*lex_token && ((*lex_token)->type == T_WORD
         || (*lex_token)->type == T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
     {
@@ -62,7 +62,7 @@ int     pars_words(t_token *lex_start, t_token **lex_token, t_command *new_token
     new_token->args = malloc((i + 1) * sizeof(char *));
     if (!new_token->args)
     {
-        free(new_token);
+        free_command(new_token);
         return (1);
     }
     *lex_token = lex_start;
@@ -84,10 +84,13 @@ int     input_tok(t_token **lex_token, t_command *new_token)
 {
     if (*lex_token && ((*lex_token)->type == T_REDIR_IN))
     {
+        if ((*lex_token)->next == NULL || ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
+            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD))
+            return (free_command(new_token), ("Syntax error\n"), 1);
         new_token->input_redir = malloc(sizeof(t_redirection));
         if (!new_token->input_redir)
         {
-            free(new_token);
+            free_command(new_token);
             return (1);
         }
         new_token->input_redir->type = TOK_INPUT;
@@ -96,9 +99,6 @@ int     input_tok(t_token **lex_token, t_command *new_token)
         else
             new_token->input_redir->target = NULL;
         new_token->input_redir->next = NULL;
-        if ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
-            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD)
-            return (free_command(new_token), printf("Syntax error\n"), 1);
     }
     else
         return (0);
@@ -113,10 +113,13 @@ int    output_tok(t_token **lex_token, t_command *new_token)
 {
     if ((*lex_token) && (*lex_token)->type == T_REDIR_OUT)
     {
+        if ((*lex_token)->next == NULL || ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
+            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD))
+            return (free_command(new_token), ("Syntax error\n"), 1);
         new_token->output_redir = malloc(sizeof(t_redirection));
         if (!new_token->output_redir)
         {
-            free(new_token);
+            free_command(new_token);
             return (1);
         }
         new_token->output_redir->type = TOK_OUTPUT;
@@ -125,9 +128,6 @@ int    output_tok(t_token **lex_token, t_command *new_token)
         else
             new_token->output_redir->target = NULL;
         new_token->output_redir->next = NULL;
-        if ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
-            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD)
-            return (free_command(new_token), printf("Syntax error\n"), 1);
     }
     else
         return (0);
@@ -142,18 +142,18 @@ int     append_tok(t_token **lex_token, t_command *new_token)
 {
     if ((*lex_token) && (*lex_token)->type == T_REDIR_APPEND)
     {
+        if ((*lex_token)->next == NULL || ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
+            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD))
+            return (free_command(new_token), ("Syntax error\n"), 1);
         new_token->output_redir = malloc(sizeof(t_redirection));
         if (!new_token->output_redir)
-            return (free(new_token), 1);
+            return (free_command(new_token), 1);
         new_token->output_redir->type = TOK_APPEND;
         if ((*lex_token)->next)
             new_token->output_redir->target = ft_strdup((*lex_token)->next->value);
         else
             new_token->output_redir->target = NULL;
         new_token->output_redir->next = NULL;
-        if ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
-            != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD)
-            return (free_command(new_token), printf("Syntax error\n"), 1);
     }
     else
         return (0);
@@ -167,12 +167,12 @@ int    heredoc_tok(t_token **lex_token, t_command *new_token)
 {
     if ((*lex_token) && (*lex_token)->type == T_HEREDOC)
     {
-        if (!(*lex_token)->next || ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
+        if ((*lex_token)->next == NULL || ((*lex_token)->next->type != T_WORD && (*lex_token)->next->type
             != T_Q_WORD && (*lex_token)->next->type != T_D_Q_WORD))
-            return (free_command(new_token), printf("Syntax error\n"), 1);
+            return (free_command(new_token), ("Syntax error\n"), 1);
         new_token->input_redir = malloc(sizeof(t_redirection));
         if (!new_token->input_redir)
-            return (free(new_token), 1);
+            return (free_command(new_token), 1);
         new_token->input_redir->type = TOK_HEREDOC;
         if ((*lex_token)->next)
             new_token->input_redir->target = ft_strdup((*lex_token)->next->value);
@@ -224,19 +224,15 @@ t_command	*parser(t_token *lex_start)
         if (!new_token)
             return (NULL);
         init_token(new_token);
-        if (pars_words(lex_token, &lex_token, new_token, i))
-            break ;
-        if (input_tok(&lex_token, new_token))
-            break ;
-        if (output_tok(&lex_token, new_token))
-            break ;
-        if (append_tok(&lex_token, new_token))
-            break ;
-        if (heredoc_tok(&lex_token, new_token))
+        if (pars_words(lex_token, &lex_token, new_token, i)
+            || input_tok(&lex_token, new_token)
+            || output_tok(&lex_token, new_token)
+            || append_tok(&lex_token, new_token)
+            || heredoc_tok(&lex_token, new_token))
         {
-            // if (start)
-            //     free_command(start);
-            break ;
+            if (start)
+                free_command(start);
+            return (NULL);
         }
         if (!start)
             start = new_token;

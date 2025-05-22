@@ -6,13 +6,13 @@
 #    By: jakand <jakand@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/05/07 11:28:13 by jakand           ###   ########.fr        #
+#    Updated: 2025/05/22 20:13:50 by jakand           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDES = -Iincludes
 
 SRCS_DIR = src
