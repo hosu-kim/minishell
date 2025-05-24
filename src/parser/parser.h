@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/22 18:09:16 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/24 22:39:32 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_command
     int                 arc;                // amount of arguments
     t_redirection       *input_redir;       // list of input redirections
     t_redirection       *output_redir;      // list of output redirections
+    int                 pipe;               // 1 pipe, 0 no pipe
     struct s_command    *next;              // if pipe pointer to next command
 }   t_command;
 

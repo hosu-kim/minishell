@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 23:11:38 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/18 23:12:17 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/24 22:31:17 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ int	skip_whitespaces(const char **input)
 		return (0);
 	return (1);
 }
-

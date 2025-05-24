@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_textual_tokens.c                             :+:      :+:    :+:   */
+/*   insert_textual_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/19 01:14:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/05/24 22:22:00 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	insert_double_quotes_token(const char ****input, t_token *new_node)
 	return (0);
 }
 
-
 int	insert_textual_token(const char ***input, t_token *new_node)
 {
 	int	i;
@@ -107,4 +106,3 @@ int	insert_textual_token(const char ***input, t_token *new_node)
 		return (insert_double_quotes_token(&input, new_node));
 	return (0);
 }
-

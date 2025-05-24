@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/22 18:10:57 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/24 22:51:36 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,30 @@ int	main(void)
 		if (*line)
 			add_history(line);
 		token = tokenize(line);
+		if (token == NULL)
+		{
+			free(line);
+			continue ;
+		}
 		token_parsed = parser(token);
+		if (token_parsed == NULL)
+		{
+			if (token)
+				free_token(token);
+			if (line)
+				free(line);
+			continue ;
+		}
 		print_tok = token_parsed;
 		while (print_tok)
 		{
 			i = 0;
+			printf("pipe %i\n", print_tok->pipe);
 			while (print_tok->args[i])
 			{
 				printf("argument[%i]: %s\n", i, print_tok->args[i]);
 				i++;
 			}
-			printf("next\n");
 			print_redir = print_tok->input_redir;
 			while (print_redir)
 			{
@@ -102,6 +115,7 @@ int	main(void)
 				printf("type: %d value: %s\n", print_redir->type, print_redir->target);
 				print_redir = print_redir->next;
 			}
+			printf("next\n");
 			print_tok = print_tok->next;
 		}
 		if (token)

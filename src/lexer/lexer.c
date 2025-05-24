@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/19 18:34:26 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/24 22:30:46 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_token	*tokenize(const char *input)
 			new_token->next = NULL;
 		}
 		if (add_new_token(&input, new_token, &start, &current))
-			return (free_token(new_token), NULL);
+			return (free_token(new_token), free_token(start), NULL);
 	}
 	return (start);
 }
