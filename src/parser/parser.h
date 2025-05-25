@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/24 22:39:32 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 13:40:24 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,24 @@ typedef struct s_command
     struct s_command    *next;              // if pipe pointer to next command
 }   t_command;
 
+// prepare lexed tokens for execution
 t_command	*parser(t_token *start);
+
+// make word tokens for execution
+int     pars_words(t_token *lex_start, t_token **lex_token,
+        t_command *new_token);
+
+// make pipe tokens for execution
+int     pipe_tok(t_token **lex_token, t_command *new_token);
+
+// make redir tokens for execution
+int     redir_tok(t_token **lex_token, t_command *new_token);
+
+// free parsed tokens in main
 void	free_token_parsed(t_command *token_parsed);
+
+// free parsed tokens in parser
+void    free_command(t_command *start);
+
 
 #endif
