@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 13:40:24 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:35:24 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ typedef enum e_redir_type
 
 typedef struct s_redirection
 {
-    t_redir_type            type;       // redirection type
-    char                    *target;    // target file or heredoc delimiter
-    struct s_redirection    *next;      // pointer to next redirection
+    t_redir_type            type;           // redirection type
+    char                    *target;        // target file or heredoc delimiter
+    int                     target_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+    struct s_redirection    *next;          // pointer to next redirection
 }   t_redirection;
 
 typedef struct s_command
 {
     char                **args;             // args and command on 0 pozition
     int                 arc;                // amount of arguments
+    int                 *args_types;        // types of words (quotes - 0, double quotes - 2, no quotes - 1)
     t_redirection       *input_redir;       // list of input redirections
     t_redirection       *output_redir;      // list of output redirections
     int                 pipe;               // 1 pipe, 0 no pipe
@@ -52,6 +54,9 @@ int     pipe_tok(t_token **lex_token, t_command *new_token);
 
 // make redir tokens for execution
 int     redir_tok(t_token **lex_token, t_command *new_token);
+
+// get type (word, quotes, double quotes)
+int     get_args_type(int type);
 
 // free parsed tokens in main
 void	free_token_parsed(t_command *token_parsed);

@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/25 13:38:31 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:26:02 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void   *init_token(t_command *new_token)
 {
     new_token->args = NULL;
     new_token->arc = 0;
+    new_token->args_types = 0;
     new_token->input_redir = NULL;
     new_token->output_redir = NULL;
     new_token->pipe = 0;

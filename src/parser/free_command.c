@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:29:59 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 13:30:49 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:39:50 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void    free_args(t_command *start)
         }
         free(start->args);
     }
+    if (start->args_types)
+        free(start->args_types);
 }
 
 void    free_input_redir(t_redirection *redir)

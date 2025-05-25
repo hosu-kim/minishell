@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/25 13:41:35 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:32:59 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	free_token_parsed(t_command *token_parsed)
 			}
 			free(temp->args);
 		}
+		if (temp->args_types)
+			free(temp->args_types);
 		if (temp->input_redir)
 			free_redirections(temp->input_redir);
 		if (temp->output_redir)
@@ -100,19 +102,19 @@ int	main(void)
 			printf("pipe %i\n", print_tok->pipe);
 			while (print_tok->args[i])
 			{
-				printf("argument[%i]: %s\n", i, print_tok->args[i]);
+				printf("argument[%i]: %s quotes type: %i\n", i, print_tok->args[i], print_tok->args_types[i]);
 				i++;
 			}
 			print_redir = print_tok->input_redir;
 			while (print_redir)
 			{
-				printf("input type: %d value: %s\n", print_redir->type, print_redir->target);
+				printf("input type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
 				print_redir = print_redir->next;
 			}
 			print_redir = print_tok->output_redir;
 			while (print_redir)
 			{
-				printf("output type: %d value: %s\n", print_redir->type, print_redir->target);
+				printf("output type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
 				print_redir = print_redir->next;
 			}
 			printf("next\n");

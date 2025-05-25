@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:33:51 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 13:35:06 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:38:48 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ void    make_redirection_list(t_token ***lex_token, t_command *new_token,
     }
 }
 
+void    move_lex_token(t_token ***lex_token)
+{
+    if ((**lex_token))
+            (**lex_token) = (**lex_token)->next;
+    if ((**lex_token))
+            (**lex_token) = (**lex_token)->next;
+}
+
 int     redir_tok(t_token **lex_token, t_command *new_token)
 {
     t_redirection *new_redir;
@@ -79,6 +87,7 @@ int     redir_tok(t_token **lex_token, t_command *new_token)
         new_redir = malloc(sizeof(t_redirection));
         if (!new_redir)
             return (1);
+        new_redir->target_types = get_args_type((*lex_token)->next->type);
         check_redir_type(&lex_token, new_redir);
         if ((*lex_token)->next)
             new_redir->target = ft_strdup((*lex_token)->next->value);
@@ -86,10 +95,7 @@ int     redir_tok(t_token **lex_token, t_command *new_token)
             new_redir->target = NULL;
         new_redir->next = NULL;
         make_redirection_list(&lex_token, new_token, new_redir, &current);
-        if ((*lex_token))
-            (*lex_token) = (*lex_token)->next;
-        if ((*lex_token))
-            (*lex_token) = (*lex_token)->next;
+        move_lex_token(&lex_token);
     }
     return (0);
 }

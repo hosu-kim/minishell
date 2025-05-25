@@ -6,11 +6,31 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 13:38:43 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:51:38 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int    malloc_memmory(t_command **new_token, int i)
+{
+    (*new_token)->args = malloc((i + 1) * sizeof(char *));
+    if (!(*new_token)->args)
+        return (1);
+    (*new_token)->args_types = malloc((i + 1) * sizeof(int));
+    if (!(*new_token)->args_types)
+        return (free((*new_token)->args), 1);
+    return (0);
+}
+
+int     get_args_type(int type)
+{
+    if (type == T_WORD)
+        return (1);
+    if (type == T_D_Q_WORD)
+        return (2);
+    return (0);
+}
 
 int     pars_words(t_token *lex_start, t_token **lex_token,
         t_command *new_token)
@@ -24,8 +44,7 @@ int     pars_words(t_token *lex_start, t_token **lex_token,
         i++;
         *lex_token = (*lex_token)->next;
     }
-    new_token->args = malloc((i + 1) * sizeof(char *));
-    if (!new_token->args)
+    if (malloc_memmory(&new_token, i))
         return (1);
     *lex_token = lex_start;
     i = 0;
@@ -33,10 +52,12 @@ int     pars_words(t_token *lex_start, t_token **lex_token,
         || (*lex_token)->type == T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
     {
         new_token->args[i] = ft_strdup((*lex_token)->value);
+        new_token->args_types[i] = get_args_type((*lex_token)->type);
         i++;
         *lex_token = (*lex_token)->next;
     }
     new_token->args[i] = NULL;
+    new_token->args_types[i] = '\0';
     new_token->arc = i;
     return (0);
 }
