@@ -6,13 +6,14 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/25 20:32:59 by jakand           ###   ########.fr       */
+/*   Updated: 2025/05/27 22:54:59 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minishell.h"
 # include "lexer/lexer.h"
 # include "parser/parser.h"
+# include "expander/expander.h"
 
 
 /**
@@ -64,14 +65,43 @@ void	free_token_parsed(t_command *token_parsed)
 	}
 }
 
+void	print_parsed_token(t_command *print_tok)
+{
+	t_redirection	*print_redir;
+	int	i;
+
+	while (print_tok)
+		{
+			i = 0;
+			printf("pipe %i\n", print_tok->pipe);
+			while (print_tok->args[i])
+			{
+				printf("argument[%i]: %s quotes type: %i\n", i, print_tok->args[i], print_tok->args_types[i]);
+				i++;
+			}
+			print_redir = print_tok->input_redir;
+			while (print_redir)
+			{
+				printf("input type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
+				print_redir = print_redir->next;
+			}
+			print_redir = print_tok->output_redir;
+			while (print_redir)
+			{
+				printf("output type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
+				print_redir = print_redir->next;
+			}
+			printf("next\n");
+			print_tok = print_tok->next;
+		}
+}
+
 int	main(void)
 {
 	t_token		*token;
 	t_command	*token_parsed;
 	t_command	*print_tok;
-	t_redirection	*print_redir;
 	char		*line;
-	int			i;
 
 	while (1)
 	{
@@ -96,30 +126,13 @@ int	main(void)
 			continue ;
 		}
 		print_tok = token_parsed;
-		while (print_tok)
-		{
-			i = 0;
-			printf("pipe %i\n", print_tok->pipe);
-			while (print_tok->args[i])
-			{
-				printf("argument[%i]: %s quotes type: %i\n", i, print_tok->args[i], print_tok->args_types[i]);
-				i++;
-			}
-			print_redir = print_tok->input_redir;
-			while (print_redir)
-			{
-				printf("input type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
-				print_redir = print_redir->next;
-			}
-			print_redir = print_tok->output_redir;
-			while (print_redir)
-			{
-				printf("output type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
-				print_redir = print_redir->next;
-			}
-			printf("next\n");
-			print_tok = print_tok->next;
-		}
+
+		print_parsed_token(print_tok);
+
+		expand_token(token_parsed);
+
+		print_parsed_token(print_tok);
+
 		if (token)
 			free_token(token);
 		if (line)
