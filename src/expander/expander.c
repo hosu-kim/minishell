@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/04 10:00:47 by hoskim           ###   ########seoul.kr  */
-=======
-/*   Updated: 2025/05/29 22:50:49 by jakand           ###   ########.fr       */
->>>>>>> 518953b (expander)
+/*   Updated: 2025/06/04 22:53:35 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +16,7 @@ char	*erase_dollar(const char *s)
 {
 	int		str_len;
 	int		i;
-	int     j;
+    int     j;
 	char	*dup;
 
 	str_len = ft_strlen(s);
@@ -28,12 +24,12 @@ char	*erase_dollar(const char *s)
 	if (!dup)
 		return (NULL);
 	i = 0;
-	j = 1;
+    j = 1;
 	while (j < str_len)
 	{
 		dup[i] = s[j];
 		i++;
-		j++;
+        j++;
 	}
 	dup[i] = '\0';
 	return (dup);
@@ -172,28 +168,6 @@ void    expand_double_quotes(char **arg)
 
 void    expand_token(t_command *token)
 {
-<<<<<<< HEAD
-	int i;
-	char    *env;
-
-	env = NULL;
-	while(token)
-	{
-		i = 0;
-		while (token->args && token->args[i] != NULL)
-		{
-			free(token->args[i]);
-			if (token->args[i][0] == '$' && token->args_types != 0)
-			{
-				env = erase_dollar(token->args[i]);
-				token->args[i] = getenv(env);
-				free(env);
-			}
-			i++;
-		}
-		token = token->next;
-	}
-=======
     int i;
     char    *env;
     char    *original;
@@ -221,5 +195,4 @@ void    expand_token(t_command *token)
         }
         token = token->next;
     }
->>>>>>> 518953b (expander)
 }
