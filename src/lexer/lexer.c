@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/24 22:30:46 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/04 20:26:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 		new_token->type = T_HEREDOC;
 		new_token->value = ft_strdup("<<");
 		(**input) += 2;
-		new_token->next = NULL;
 		return (1);
 	}
 	else if (***input == '>' && (**input)[1] == '>')
@@ -53,7 +52,6 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 		new_token->type = T_REDIR_APPEND;
 		new_token->value = ft_strdup(">>");
 		(**input) += 2;
-		new_token->next = NULL;
 		return (1);
 	}
 	return (0);
