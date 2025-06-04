@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/09 22:52:48 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/04 20:32:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /* Core utilities */
-#include "readline_wrapper.h"
 #include "utils.h"
 
 /* Lexer and parser */
@@ -33,6 +34,7 @@
 
 /* Built-ins and execution */
 # include "builtin.h"
+# include "parser.h"
 # include "executor.h"
 
 /* Signal handling */

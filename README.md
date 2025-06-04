@@ -35,37 +35,5 @@ minishell/                      # Project root directory
 │   └── utils.h                 # Prototypes for all utils and shared macros
 └── README.md                   # Project overview
 ```
-```bash
-+---------------------+             +----------------------+
-|      main.c         | ----------> |        lexer.c       |
-| (Input, Prompt,     |             | (Tokenization)       |
-| Signal Handler Reg.)|             +----------+-----------+
-+--------+------------+                        |
-         |                                     | (Token List)
-         | (Signal -> Handler Call)            v
-         |                          +----------+-----------+
-         |                          |       parser.c       |
-         |                          | (Syntax Analysis,    |
-         |                          |  Structure Creation) |
-+--------v------------+             +----------+-----------+
-|     signal.c        |                        |
-| (Signal Handlers    |                        | (Command Structure)
-|  Definition)        |                        v
-+---------------------+             +----------+-----------+
-                                    |      expander.c      |
-                                    | (Var/Quote Expansion)|
-                                    +----------+-----------+
-                                               |
-                                               | (Final Command Struct)
-                                               v
-                                    +----------+-----------+
-                                    |      executor.c      |
-                                    | (Command Execution)  |---------+
-                                    +----------+-----------+         |
-                                               |                     | (If Built-in)
-                                               | (External Cmd Exec) v
-                                               |          +----------+-----------+
-                                               +--------> |       builtin.c      |
-                                                          | (Built-in Cmd Impl.) |
-                                                          +----------------------+
-```
+
+test minishell -  echo $USER "$USER" '$USER' "'$USER'" '"$USER"' qwe$USER $USERaa
