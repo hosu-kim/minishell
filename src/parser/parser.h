@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 20:35:24 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:47:26 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_redirection
 
 typedef struct s_command
 {
-    char                **args;             // args and command on 0 pozition
-    int                 arc;                // amount of arguments
+    char                **args;             // args and command on 0 position
+    int                 argc;                // amount of arguments
     int                 *args_types;        // types of words (quotes - 0, double quotes - 2, no quotes - 1)
     t_redirection       *input_redir;       // list of input redirections
     t_redirection       *output_redir;      // list of output redirections

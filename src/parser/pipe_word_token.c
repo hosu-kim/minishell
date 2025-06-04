@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_word_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 20:51:38 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/04 21:47:26 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int     pars_words(t_token *lex_start, t_token **lex_token,
     }
     new_token->args[i] = NULL;
     new_token->args_types[i] = '\0';
-    new_token->arc = i;
+    new_token->argc = i;
     return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/04 20:26:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/04 20:45:40 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 	return (0);
 }
 
-int	add_new_token(const char **input, t_token *new_token,
+int	link_new_token(const char **input, t_token *new_token,
 					t_token **start, t_token **current)
 {
 	if (!single_char_tokens(&input, new_token))
@@ -99,7 +99,7 @@ t_token	*tokenize(const char *input)
 			new_token->value = NULL;
 			new_token->next = NULL;
 		}
-		if (add_new_token(&input, new_token, &start, &current))
+		if (link_new_token(&input, new_token, &start, &current))
 			return (free_token(new_token), free_token(start), NULL);
 	}
 	return (start);

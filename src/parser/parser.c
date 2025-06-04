@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/04 20:36:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/04 21:47:26 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_token     *init_vars(t_token *lex_start, t_command **start,
 void   *init_token(t_command *new_token)
 {
     new_token->args = NULL;
-    new_token->arc = 0;
+    new_token->argc = 0;
     new_token->args_types = 0;
     new_token->input_redir = NULL;
     new_token->output_redir = NULL;
