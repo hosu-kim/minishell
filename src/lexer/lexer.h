@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/05/19 01:15:21 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_token
 
 /* lexer.c */
 // Split the input line int a linked list of tokens.
-t_token	*tokenize(const char *input);
+t_token	*tokenizer(const char *input);
 
 /* lexer_utils.h */
 // Skip whitespaces
@@ -66,6 +66,6 @@ void	free_token(t_token *token);
 
 /* word_tokens.c */
 // Make word tokens
-int	insert_textual_token(const char ***input, t_token *new_node);
+int	tokenize_text(const char ***input, t_token *new_node);
 
 #endif

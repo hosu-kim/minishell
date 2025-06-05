@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/04 20:33:42 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/05 22:30:39 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*erase_dollar(const char *s)
 {
 	int		str_len;
 	int		i;
-	int     j;
+	int		j;
 	char	*dup;
 
 	str_len = ft_strlen(s);

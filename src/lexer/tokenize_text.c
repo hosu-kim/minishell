@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/04 21:31:04 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/05 22:39:50 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*extract_value(const char *****input, int token_len)
 	return (token_value);
 }
 
-void	insert_word_token(const char ****input, t_token *new_node, int len)
+void	tokenize_word(const char ****input, t_token *new_node, int len)
 {
 	new_node->type = T_WORD;
 	new_node->value = extract_value(&input, len);
@@ -48,7 +48,7 @@ void	insert_word_token(const char ****input, t_token *new_node, int len)
  * 2. Counts qouted_s_len (Length of quoted string) up to '\'' and '\0'.access
  * 3. Sets up the data into a new node 
  */
-static int	insert_single_quotes_token(const char ****input, t_token *new_node)
+static int	tokenize_single_quoted_text(const char ****input, t_token *new_node)
 {
 	int	quoted_s_len;
 
@@ -65,7 +65,7 @@ static int	insert_single_quotes_token(const char ****input, t_token *new_node)
 	return (0);
 }
 
-static int	insert_double_quotes_token(const char ****input, t_token *new_node)
+static int	tokenize_double_quoted_text(const char ****input, t_token *new_node)
 {
 	int	quoted_s_len;
 
@@ -82,7 +82,7 @@ static int	insert_double_quotes_token(const char ****input, t_token *new_node)
 	return (0);
 }
 
-int	insert_textual_token(const char ***input, t_token *new_node)
+int	tokenize_text(const char ***input, t_token *new_node)
 {
 	int	i;
 
@@ -99,10 +99,10 @@ int	insert_textual_token(const char ***input, t_token *new_node)
 		i++;
 	}
 	if (i != 0)
-		return (insert_word_token(&input, new_node, i), 0);
+		return (tokenize_word(&input, new_node, i), 0);
 	if ((***input) == '\'')
-		return (insert_single_quotes_token(&input, new_node));
+		return (tokenize_single_quoted_text(&input, new_node));
 	if ((***input) == '"')
-		return (insert_double_quotes_token(&input, new_node));
+		return (tokenize_double_quoted_text(&input, new_node));
 	return (0);
 }

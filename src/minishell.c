@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/04 20:34:13 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	main(void)
 			break ;
 		if (*line)
 			add_history(line);
-		token = tokenize(line);
+		token = tokenizer(line);
 		if (token == NULL)
 		{
 			free(line);

@@ -6,13 +6,13 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/04 20:45:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-int	single_char_tokens(const char ***input, t_token *new_token)
+int	tokenize_sigle_char_operator(const char ***input, t_token *new_token)
 {
 	if (***input == '|')
 	{
@@ -38,7 +38,7 @@ int	single_char_tokens(const char ***input, t_token *new_token)
 	return (0);
 }
 
-int	double_char_tokens(const char ***input, t_token *new_token)
+int	tokenize_double_char_operator(const char ***input, t_token *new_token)
 {
 	if (***input == '<' && (**input)[1] == '<')
 	{
@@ -60,10 +60,10 @@ int	double_char_tokens(const char ***input, t_token *new_token)
 int	link_new_token(const char **input, t_token *new_token,
 					t_token **start, t_token **current)
 {
-	if (!single_char_tokens(&input, new_token))
+	if (!tokenize_sigle_char_operator(&input, new_token))
 	{
-		if (!double_char_tokens(&input, new_token))
-			if (insert_textual_token(&input, new_token))
+		if (!tokenize_double_char_operator(&input, new_token))
+			if (tokenize_text(&input, new_token))
 				return (1);
 	}
 	if (!(*start))
@@ -79,7 +79,7 @@ int	link_new_token(const char **input, t_token *new_token,
 	return (0);
 }
 
-t_token	*tokenize(const char *input)
+t_token	*tokenizer(const char *input)
 {
 	t_token		*start;
 	t_token		*new_token;
