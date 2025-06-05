@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 20:35:24 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:22:46 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_redirection
 {
     t_redir_type            type;           // redirection type
     char                    *target;        // target file or heredoc delimiter
-    int                     target_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+    int                     target_types;   // types of words (quotes - 0, double quotes - 2,
+                                            // no quotes - 1, don't print in the end - 3)
     struct s_redirection    *next;          // pointer to next redirection
 }   t_redirection;
 

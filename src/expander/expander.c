@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/04 22:53:35 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:51:14 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ char	*erase_dollar(const char *s)
 	return (dup);
 }
 
-char    *end_of_token(char *arg, int j)
+char    *environment_variable(char *arg, int j)
 {
     int     i;
     int     k;
+    int     l;
     char    *ptr;
     
     i = j;
-    while(arg[i] != '\0')
+    while(arg[i] != '\0' && !(arg[i] >= 9 && arg[i] <= 13) && arg[i] != ' ')
         i++;
-    i = i - j;
-    ptr = malloc((i + 1) * sizeof(char));
+    l = i - j;
+    ptr = malloc((l) * sizeof(char));
     if (!ptr)
         return (NULL);
     k = 0;
+    j++;
     while (j < i)
     {
         ptr[k] = arg[j];
@@ -78,7 +80,7 @@ char    *make_var(char *arg, int start, int end, int len)
     return (ptr);
 }
 
-char    *start_of_token(char *arg)
+char    *start_of_env(char *arg)
 {
     int     i;
     int     j;
@@ -93,8 +95,7 @@ char    *start_of_token(char *arg)
     j = 0;
     while (j < i)
     {
-        ptr[j] = arg[i];
-        i++;
+        ptr[j] = arg[j];
         j++;
     }
     ptr[j] = '\0';
@@ -153,11 +154,18 @@ void    expand_double_quotes(char **arg)
             j = i;
             while ((*arg)[i] != '\0' && (*arg)[i] != 9 && (*arg)[i] != 13 && (*arg)[i] != ' ')
                 i++;
-            start = start_of_token(*arg);
-            ptr = end_of_token(*arg, j);
+            start = start_of_env(*arg);
+            printf("start=> %s\n", start);
+            
+            ptr = environment_variable(*arg, j);
+            printf("ptr=> %s\n", ptr);
+            
             var = make_var(*arg, j, i, (i - j));
+            printf("var=> %s\n", var);
+            
             varvar = getenv(var);
-            printf("%s\n", varvar);
+            printf("varvar=> %s\n", varvar);
+            
             if (var)
                 free(var);
             free((*arg));
@@ -166,11 +174,43 @@ void    expand_double_quotes(char **arg)
     }
 }
 
+void    update_token(char **arg, char *start, int j)
+{
+    int     i;
+    int     l;
+    char    *ptr;
+
+    while ((*arg)[j] != '\0' && !((*arg)[j] >= 9 && (*arg)[j] <= 13) && (*arg)[j] != ' ')
+        j++;
+    i = ft_strlen(start) + (ft_strlen(*arg) - j);
+    ptr = malloc((i + 1) * sizeof(char));
+    if (!ptr)
+        return ;
+    l = 0;
+    while (l < i && start[l])
+    {
+        ptr[l] = start[l];
+        l++;
+    }
+    while (l < i && (*arg)[j])
+    {
+        ptr[l] = (*arg)[j];
+        l++;
+        j++;
+    }
+    ptr[l] = '\0';
+    free((*arg));
+    (*arg) = ptr;
+}
+
 void    expand_token(t_command *token)
 {
     int i;
+    int j;
     char    *env;
+    char    *var;
     char    *original;
+    char    *start;
 
     env = NULL;
     while(token)
@@ -178,17 +218,39 @@ void    expand_token(t_command *token)
         i = 0;
         while (token->args && token->args[i] != NULL)
         {
-            if (token->args[i][0] == '$' && token->args_types[i] == 1)
+            j = 0;
+            while (token->args[i][j] != '$' && token->args[i][j] != '\0'
+                    && (token->args_types[i] == 1 || token->args_types[i] == 2))
+                j++;
+            if (token->args[i][j] == '$' && token->args_types[i] != 0)
             {
                 original = token->args[i];  // Save the pointer
-                env = erase_dollar(original);  // Extract variable name
+                start = start_of_env(original);
+                printf("startttt=> %s\n", start);
+                env = environment_variable(original, j);
+                printf("envvvvv=> %s\n", env);
+                var = getenv(env);
+                printf("varrrr=> %s\n", var);
+                if (var == NULL && token->args_types[i] == 1)
+                {
+                    token->args_types[i] = 3;
+                    i++;
+                    free(env);
+                    free(start);
+                    continue ;
+                }
+                else if (var == NULL && token->args_types[i] == 2)
+                {
+                    update_token(&token->args[i], start, j);
+                    free(env);
+                    free(start);
+                    continue ;
+                }
+                // env = erase_dollar(original);  // Extract variable name
                 token->args[i] = ft_strdup(getenv(env));  // Get and duplicate env value
                 free(original);  // Free the original
                 free(env);  // Free the variable name
-            }
-            else if (token->args_types[i] == 2)
-            {
-                expand_double_quotes(&token->args[i]);
+                free(start);
             }
             // For other types, keep the string as is (don't free it)
             i++;
