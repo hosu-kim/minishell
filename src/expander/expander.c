@@ -6,34 +6,34 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/06 23:39:25 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/07 14:16:01 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-char	*erase_dollar(const char *s)
-{
-	int		str_len;
-	int		i;
-    int     j;
-	char	*dup;
+// char	*erase_dollar(const char *s)
+// {
+// 	int		str_len;
+// 	int		i;
+//     int     j;
+// 	char	*dup;
 
-	str_len = ft_strlen(s);
-	dup = (char *)malloc((str_len) * sizeof(char));
-	if (!dup)
-		return (NULL);
-	i = 0;
-    j = 1;
-	while (j < str_len)
-	{
-		dup[i] = s[j];
-		i++;
-        j++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
+// 	str_len = ft_strlen(s);
+// 	dup = (char *)malloc((str_len) * sizeof(char));
+// 	if (!dup)
+// 		return (NULL);
+// 	i = 0;
+//     j = 1;
+// 	while (j < str_len)
+// 	{
+// 		dup[i] = s[j];
+// 		i++;
+//         j++;
+// 	}
+// 	dup[i] = '\0';
+// 	return (dup);
+// }
 
 char    *environment_variable(char *arg, int j)
 {
@@ -41,9 +41,11 @@ char    *environment_variable(char *arg, int j)
     int     k;
     int     l;
     char    *ptr;
-    
+
     i = j;
-    while(arg[i] != '\0' && !(arg[i] >= 9 && arg[i] <= 13) && arg[i] != ' ')
+    i++;
+    while((arg[i] >= '0' && arg[i] <= '9') || (arg[i] >= 'a' && arg[i] <= 'z')
+        || (arg[i] >= 'A' && arg[i] <= 'Z') || arg[i] == '_')
         i++;
     l = i - j;
     ptr = malloc((l) * sizeof(char));
@@ -61,24 +63,24 @@ char    *environment_variable(char *arg, int j)
     return (ptr);
 }
 
-char    *make_var(char *arg, int start, int end, int len)
-{
-    char    *ptr;
+// char    *make_var(char *arg, int start, int end, int len)
+// {
+//     char    *ptr;
 
-    ptr = malloc(len * sizeof(char));
-    if (!ptr)
-        return (NULL);
-    start++;
-    len = 0;
-    while (start < end)
-    {
-        ptr[len] = arg[start];
-        start++;
-        len++;
-    }
-    ptr[len] = '\0';
-    return (ptr);
-}
+//     ptr = malloc(len * sizeof(char));
+//     if (!ptr)
+//         return (NULL);
+//     start++;
+//     len = 0;
+//     while (start < end)
+//     {
+//         ptr[len] = arg[start];
+//         start++;
+//         len++;
+//     }
+//     ptr[len] = '\0';
+//     return (ptr);
+// }
 
 char    *start_of_env(char *arg)
 {
@@ -180,7 +182,8 @@ void    update_token(char **arg, char *start, int j)
     int     l;
     char    *ptr;
 
-    while ((*arg)[j] != '\0' && !((*arg)[j] >= 9 && (*arg)[j] <= 13) && (*arg)[j] != ' ')
+    j++;
+    while (((*arg)[j] >= '0' && (*arg)[j] <= '9') || ((*arg)[j] >= 'a' && (*arg)[j] <= 'z') || ((*arg)[j] >= 'A' && (*arg)[j] <= 'Z') || (*arg)[j] == '_')
         j++;
     i = ft_strlen(start) + (ft_strlen(*arg) - j);
     ptr = malloc((i + 1) * sizeof(char));
@@ -210,7 +213,8 @@ void    remake_token(char **arg, char *start, char *var, int j)
     int     m;
     char    *ptr;
 
-    while ((*arg)[j] != '\0' && !((*arg)[j] >= 9 && (*arg)[j] <= 13) && (*arg)[j] != ' ')
+    j++;
+    while (((*arg)[j] >= '0' && (*arg)[j] <= '9') || ((*arg)[j] >= 'a' && (*arg)[j] <= 'z') || ((*arg)[j] >= 'A' && (*arg)[j] <= 'Z') || (*arg)[j] == '_')
         j++;
     i = ft_strlen(start) + ft_strlen(var) + (ft_strlen(*arg) - j);
     ptr = malloc((i + 1) * sizeof(char));
@@ -290,9 +294,8 @@ void    expand_token(t_command *token)
                     free(start);
                     continue;
                 }
-                // env = erase_dollar(original);  // Extract variable name
-                token->args[i] = ft_strdup(getenv(env));  // Get and duplicate env value
-                free(original);  // Free the original
+                remake_token(&token->args[i], start, var, j);
+                // free(original);  // Free the original
                 free(env);  // Free the variable name
                 free(start);
             }
