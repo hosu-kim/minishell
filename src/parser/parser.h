@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/07 16:21:58 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/07 16:42:45 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ typedef enum e_redir_type
 
 typedef struct s_redirection
 {
-	t_redir_type			type;         // redirection type
-	char					*target;      // target file or heredoc delimiter
-	int						target_types; // types of words (quotes - 0, double quotes - 2, no quotes - 1)
-	struct s_redirection	*next;        // pointer to next redirection
-}	t_redirection;
+    t_redir_type            type;           // redirection type
+    char                    *target;        // target file or heredoc delimiter
+    int                     target_types;   // types of words (quotes - 0, double quotes - 2,
+                                            // no quotes - 1, don't print in the end - 3)
+    struct s_redirection    *next;          // pointer to next redirection
+}   t_redirection;
 
 typedef struct s_command
 {
