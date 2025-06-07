@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/07 12:59:17 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	link_new_token(const char **input, t_token *new_token,
 	if (!tokenize_sigle_char_operator(&input, new_token))
 	{
 		if (!tokenize_double_char_operator(&input, new_token))
-			if (tokenize_text(&input, new_token))
+			if (text_tokenizer(&input, new_token))
 				return (1);
 	}
 	if (!(*start))

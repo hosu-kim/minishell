@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert_textual_tokens.c                            :+:      :+:    :+:   */
+/*   text_tokenizer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/05 22:39:50 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/07 13:03:04 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	tokenize_word(const char ****input, t_token *new_node, int len)
 }
 
 /**
- * @brief Stores sigle quote token data into a new node.
+ * @brief Tokenizes a sigle quoted text as a node.
  * @details
  * 1. Skips first sigle quote character.
  * 2. Counts qouted_s_len (Length of quoted string) up to '\'' and '\0'.access
@@ -65,6 +65,9 @@ static int	tokenize_single_quoted_text(const char ****input, t_token *new_node)
 	return (0);
 }
 
+/**
+ * @brief Tokenizes a double quoted text as a node.
+ */
 static int	tokenize_double_quoted_text(const char ****input, t_token *new_node)
 {
 	int	quoted_s_len;
@@ -82,7 +85,7 @@ static int	tokenize_double_quoted_text(const char ****input, t_token *new_node)
 	return (0);
 }
 
-int	tokenize_text(const char ***input, t_token *new_node)
+int	text_tokenizer(const char ***input, t_token *new_node)
 {
 	int	i;
 

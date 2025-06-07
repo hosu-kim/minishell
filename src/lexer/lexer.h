@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/07 12:59:17 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	free_token(t_token *token);
 
 /* word_tokens.c */
 // Make word tokens
-int	tokenize_text(const char ***input, t_token *new_node);
+int	text_tokenizer(const char ***input, t_token *new_node);
 
 #endif
