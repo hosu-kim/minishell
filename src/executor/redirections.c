@@ -1,14 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/09 14:03:12 by hoskim           ###   ########seoul.kr  */
+/*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
+/*   Updated: 2025/06/09 14:11:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "executor.h"
 
+void	redirection_output(t_command redirection)
+{
+	
+}

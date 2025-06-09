@@ -6,7 +6,7 @@
 #    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/06/04 20:34:57 by hoskim           ###   ########seoul.kr   #
+#    Updated: 2025/06/09 14:02:35 by hoskim           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 OBJS = $(SRCS:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-INCLUDES = -Iincludes
+INCLUDES = -Iinclude -Isrc/builtin -Isrc/executor -Isrc/lexer -Isrc/expander -Isrc/parser -Isrc/utils
 
 SRCS_DIR = src
 SRCS = $(wildcard $(SRCS_DIR)/**/*.c) $(wildcard $(SRCS_DIR)/*.c)
