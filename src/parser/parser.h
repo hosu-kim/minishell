@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/09 14:09:09 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/09 15:09:04 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,38 @@ typedef struct s_redirection
     struct s_redirection    *next;          // pointer to next redirection
 }   t_redirection;
 
-typedef struct s_command
+typedef struct s_cmd_token
 {
-	char				**args;        // args and command on 0 position
+	char				**cmd_with_args;        // args and command on 0 position
 	int					argc;          // amount of arguments
-	int					*args_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
-	t_redirection		*input_redir;  // list of input redirections
-	t_redirection		*output_redir; // list of output redirections
-	int					pipe;          // 1 pipe, 0 no pipe
-	struct s_command	*next;         // if pipe pointer to next command
-}	t_command;
+	int					*arg_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+	t_redirection		*input_redirs;  // list of input redirections
+	t_redirection		*output_redirs; // list of output redirections
+	int					has_pipe;          // 1 pipe, 0 no pipe
+	struct s_cmd_token	*next_cmd_token;         // if pipe pointer to next command
+}	t_cmd_token;
 
 // prepare lexed tokens for execution
-t_command	*parser(t_token *start);
+t_cmd_token	*parser(t_token *start);
 
 // make word tokens for execution
-int			pars_words(t_token *lex_start, t_token **lex_token,
-		t_command *new_token);
+int			is_text_token(t_token *lex_start, t_token **lex_token,
+		t_cmd_token *new_token);
 
 // make pipe tokens for execution
-int			pipe_tok(t_token **lex_token, t_command *new_token);
+int			is_pipe_token(t_token **lex_token, t_cmd_token *new_token);
 
 // make redir tokens for execution
-int			redir_tok(t_token **lex_token, t_command *new_token);
+int			is_redirection_token(t_token **lex_token, t_cmd_token *new_token);
 
 // get type (word, quotes, double quotes)
 int			get_args_type(int type);
 
 // free parsed tokens in main
-void		free_token_parsed(t_command *token_parsed);
+void		free_token_parsed(t_cmd_token *token_parsed);
 
 // free parsed tokens in parser
-void		free_command(t_command *start);
+void		free_command(t_cmd_token *start);
 
 
 #endif

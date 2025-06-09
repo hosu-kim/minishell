@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/08 00:25:39 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:08:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,27 @@ void	free_var(char **env, char **var)
 		free(*var);
 }
 
-int	make_env(t_command **token, int i, int j)
+int	make_env(t_cmd_token **token, int i, int j)
 {
 	char    *env;
     char    *var;
     char    *start;
 
-	start = start_of_env((*token)->args[i]);
-    env = environment_variable((*token)->args[i], j);
+	start = start_of_env((*token)->cmd_with_args[i]);
+    env = environment_variable((*token)->cmd_with_args[i], j);
     var = getenv(env);
     printf("startttt=> %s\nenvvvvv=> %s\nvarrrr=> %s\n", start, env, var);
-    if (var == NULL && (*token)->args_types[i] < 3)
+    if (var == NULL && (*token)->arg_types[i] < 3)
     {
-		update_token(&(*token)->args[i], start, j);
-		if ((*token)->args[i][0] == '\0')
-			(*token)->args_types[i] = 3;
+		update_token(&(*token)->cmd_with_args[i], start, j);
+		if ((*token)->cmd_with_args[i][0] == '\0')
+			(*token)->arg_types[i] = 3;
 		free_var(&env, &start);
         return (1);
     }
     else if (var)
     {
-        remake_token(&(*token)->args[i], start, var, j);
+        remake_token(&(*token)->cmd_with_args[i], start, var, j);
 		free_var(&env, &start);
         return (1);
     }
@@ -98,7 +98,7 @@ int	make_env(t_command **token, int i, int j)
 	return (0);
 }
 
-void	expand_token(t_command *token)
+void	expand_token(t_cmd_token *token)
 {
     int i;
     int j;
@@ -106,19 +106,19 @@ void	expand_token(t_command *token)
     while(token)
     {
         i = 0;
-        while (token->args && token->args[i] != NULL)
+        while (token->cmd_with_args && token->cmd_with_args[i] != NULL)
         {
             j = 0;
-            while (token->args[i][j] != '$' && token->args[i][j] != '\0'
-                    && (token->args_types[i] == 1 || token->args_types[i] == 2))
+            while (token->cmd_with_args[i][j] != '$' && token->cmd_with_args[i][j] != '\0'
+                    && (token->arg_types[i] == 1 || token->arg_types[i] == 2))
                 j++;
-            if (token->args[i][j] == '$' && token->args_types[i] != 0)
+            if (token->cmd_with_args[i][j] == '$' && token->arg_types[i] != 0)
             {
                 if (make_env(&token, i, j) == 1)
 					continue ;
             }
             i++;
         }
-        token = token->next;
+        token = token->next_cmd_token;
     }
 }

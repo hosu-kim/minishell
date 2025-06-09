@@ -6,13 +6,13 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/09 14:11:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/09 15:01:14 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	redirection_output(t_command redirection)
+void	redirection_output(t_cmd_token redirection)
 {
 	
 }

@@ -6,14 +6,15 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/09 14:12:51 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/09 15:08:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_token	*init_vars(t_token *lex_start, t_command **start,
-				t_command **current, t_command **new_token)
+// Initializes t_command pointers to NULL and returns lex_start, the initial token from the lexer.
+t_token	*initialize_t_command_pointers(t_token *lex_start, t_cmd_token **start,
+				t_cmd_token **current, t_cmd_token **new_token)
 {
 	(*start) = NULL;
 	(*current) = NULL;
@@ -21,53 +22,53 @@ t_token	*init_vars(t_token *lex_start, t_command **start,
 	return (lex_start);
 }
 
-void	*init_token(t_command *new_token)
+void	*initialize_new_token_members(t_cmd_token *new_token)
 {
-	new_token->args = NULL;
+	new_token->cmd_with_args = NULL;
 	new_token->argc = 0;
-	new_token->args_types = 0;
-	new_token->input_redir = NULL;
-	new_token->output_redir = NULL;
-	new_token->pipe = 0;
-	new_token->next = NULL;
+	new_token->arg_types = 0;
+	new_token->input_redirs = NULL;
+	new_token->output_redirs = NULL;
+	new_token->has_pipe = 0;
+	new_token->next_cmd_token = NULL;
 	return (new_token);
 }
 
-void	make_token_list(t_command **start, t_command *new_token,
-		t_command **current)
+void	make_token_list(t_cmd_token **start, t_cmd_token *new_token,
+		t_cmd_token **current)
 {
 	if (!(*start))
 		(*start) = new_token;
 	else
-		(*current)->next = new_token;
+		(*current)->next_cmd_token = new_token;
 	(*current) = new_token;
 }
 
-t_command	*parser(t_token *lex_start)
+t_cmd_token	*parser(t_token *lex_start)
 {
-	t_token		*lex_token;
-	t_command	*start;
-	t_command	*current;
-	t_command	*new_token;
+	t_token		*lexed_token;
+	t_cmd_token	*start;
+	t_cmd_token	*current;
+	t_cmd_token	*new_parsed_token;
 
-	lex_token = init_vars(lex_start, &start, &current, &new_token);
-	while (lex_token)
+	lexed_token = initialize_t_command_pointers(lex_start, &start, &current, &new_parsed_token);
+	while (lexed_token)
 	{
-		new_token = malloc(sizeof(t_command));
-		if (!new_token)
+		new_parsed_token = malloc(sizeof(t_cmd_token));
+		if (!new_parsed_token)
 			return (free_command(start), NULL);
-		init_token(new_token);
-		if (pipe_tok(&lex_token, new_token)
-			|| pars_words(lex_token, &lex_token, new_token)
-			|| redir_tok(&lex_token, new_token))
+		initialize_new_token_members(new_parsed_token);
+		if (is_pipe_token(&lexed_token, new_parsed_token)
+			|| is_text_token(lexed_token, &lexed_token, new_parsed_token)
+			|| is_redirection_token(&lexed_token, new_parsed_token))
 		{
-			if (new_token)
-				free_command(new_token);
+			if (new_parsed_token)
+				free_command(new_parsed_token);
 			if (start)
 				free_command(start);
 			return (NULL);
 		}
-		make_token_list(&start, new_token, &current);
+		make_token_list(&start, new_parsed_token, &current);
 	}
 	return (start);
 }

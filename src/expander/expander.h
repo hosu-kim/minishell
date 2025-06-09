@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:55 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/08 00:23:44 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:01:14 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../parser/parser.h"
 
 // Make expander for $
-void	expand_token(t_command *token);
+void	expand_token(t_cmd_token *token);
 
 // Updating token
 void	update_token(char **arg, char *start, int j);

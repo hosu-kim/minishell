@@ -6,20 +6,20 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/04 21:47:26 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/09 15:08:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int    malloc_memmory(t_command **new_token, int i)
+int    malloc_memmory(t_cmd_token **new_token, int i)
 {
-    (*new_token)->args = malloc((i + 1) * sizeof(char *));
-    if (!(*new_token)->args)
+    (*new_token)->cmd_with_args = malloc((i + 1) * sizeof(char *));
+    if (!(*new_token)->cmd_with_args)
         return (1);
-    (*new_token)->args_types = malloc((i + 1) * sizeof(int));
-    if (!(*new_token)->args_types)
-        return (free((*new_token)->args), 1);
+    (*new_token)->arg_types = malloc((i + 1) * sizeof(int));
+    if (!(*new_token)->arg_types)
+        return (free((*new_token)->cmd_with_args), 1);
     return (0);
 }
 
@@ -32,8 +32,8 @@ int     get_args_type(int type)
     return (0);
 }
 
-int     pars_words(t_token *lex_start, t_token **lex_token,
-        t_command *new_token)
+int     is_text_token(t_token *lex_start, t_token **lex_token,
+        t_cmd_token *new_token)
 {
     int     i;
     
@@ -51,18 +51,18 @@ int     pars_words(t_token *lex_start, t_token **lex_token,
     while (*lex_token && ((*lex_token)->type == T_WORD
         || (*lex_token)->type == T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
     {
-        new_token->args[i] = ft_strdup((*lex_token)->value);
-        new_token->args_types[i] = get_args_type((*lex_token)->type);
+        new_token->cmd_with_args[i] = ft_strdup((*lex_token)->value);
+        new_token->arg_types[i] = get_args_type((*lex_token)->type);
         i++;
         *lex_token = (*lex_token)->next;
     }
-    new_token->args[i] = NULL;
-    new_token->args_types[i] = '\0';
+    new_token->cmd_with_args[i] = NULL;
+    new_token->arg_types[i] = '\0';
     new_token->argc = i;
     return (0);
 }
 
-int     pipe_tok(t_token **lex_token, t_command *new_token)
+int     is_pipe_token(t_token **lex_token, t_cmd_token *new_token)
 {
     if (!(*lex_token) || (*lex_token)->type != T_PIPE)
         return (0);
@@ -73,6 +73,6 @@ int     pipe_tok(t_token **lex_token, t_command *new_token)
         && (*lex_token)->next->type != T_D_Q_WORD)
         return (printf("Syntax error\n"), 1);
     (*lex_token) = (*lex_token)->next;
-    new_token->pipe = 1;
+    new_token->has_pipe = 1;
     return (0);
 }

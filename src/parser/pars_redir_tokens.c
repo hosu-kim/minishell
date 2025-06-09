@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_redir_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:33:51 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/25 20:38:48 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:01:14 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void    check_redir_type(t_token ***lex_token, t_redirection *new_redir)
         new_redir->type = TOK_HEREDOC;
 }
 
-void    make_redirection_list(t_token ***lex_token, t_command *new_token,
+void    make_redirection_list(t_token ***lex_token, t_cmd_token *new_token,
         t_redirection *new_redir, t_redirection **current)
 {
     if ((**lex_token)->type == T_REDIR_IN || (**lex_token)->type == T_HEREDOC)
     {
-        if (!new_token->input_redir)
-            new_token->input_redir = new_redir;
+        if (!new_token->input_redirs)
+            new_token->input_redirs = new_redir;
         else
         {
-            (*current) = new_token->input_redir;
+            (*current) = new_token->input_redirs;
             while ((*current)->next)
                 (*current) = (*current)->next;
             (*current)->next = new_redir;
@@ -53,11 +53,11 @@ void    make_redirection_list(t_token ***lex_token, t_command *new_token,
         if ((**lex_token)->type == T_REDIR_OUT
             || (**lex_token)->type == T_REDIR_APPEND)
         {
-        if (!new_token->output_redir)
-            new_token->output_redir = new_redir;
+        if (!new_token->output_redirs)
+            new_token->output_redirs = new_redir;
         else
         {
-            (*current) = new_token->output_redir;
+            (*current) = new_token->output_redirs;
             while ((*current)->next)
                 (*current) = (*current)->next;
             (*current)->next = new_redir;
@@ -73,7 +73,7 @@ void    move_lex_token(t_token ***lex_token)
             (**lex_token) = (**lex_token)->next;
 }
 
-int     redir_tok(t_token **lex_token, t_command *new_token)
+int     is_redirection_token(t_token **lex_token, t_cmd_token *new_token)
 {
     t_redirection *new_redir;
     t_redirection *current;

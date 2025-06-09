@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/05 22:59:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/09 15:08:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,36 @@ void	free_redirections(t_redirection *redir)
 	}
 }
 
-void	free_token_parsed(t_command *token_parsed)
+void	free_token_parsed(t_cmd_token *token_parsed)
 {
 	int		i;
-	t_command	*temp;
+	t_cmd_token	*temp;
 
 	while (token_parsed)
 	{
 		temp = token_parsed;
-		token_parsed = token_parsed->next;
-		if (temp->args)
+		token_parsed = token_parsed->next_cmd_token;
+		if (temp->cmd_with_args)
 		{
 			i = 0;
-			while (temp->args[i])
+			while (temp->cmd_with_args[i])
 			{
-				free(temp->args[i]);
+				free(temp->cmd_with_args[i]);
 				i++;
 			}
-			free(temp->args);
+			free(temp->cmd_with_args);
 		}
-		if (temp->args_types)
-			free(temp->args_types);
-		if (temp->input_redir)
-			free_redirections(temp->input_redir);
-		if (temp->output_redir)
-			free_redirections(temp->output_redir);
+		if (temp->arg_types)
+			free(temp->arg_types);
+		if (temp->input_redirs)
+			free_redirections(temp->input_redirs);
+		if (temp->output_redirs)
+			free_redirections(temp->output_redirs);
 		free(temp);
 	}
 }
 
-void	print_parsed_token(t_command *print_tok)
+void	print_parsed_token(t_cmd_token *print_tok)
 {
 	t_redirection	*print_redir;
 	int	i;
@@ -73,34 +73,34 @@ void	print_parsed_token(t_command *print_tok)
 	while (print_tok)
 		{
 			i = 0;
-			printf("pipe %i\n", print_tok->pipe);
-			while (print_tok->args[i])
+			printf("pipe %i\n", print_tok->has_pipe);
+			while (print_tok->cmd_with_args[i])
 			{
-				printf("argument[%i]: %s quotes type: %i\n", i, print_tok->args[i], print_tok->args_types[i]);
+				printf("argument[%i]: %s quotes type: %i\n", i, print_tok->cmd_with_args[i], print_tok->arg_types[i]);
 				i++;
 			}
-			print_redir = print_tok->input_redir;
+			print_redir = print_tok->input_redirs;
 			while (print_redir)
 			{
 				printf("input type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
 				print_redir = print_redir->next;
 			}
-			print_redir = print_tok->output_redir;
+			print_redir = print_tok->output_redirs;
 			while (print_redir)
 			{
 				printf("output type: %d value: %s quotes type: %i\n", print_redir->type, print_redir->target, print_redir->target_types);
 				print_redir = print_redir->next;
 			}
 			printf("next\n");
-			print_tok = print_tok->next;
+			print_tok = print_tok->next_cmd_token;
 		}
 }
 
 int	main(void)
 {
 	t_token		*token;
-	t_command	*token_parsed;
-	t_command	*print_tok;
+	t_cmd_token	*token_parsed;
+	t_cmd_token	*print_tok;
 	char		*line;
 
 	while (1)
