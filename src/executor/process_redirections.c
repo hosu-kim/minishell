@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/10 21:41:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/10 22:52:53 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 /**
  * @brief Redirects standard input to read from a file, making the file's
  * 		  content appear as if it were typed on the keyboard.
- * @note STDIN_FILENO (standard input, normally file descriptor 0) is made
- * 		 to refer to the specified file instead of the actual keyboard.
+ * @note 
+ * 1. STDIN_FILENO (standard input, normally file descriptor 0) is made
+ * 	  to refer to the specified file instead of the actual keyboard.
+ * 2. if (redirection == NULL || redirection->target == NULL):
+ * 	  Prevents null pointer dereferencing (runtime error -> crash)
  */
 // Reads a file like keyboard input.
 // STDIN_FILENO: keyboard input
