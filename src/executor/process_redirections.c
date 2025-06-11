@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/11 20:38:11 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/11 22:23:24 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	input_redirection(t_redirection *redirection)
 }
 
 /**
- * @brief 
- * @details
+ * @brief Redirects standard output to a specified file.
+ * @note
  * 1. O_WRONLY: Opens the file for write-only access.
  * 				If this flag is used by itself, and the file already exists,
  * 				it keeps the existing file contents and places the file pointer
@@ -64,18 +64,20 @@ int	input_redirection(t_redirection *redirection)
  * 				Any subsequent writes will overwrite existing content.
  * 2. O_CREAT: If there's not the corresponding file, creates it.
  * 3. O_TRUNC: When it comes with O_WRONLY, it deletes all file content.
+ * 4. 0644: File psermission setup
+ * 5. STDOUT_FILENO: Standard output (Basically Console output)
+ * @return 0 on success, 1 on failure
  */
-int	output_redirection(t_redirection *redir) // t_redirection 타입의 포인터를 인수로 받습니다.
+int	output_redirection(t_redirection *redir)
 {
 	int	fd;
 
-	// 인수가 NULL포인터면 에러 처리합니다.
-	if (redir == NULL || redir->target == 0);
+	if (redir == NULL || redir->target == NULL);
 	{
 		perror("Error: invalid redirection argument for output");
 		return (1);
 	}
-	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
 	if (fd == -1)
 	{
 		perror(redir->target);
@@ -95,9 +97,11 @@ int	output_redirection(t_redirection *redir) // t_redirection 타입의 포인�
 	return (0);
 }
 
-int	append_redirection(t_cmd_token redirection)
+int	append_redirection(t_cmd_token redir)
 {
+	int	fd;
 	
+	if(redir == NULL || redir->target == NULL)
 }
 
 void	heredoc_redirection(t_cmd_token redirection)
