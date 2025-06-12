@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/12 11:59:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/12 16:17:53 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 /**
  * @brief Redirects standard input to read from a file, making the file's
  * 		  content appear as if it were typed on the keyboard.
- * @details
+ * @note
  * 1. STDIN_FILENO (standard input, normally file descriptor 0) is made
  * 	  to refer to the specified file instead of the actual keyboard.
  * 2. if (redirection == NULL || redirection->target == NULL):
  * 	  Prevents null pointer dereferencing (runtime error -> crash)
- * @param redirection a pointer of t_redirection type
+ * @param redir a pointer of t_redirection type
  * @return 0 on success, 1 on failure.
  */
 // Reads a file like keyboard input.
 // STDIN_FILENO: keyboard input
-int	input_redirection(t_redirection *redirection)
+int	input_redirection(t_redirection *redir)
 {
 	int	fd;
 
-	if (redirection == NULL || redirection->target == NULL)
+	if (redir == NULL || redir->target == NULL)
 	{
 		perror("Error: invalied redir argument");
 		return (1);
 	}
-	fd = open(redirection->target, O_RDONLY);
+	fd = open(redir->target, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(redirection->target);
+		perror(redir->target);
 		return (1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -51,7 +51,7 @@ int	input_redirection(t_redirection *redirection)
 		perror("close failed for original input fd");
 		return (1);
 	}
-	return (0);
+	return (fd);
 }
 
 /**
@@ -66,15 +66,16 @@ int	input_redirection(t_redirection *redirection)
  * 3. O_TRUNC: When it comes with O_WRONLY, it deletes all file content.
  * 4. 0644: File psermission setup
  * 5. STDOUT_FILENO: Standard output (Basically Console output)
+ * @param redir a pointer of t_redirection type
  * @return 0 on success, 1 on failure
  */
 int	output_redirection(t_redirection *redir)
 {
 	int	fd;
 
-	if (redir == NULL || redir->target == NULL);
+	if (redir == NULL || redir->target == NULL)
 	{
-		perror("Error: invalid redirection argument for output");
+		perror("Error: invalid redirection argument");
 		return (1);
 	}
 	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
@@ -91,17 +92,45 @@ int	output_redirection(t_redirection *redir)
 	}
 	if (close(fd) == -1)
 	{
-		perror("close failed for original output fd");
+		perror("Failed in close(fd)");
 		return (1);
 	}
 	return (0);
 }
 
+/**
+ * @brief Redirects standard output to a specified file in append mode.
+ * @note O_APPEND: Writes data to the end of the file, appending if it exists.
+ * @param redir a pointer of t_redirection type
+ * @return 0 on success, 1 on failure
+ */
 int	append_redirection(t_redirection *redir)
 {
 	int	fd;
 	
 	if(redir == NULL || redir->target == NULL)
+	{
+		perror("Error: Invalid redir argument");
+		return (1);
+	}
+	fd = open(redir->target, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		perror(redir->target);
+		return (1);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2 for STDOUT_FILENO failed");
+		close(fd);
+		return (1);
+	}
+	if (close(fd) == -1)
+	{
+		perror("Failed in close(fd)");
+		return (1);
+	}
+	return (0);
 }
 
 void	heredoc_redirection(t_redirection redirection)
