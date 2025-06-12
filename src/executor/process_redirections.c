@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/12 16:17:53 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/12 20:13:36 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	append_redirection(t_redirection *redir)
 {
 	int	fd;
 	
-	if(redir == NULL || redir->target == NULL)
+	if (redir == NULL || redir->target == NULL)
 	{
 		perror("Error: Invalid redir argument");
 		return (1);
@@ -133,7 +133,18 @@ int	append_redirection(t_redirection *redir)
 	return (0);
 }
 
-void	heredoc_redirection(t_redirection redirection)
+/**
+ * 1. 임시 텍스트 파일 생성
+ * 2.  키보드 입력을 한 줄씩 받아 임시 파일에 저장.
+ * 3. 입력된 줄이 지정된 delimiter와 일치하는지 매번 확인합니다.
+ * 4. Delimiter가 인식되면, 임시 파일에 저장된 내용을 콘솔에 출력.
+ * 5. 임시 파일을 삭제합니다.
+ */
+void	heredoc_redirection(t_redirection *redir)
 {
+	int		fd;
+	char	*delimiter = redir->target;
+
+	
 	
 }
