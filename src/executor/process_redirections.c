@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/11 22:23:24 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/12 11:59:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ int	output_redirection(t_redirection *redir)
 	return (0);
 }
 
-int	append_redirection(t_cmd_token redir)
+int	append_redirection(t_redirection *redir)
 {
 	int	fd;
 	
 	if(redir == NULL || redir->target == NULL)
 }
 
-void	heredoc_redirection(t_cmd_token redirection)
+void	heredoc_redirection(t_redirection redirection)
 {
 	
 }
