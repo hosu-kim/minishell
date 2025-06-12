@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/12 20:13:36 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/12 22:44:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	heredoc_redirection(t_redirection *redir)
 {
 	int		fd;
 	char	*delimiter = redir->target;
+
+	fd = open(".minishell_heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 
 	
 	
