@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_redirections.c                             :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/13 20:14:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/13 20:44:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	input_redirection(t_redirection *redir)
 		perror("close failed for original input fd");
 		return (1);
 	}
-	return (fd);
+	return (0);
 }
 
 /**
@@ -143,82 +143,20 @@ int	append_redirection(t_redirection *redir)
  */
 int	heredoc_redirection(t_redirection *redir)
 {
-	int		fd;
-	char	*delimiter = redir->target;
-	char	*user_input;
-	char	*processed_input;
-	ssize_t	bytes_written;
-	int		expand_variables;
+	int	fd;
+	int	expand_variables;
+	int	status;
 
-	if (redir->target_types == 1)
-		expand_variables = 1;
-	else
-		expand_variables = 0;
-
-	fd = open(".minishell_heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	fd = initialize_heredoc_temp_file(redir, &expand_variables);
 	if (fd == -1)
-	{
-		perror("Open heredoc temp file failed");
 		return (1);
-	}
-	while (1)
-	{
-		printf("%s", delimiter);
-		user_input = readline("> ");
-		if (user_input == NULL)
-			break ;
-		if (ft_strcmp(user_input, delimiter) == 0)
-		{
-			free(user_input);
-			break ;
-		}
-		if (expand_variables)
-		{
-			processed_input = ft_strdup(user_input);
-			if (!processed_input)
-			{
-				perror("Memory allocation failed for processed_input");
-				free(user_input);
-				close(fd);
-				return (1);
-			}
-		}
-		else
-		{
-			processed_input = ft_strdup(user_input);
-			if (!processed_input)
-			{
-				perror("Memory allocation failed for process_input");
-				free(user_input);
-				close(fd);
-				return (1);
-			}
-		}
-		bytes_written = write(fd, user_input, ft_strlen(user_input));
-		if (bytes_written == -1)
-		{
-			perror("write to heredoc temp file failed");
-			free(processed_input);
-			free(user_input);
-			close(fd);
-			return (1);
-		}
-		bytes_written = write(fd, "\n", 1);
-		if (bytes_written == -1)
-		{
-			perror("write newline to heredoc temp file failed");
-			free(processed_input);
-			free(user_input);
-			close(fd);
-			return (1);
-		}
-		free(processed_input);
-		free(user_input);
-	}
+	status = process_and_write_heredoc_input(fd, redir, expand_variables);
+	if (status != 0)
+		return (1);
 	if (close(fd) == -1)
 	{
 		perror("close heredoc temp file failed");
 		return (1);
-	}	
-	return (1);
+	}
+	return (0);
 }
