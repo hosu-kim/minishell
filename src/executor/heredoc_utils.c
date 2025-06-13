@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:24:42 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/13 21:44:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/14 00:20:36 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ int	process_and_write_heredoc_input(int fd,
 	(void)expand_variables;
 	while (1)
 	{
-		printf("%s", delimiter);
-		user_input = readline("> ");
+		user_input = readline("heredoc> ");
 		if (user_input == NULL)
 			break ;
 		if (ft_strcmp(user_input, delimiter) == 0)
