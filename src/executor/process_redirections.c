@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/13 19:55:31 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/13 20:14:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,6 @@ int	heredoc_redirection(t_redirection *redir)
 		free(processed_input);
 		free(user_input);
 	}
-
 	if (close(fd) == -1)
 	{
 		perror("close heredoc temp file failed");
