@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/07 19:07:54 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:01:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ char	*ft_strdup(const char *s)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	int	i;
+	
+	i = 0;
+	while (str1[i] || str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }
