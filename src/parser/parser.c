@@ -6,7 +6,7 @@
 /*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/07 16:56:58 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/14 13:39:25 by jakand           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_command	*parser(t_token *lex_start)
     {
         new_token = malloc(sizeof(t_command));
         if (!new_token)
-            return (free_command(start), NULL);,,
+            return (free_command(start), NULL);
         init_token(new_token);
         if (pipe_tok(&lex_token, new_token)
             || pars_words(lex_token, &lex_token, new_token)
