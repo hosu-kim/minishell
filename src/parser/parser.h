@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/09 15:09:04 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 16:42:30 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define PARSER_H
 
 #include "lexer.h"
+
+typedef enum e_arg_type
+{
+	QUOTED,
+	UNQUOTED,
+	DQUOTED,
+	SKIP_PRINT
+}	t_arg_type;
 
 typedef enum e_redir_type
 {
@@ -25,18 +33,17 @@ typedef enum e_redir_type
 
 typedef struct s_redirection
 {
-    t_redir_type            type;           // redirection type
-    char                    *target;        // target file or heredoc delimiter
-    int                     target_types;   // types of words (quotes - 0, double quotes - 2,
-                                            // no quotes - 1, don't print in the end - 3)
-    struct s_redirection    *next;          // pointer to next redirection
+    t_redir_type			type;         // redirection type
+    char					*target;      // target file or heredoc delimiter
+    t_arg_type				target_types;
+    struct s_redirection	*next;        // pointer to next redirection
 }   t_redirection;
 
 typedef struct s_cmd_token
 {
 	char				**cmd_with_args;        // args and command on 0 position
-	int					argc;          // amount of arguments
-	int					*arg_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+	int					argc;            // amount of arguments
+	t_arg_type			*arg_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
 	t_redirection		*input_redirs;  // list of input redirections
 	t_redirection		*output_redirs; // list of output redirections
 	int					has_pipe;          // 1 pipe, 0 no pipe

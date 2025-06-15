@@ -6,11 +6,12 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/14 17:09:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 15:26:26 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
 
 /**
  * @brief Redirects standard input to read from a file, making the file's
@@ -133,30 +134,15 @@ int	append_redirection(t_redirection *redir)
 	return (0);
 }
 
-/**
- * 1. 임시 텍스트 파일 생성
- * 2.  키보드 입력을 한 줄씩 받아 임시 파일에 저장.
- * 3. 입력된 줄이 지정된 delimiter와 일치하는지 매번 확인합니다.
- * 4. Delimiter가 인식되면, 임시 파일에 저장된 내용을 콘솔에 출력.
- * 5. 임시 파일을 삭제.
- * # strcmp implement.
- */
 int	heredoc_redirection(t_redirection *redir)
 {
-	int	fd;
-	int	expand_variables;
-	int	status;
+	int	pipefd[2];
 
-	fd = initialize_heredoc_temp_file(redir, &expand_variables);
-	if (fd == -1)
-		return (1);
-	status = process_and_write_heredoc_input(fd, redir, expand_variables);
-	if (status != 0)
-		return (1);
-	if (close(fd) == -1)
-	{
-		perror("close heredoc temp file failed");
-		return (1);
-	}
-	return (0);
+	if (!redir || !redir->target)
+		return (perror("invalid heredoc"), 1);
+	if (pipe(pipefd) < 0)
+		return (perror("pipe"), 1);
+	write_heredoc_lines(pipefd[1], redir);
+	close(pipefd[1]);
+	return (attach_pipe_to_stdin(pipefd[0]));
 }
