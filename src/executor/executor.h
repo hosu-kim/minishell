@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/15 15:34:34 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 21:33:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #define EXERCUTOR_H
 
 #include "parser.h"
+#include "expander.h"
 
 int  write_heredoc_lines(int wfd, t_redirection *redir);
-int  attach_pipe_to_stdin(int rfd);
+int  redirect_stdin_from_fd(int rfd);
 
 #endif

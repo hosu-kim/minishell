@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 19:09:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 21:33:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	heredoc_redirection(t_redirection *redir)
 		return (1);
 	}
 	close(pipefd[1]);
-	if (attach_pipe_to_stdin(pipefd[0]) != 0)
+	if (redirect_stdin_from_fd(pipefd[0]) != 0)
 		return (1);
 	return (0);
 }

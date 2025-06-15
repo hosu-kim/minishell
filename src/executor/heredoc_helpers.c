@@ -6,41 +6,49 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 19:06:56 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 21:33:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static ssize_t	readline_heredoc(char **line, size_t *sz)
+/**
+ * @brief Prints a heredoc prompt ("> "), reads one line, strips trailing '\n'.
+ * @param line Pointer to a char* buffer (NULL or too small -> reallocation).
+ * @param size Pointer to size_t holding buffer capacity (updated by getline).
+ * 			   of *line. On return, *size is updated to the buffer's actual size.
+ * @return Nmber of bytes read by getline() (including the original newline),
+ * 		   or -1 if EOF/error.
+ */
+static ssize_t	readline_heredoc(char **line_buffer, size_t *line_buffer_size)
 {
-	ssize_t	n;
+	ssize_t	bytes_read;
 
 	if (write(STDOUT_FILENO, "> ", 2) < 0)
 		perror("prompt");
-	n = getline(line, sz, stdin);
-	if (n > 0 && (*line)[n - 1] == '\n')
-		(*line)[n - 1] = '\0';
-	return (n);
+	bytes_read = getline(line_buffer, line_buffer_size, stdin);
+	if (bytes_read > 0 && (*line_buffer)[bytes_read - 1] == '\n')
+		(*line_buffer)[bytes_read - 1] = '\0';
+	return (bytes_read);
 }
 
-static void	process_unquoted(int fd, char *line)
+static void	process_unquoted(int std_fd, char *line)
 {
-	t_cmd_token	tmp;
-	char	*dup = strdup(line);
+	t_cmd_token	temp;
+	char	*dup = ft_strdup(line);
 	char	*args[2] = { dup, NULL };
 	int		types[2] = { UNQUOTED, 0 };
 
-	tmp.cmd_with_args = args;
-	tmp.arg_types = types;
-	tmp.input_redirs = NULL;
-	tmp.output_redirs = NULL;
-	tmp.has_pipe = 0;
-	tmp.next_cmd_token = NULL;
-	expand_token(&tmp);
-	write(fd, tmp.cmd_with_args[0], strlen(tmp.cmd_with_args[0]));
-	write(fd, "\n", 1);
-	free(tmp.cmd_with_args[0]);
+	temp.cmd_with_args = args;
+	temp.arg_types = types;
+	temp.input_redirs = NULL;
+	temp.output_redirs = NULL;
+	temp.has_pipe = 0;
+	temp.next_cmd_token = NULL;
+	expand_token(&temp);
+	write(std_fd, temp.cmd_with_args[0], strlen(temp.cmd_with_args[0]));
+	write(std_fd, "\n", 1);
+	free(temp.cmd_with_args[0]);
 	free(dup);
 }
 
@@ -50,34 +58,34 @@ static void	process_quoted(int fd, char *line)
 	write(fd, "\n", 1);
 }
 
-int	write_heredoc_lines(int wfd, t_redirection *redir)
+int	write_heredoc_lines(int out_fd, t_redirection *redir)
 {
-	char	*line = NULL;
-	size_t	sz = 0;
-	ssize_t	n;
+	char	*line_buffer = NULL;
+	size_t	buffer_size = 0;
+	ssize_t	bytes_read;
 
-	while ((n = readline_heredoc(&line, &sz)) > 0)
+	while ((bytes_read = readline_heredoc(&line_buffer, &buffer_size)) > 0)
 	{
-		if (strcmp(line, redir->target) == 0)
+		if (ft_strcmp(line_buffer, redir->target) == 0)
 			break ;
 		if (redir->target_types == UNQUOTED)
-			process_unquoted(wfd, line);
+			process_unquoted(out_fd, line_buffer);
 		else
-			process_quoted(wfd, line);
+			process_quoted(out_fd, line_buffer);
 	}
-	free(line);
+	free(line_buffer);
 	return (0);
 }
 
-int	attach_pipe_to_stdin(int rfd)
+int	redirect_stdin_from_fd(int in_fd)
 {
-	if (dup2(rfd, STDIN_FILENO) < 0)
+	if (dup2(in_fd, STDIN_FILENO) < 0)
 	{
 		perror("dup2 heredoc");
-		close(rfd);
+		close(in_fd);
 		return (1);
 	}
-	close(rfd);
+	close(in_fd);
 	return (0);
 }
 
