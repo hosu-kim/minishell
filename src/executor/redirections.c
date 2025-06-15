@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 15:26:26 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 19:09:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,24 @@ int	heredoc_redirection(t_redirection *redir)
 {
 	int	pipefd[2];
 
-	if (!redir || !redir->target)
-		return (perror("invalid heredoc"), 1);
+	if(!redir || !redir->target)
+	{
+		perror("invalid heredoc");
+		return (1);
+	}
 	if (pipe(pipefd) < 0)
-		return (perror("pipe"), 1);
-	write_heredoc_lines(pipefd[1], redir);
+	{
+		perror("pipe");
+		return (1);
+	}
+	if (write_heredoc_lines(pipefd[1], redir) < 0)
+	{
+		close(pipefd[1]);
+		close(pipefd[0]);
+		return (1);
+	}
 	close(pipefd[1]);
-	return (attach_pipe_to_stdin(pipefd[0]));
+	if (attach_pipe_to_stdin(pipefd[0]) != 0)
+		return (1);
+	return (0);
 }

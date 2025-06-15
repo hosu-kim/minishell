@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 15:27:11 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/15 19:06:56 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static ssize_t	readline_heredoc(char **line, size_t *sz)
 	if (write(STDOUT_FILENO, "> ", 2) < 0)
 		perror("prompt");
 	n = getline(line, sz, stdin);
-	if (n > 0 && (*line)[n -1] == '\n')
+	if (n > 0 && (*line)[n - 1] == '\n')
 		(*line)[n - 1] = '\0';
 	return (n);
 }
@@ -29,7 +29,7 @@ static void	process_unquoted(int fd, char *line)
 	t_cmd_token	tmp;
 	char	*dup = strdup(line);
 	char	*args[2] = { dup, NULL };
-	int		types[2] = { UNQUOTED, 0};
+	int		types[2] = { UNQUOTED, 0 };
 
 	tmp.cmd_with_args = args;
 	tmp.arg_types = types;
@@ -47,7 +47,7 @@ static void	process_unquoted(int fd, char *line)
 static void	process_quoted(int fd, char *line)
 {
 	write(fd, line, strlen(line));
-	wirte(fd, "\n", 1);
+	write(fd, "\n", 1);
 }
 
 int	write_heredoc_lines(int wfd, t_redirection *redir)
@@ -72,7 +72,12 @@ int	write_heredoc_lines(int wfd, t_redirection *redir)
 int	attach_pipe_to_stdin(int rfd)
 {
 	if (dup2(rfd, STDIN_FILENO) < 0)
-		return (perror("dub2 heredoc"), close(rfd), 1);
+	{
+		perror("dup2 heredoc");
+		close(rfd);
+		return (1);
+	}
 	close(rfd);
 	return (0);
 }
+
