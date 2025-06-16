@@ -6,19 +6,21 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/16 11:46:09 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 12:04:42 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 /**
- * @brief Prints a heredoc prompt ("> "), reads one line, strips '\n'.
- * @param line Pointer to a char* buffer (NULL or too small -> reallocation).
- * @param size Pointer to size_t holding buffer capacity (updated by getline).
- * 			   of *line. On return, *size is updated to the buffer's actual size.
- * @return Nmber of bytes read by getline() (including the original newline),
- * 		   or -1 if EOF/error.
+ * @brief Prints a heredoc prompt "> ", reads one line from stdin, strips '\n'.
+ * @param line Pointer to a buffer holding the input line. If *line_buffer is
+ * 			   NULL or too small, getline() reallocates it.
+ * @param size Pointer to a size_t with the capacity of *line_buffer. After
+ * 			   getline(), it is updated to reflect the buffer's allocated size.
+ * @return On success, returns the number of characters read
+ * 		   (excluding the stripped newline).
+ * 		   On EOF or error, returns -1.
  */
 static ssize_t	readline_heredoc(char **line_buffer, size_t *line_buffer_size)
 {
@@ -88,4 +90,3 @@ int	redirect_stdin_from_fd(int in_fd)
 	close(in_fd);
 	return (0);
 }
-
