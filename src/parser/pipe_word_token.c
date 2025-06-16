@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/09 15:08:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 19:08:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int     is_text_token(t_token *lex_start, t_token **lex_token,
         *lex_token = (*lex_token)->next;
     }
     new_token->cmd_with_args[i] = NULL;
-    new_token->arg_types[i] = '\0';
+    new_token->arg_types[i] = 0;
     new_token->argc = i;
     return (0);
 }

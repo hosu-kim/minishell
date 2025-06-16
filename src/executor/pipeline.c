@@ -6,15 +6,16 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 22:39:18 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 15:10:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	spawn_child(int in_fd, int out_fd, t_cmd_token *cmd)
+static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd)
 {
 	pid_t	pid = fork();
+
 	if (pid == 0)
 	{
 		if (in_fd != STDIN_FILENO)
@@ -33,7 +34,7 @@ static int	setup_pipe_and_fork(int prev_fd, int pipefd[2], t_cmd_token *cmd)
 {
 	if (pipe(pipefd) < 0)
 		perror("pipe");
-	spawn_child(prev_fd, pipefd[1], cmd);
+	create_child_process(prev_fd, pipefd[1], cmd);
 	close(pipefd[1]);
 	if (prev_fd != STDIN_FILENO)
 		close(prev_fd);
@@ -42,7 +43,7 @@ static int	setup_pipe_and_fork(int prev_fd, int pipefd[2], t_cmd_token *cmd)
 
 static void	fork_last(int prev_fd, t_cmd_token *cmd)
 {
-	spawn_child(prev_fd, STDOUT_FILENO, cmd);
+	create_child_process(prev_fd, STDOUT_FILENO, cmd);
 	if (prev_fd != STDIN_FILENO)
 		close(prev_fd);
 }

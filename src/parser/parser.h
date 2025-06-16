@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/15 16:42:30 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 18:58:13 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ typedef enum e_arg_type
 
 typedef enum e_redir_type
 {
-	TOK_INPUT,  // <
-	TOK_OUTPUT, // >
-	TOK_APPEND, // >>
-	TOK_HEREDOC // <<
+	REDIR_INPUT,  // <
+	REDIR_OUTPUT, // >
+	REDIR_APPEND, // >>
+	REDIR_HEREDOC // <<
 }	t_redir_type;
 
 typedef struct s_redirection
@@ -41,13 +41,14 @@ typedef struct s_redirection
 
 typedef struct s_cmd_token
 {
-	char				**cmd_with_args;        // args and command on 0 position
-	int					argc;            // amount of arguments
-	t_arg_type			*arg_types;   // types of words (quotes - 0, double quotes - 2, no quotes - 1)
-	t_redirection		*input_redirs;  // list of input redirections
-	t_redirection		*output_redirs; // list of output redirections
-	int					has_pipe;          // 1 pipe, 0 no pipe
-	struct s_cmd_token	*next_cmd_token;         // if pipe pointer to next command
+	char				**cmd_with_args; // args and command on 0 position
+	int					argc;			 // amount of arguments
+	t_arg_type			*arg_types;		 // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+	t_redirection		*input_redirs;	 // list of input redirections
+	t_redirection		*output_redirs;	 // list of output redirections
+	int					has_pipe;        // 1 pipe, 0 no pipe
+	int					exit_code;		 // to store child’s exit status
+	struct s_cmd_token	*next_cmd_token; // if pipe pointer to next command
 }	t_cmd_token;
 
 // prepare lexed tokens for execution

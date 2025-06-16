@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/09 14:02:43 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 16:54:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,5 @@
 # include "builtin.h"
 # include "parser.h"
 # include "executor.h"
-
-/* Signal handling */
-# include "signal.h"
 
 #endif
