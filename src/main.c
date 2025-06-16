@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/16 19:02:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 20:01:10 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # include "lexer/lexer.h"
 # include "parser/parser.h"
 # include "expander/expander.h"
+
+extern char **environ;
 
 /**
  * Entry point for the minishell program.
@@ -101,9 +103,21 @@ int	main(void)
 	t_cmd_token	*token_parsed;
 	t_cmd_token	*print_tok;
 	char		*line;
+	pid_t	pid = fork();
 
+	init_parent_signals();
 	while (1)
 	{
+		if (g_received_signal == SIGINT)
+		{
+			rl_replace_line("", 0);
+			write(STDOUT_FILENO, "\n", 1);
+			rl_on_new_line();
+			rl_redisplay();
+			g_received_signal = 0;
+		}
+		else if (g_received_signal == SIGQUIT)
+			g_received_signal = 0;
 		line = readline("minishell> ");
 		if (line == NULL)
 			break ;
@@ -118,27 +132,31 @@ int	main(void)
 		token_parsed = parser(token);
 		if (token_parsed == NULL)
 		{
-			if (token)
-				free_token(token);
-			if (line)
-				free(line);
+			free_token(token);
+			free(line);
 			continue ;
 		}
 		print_tok = token_parsed;
-
 		print_parsed_token(print_tok);
-
 		expand_token(token_parsed);
-
 		print_parsed_token(print_tok);
 
-		if (token)
-			free_token(token);
-		if (line)
-			free(line);
-		if (token_parsed)
-			free_token_parsed(token_parsed);
-		// parsing and execution logics
+		if (pid < 0)
+			perror("fork");
+		else if (pid == 0)
+		{
+			init_child_signals();
+			execve(token_parsed->cmd_with_args[0],
+								token_parsed->cmd_with_args,
+								environ);
+			perror("execve");
+			exit(EXIT_FAILURE);
+		}
+		else
+			waitpid(pid, NULL, 0);
+		free_token(token);
+		free(line);
+		free_token_parsed(token_parsed);
 	}
 	return (0);
 }
