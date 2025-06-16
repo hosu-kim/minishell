@@ -6,14 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/09 14:04:23 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 20:18:56 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "minishell.h"
+# include "../../include/minishell.h"
 
 /**
  * @brief Token types stored in the linked list.

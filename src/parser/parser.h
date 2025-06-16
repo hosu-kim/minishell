@@ -6,14 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/16 18:58:13 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 20:17:49 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "lexer.h"
+#include "../lexer/lexer.h"
 
 typedef enum e_arg_type
 {
