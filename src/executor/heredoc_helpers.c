@@ -6,14 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/15 21:42:11 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/16 11:46:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 /**
- * @brief Prints a heredoc prompt ("> "), reads one line, strips trailing '\n'.
+ * @brief Prints a heredoc prompt ("> "), reads one line, strips '\n'.
  * @param line Pointer to a char* buffer (NULL or too small -> reallocation).
  * @param size Pointer to size_t holding buffer capacity (updated by getline).
  * 			   of *line. On return, *size is updated to the buffer's actual size.
