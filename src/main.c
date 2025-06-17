@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/16 20:01:10 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/17 17:39:49 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@
 # include "expander/expander.h"
 
 extern char **environ;
-
-/**
- * Entry point for the minishell program.
- * Sets up signal handlers, initializes environment list,
- * then enters the main read-eval-print loop.
- */
+int	g_recieved_signal = 0;
 
 void	free_redirections(t_redirection *redir)
 {
@@ -66,6 +61,7 @@ void	free_token_parsed(t_cmd_token *token_parsed)
 	}
 }
 
+#ifdef DEBUG
 void	print_parsed_token(t_cmd_token *print_tok)
 {
 	t_redirection	*print_redir;
@@ -96,6 +92,7 @@ void	print_parsed_token(t_cmd_token *print_tok)
 			print_tok = print_tok->next_cmd_token;
 		}
 }
+#endif
 
 int	main(void)
 {
