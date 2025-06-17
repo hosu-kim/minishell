@@ -6,59 +6,17 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 17:39:49 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/17 17:48:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
-# include "lexer/lexer.h"
-# include "parser/parser.h"
-# include "expander/expander.h"
+#include "minishell.h"
 
-extern char **environ;
-int	g_recieved_signal = 0;
+int	g_signal_status = 0;
 
-void	free_redirections(t_redirection *redir)
+static void	init_shell(t_shell *shell)
 {
-	t_redirection	*temp;
-
-	while (redir)
-	{
-		temp = redir;
-		redir = redir->next;
-		if (temp->target)
-			free(temp->target);
-		free(temp);
-	}
-}
-
-void	free_token_parsed(t_cmd_token *token_parsed)
-{
-	int		i;
-	t_cmd_token	*temp;
-
-	while (token_parsed)
-	{
-		temp = token_parsed;
-		token_parsed = token_parsed->next_cmd_token;
-		if (temp->cmd_with_args)
-		{
-			i = 0;
-			while (temp->cmd_with_args[i])
-			{
-				free(temp->cmd_with_args[i]);
-				i++;
-			}
-			free(temp->cmd_with_args);
-		}
-		if (temp->arg_types)
-			free(temp->arg_types);
-		if (temp->input_redirs)
-			free_redirections(temp->input_redirs);
-		if (temp->output_redirs)
-			free_redirections(temp->output_redirs);
-		free(temp);
-	}
+	shell->
 }
 
 #ifdef DEBUG
