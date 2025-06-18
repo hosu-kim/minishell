@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakand <jakand@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 23:11:38 by jakand            #+#    #+#             */
-/*   Updated: 2025/05/24 22:31:17 by jakand           ###   ########.fr       */
+/*   Updated: 2025/06/17 21:36:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Deallocates every value in a node and node itself.
  */
-void	free_token(t_token *token)
+void	free_tokens(t_token *token)
 {
 	t_token	*held_token;
 

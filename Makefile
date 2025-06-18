@@ -6,14 +6,14 @@
 #    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/06/16 20:21:01 by hoskim           ###   ########seoul.kr   #
+#    Updated: 2025/06/18 17:04:02 by hoskim           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-INCLUDES = -Iincludes -Isrc/expander -Isrc/lexer -Isrc/parser -Isrc/signal -Isrc/utils -Isrc/builtin -Isrc/executor
+INCLUDES = -Iincludes
 
 SRCS_DIR = src
 SRCS = $(wildcard $(SRCS_DIR)/**/*.c) $(wildcard $(SRCS_DIR)/*.c)

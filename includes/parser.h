@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/16 20:17:49 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/17 21:37:55 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			get_args_type(int type);
 void		free_token_parsed(t_cmd_token *token_parsed);
 
 // free parsed tokens in parser
-void		free_command(t_cmd_token *start);
+void		free_cmd_tokens(t_cmd_token *start);
 
 
 #endif

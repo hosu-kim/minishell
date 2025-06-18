@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   input_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 12:55:55 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/18 12:56:32 by hoskim           ###   ########seoul.kr  */
+/*   Created: 2025/06/17 21:26:04 by hoskim            #+#    #+#             */
+/*   Updated: 2025/06/17 21:28:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "minishell.h"
 
-# include "minishell.h"
-# include <limits.h>
+void	handle_tokenization_error(void)
+{
+	if (errno != 0)
+		perror("minishell");
+}
+
+void	handle_parsing_error(t_token *tokens)
+{
+	ft_putendl_fd("minishell: syntax error", STDERR_FILENO);
+	free_tokens(tokens);
+}

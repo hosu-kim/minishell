@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:29:59 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/09 15:08:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/17 21:37:44 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_output_redir(t_redirection *redir)
 	}
 }
 
-void    free_command(t_cmd_token *start)
+void	free_cmd_tokens(t_cmd_token *start)
 {
 	t_cmd_token       *cmd;
 	t_redirection   *redir;

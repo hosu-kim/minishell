@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handler.h                                   :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 19:34:59 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/16 20:21:32 by hoskim           ###   ########seoul.kr  */
+/*   Created: 2025/04/29 17:44:56 by hoskim            #+#    #+#             */
+/*   Updated: 2025/06/17 21:47:04 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_HANDLER_H
-# define SIGNAL_HANDLER_H
-
-#include "../../include/minishell.h"
-
-extern volatile sig_atomic_t g_received_signal;
-
-void	init_parent_signals(void);
-void	init_child_signals(void);
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 #endif

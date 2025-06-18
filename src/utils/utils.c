@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/13 16:01:12 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/17 21:39:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ int	ft_strcmp(const char *str1, const char *str2)
 		i++;
 	}
 	return (0);
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (s)
+		write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }

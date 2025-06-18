@@ -1,0 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_cleanup.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 20:51:09 by hoskim            #+#    #+#             */
+/*   Updated: 2025/06/17 21:36:19 by hoskim           ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	cleanup_parsing_resources(t_token *tokens, t_cmd_token *commands)
+{
+	if (tokens)
+		free_tokens(tokens);
+	if (commands)
+		free_cmd_tokens(commands);
+}
+
+static void	restore_file_descriptor(int *backup_fd, int standard_fd)
+{
+	if (*backup_fd != -1)
+	{
+		dup2(*backup_fd, standard_fd);
+		close(*backup_fd);
+		*backup_fd = -1;
+	}
+}
+
+static void	restore_standard_file_descriptors(t_shell *shell)
+{
+	restore_file_descriptor(&shell->stdin_backup, STDIN_FILENO);
+	restore_file_descriptor(&shell->stdout_backup, STDOUT_FILENO);
+}
+
+void	free_shell_resources(t_shell *shell)
+{
+	if (shell->env)
+		free_environment(shell->env);
+	if (shell->input)
+	{
+		free(shell->input);
+		shell->input = NULL;
+	}
+}
+
+void	cleanup_shell(t_shell *shell)
+{
+	free_shell_resources(shell);
+	restore_standard_file_descriptors(shell);
+}
