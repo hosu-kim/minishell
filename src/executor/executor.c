@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 19:37:38 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 22:41:52 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,47 +44,57 @@ static void	run_external(char **argv, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-static int	exec_single(t_cmd_token *cmd, char **envp)
+void	execute_in_child(t_cmd_token *cmd, char **envp)
 {
+	int	exit_code;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	apply_redirections(cmd);
-	if (is_builtin(cmd->cmd_with_args[0]))
-		return (execute_builtin(cmd, envp));
-	run_external(cmd->cmd_with_args, envp);
-	return (EXIT_FAILURE);
-}
-
-void	execute_command(t_cmd_token *cmd, char **envp)
-{
-	if (!cmd || !cmd->cmd_with_args || !cmd->cmd_with_args[0])
-		exit(1);
-	apply_redirections(cmd);
+	if (!cmd->cmd_with_args || !cmd->cmd_with_args[0])
+		exit(EXIT_SUCCESS);
 	if (is_builtin(cmd->cmd_with_args[0]))
 	{
-		execute_builtin(cmd, envp);
-		exit(0);
+		exit_code = execute_builtin(cmd, &envp);
+		exit(exit_code);
 	}
-	else
-		run_external(cmd->cmd_with_args, envp);
+	run_external(cmd->cmd_with_args, envp);
 }
 
-int	executor(t_cmd_token *tokens, char **envp)
+static int	is_parent_builtin(const char *cmd)
+{
+	if (!cmd)
+		return (NO);
+	if (ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "exit") == 0)
+			return (YES);
+		return (NO);
+}
+
+int	executor(t_cmd_token *tokens, char ***envp)
 {
 	pid_t	pid;
 	int		status;
 
 	if (!tokens)
 		return (0);
-	if (tokens && !tokens->next_cmd_token && is_builtin(tokens->cmd_with_args[0]))
+	if (tokens && !tokens->next_cmd_token
+		&& is_parent_builtin(tokens->cmd_with_args[0]))
 		return (execute_builtin(tokens, envp));
 	if (tokens->next_cmd_token)
-		return (execute_pipeline(tokens, envp));
+		return (execute_pipeline(tokens, *envp));
 	setup_signal_handlers();
 	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
-		exit(exec_single(tokens, envp));
-	else if (pid > 0)
+		execute_in_child(tokens, *envp);
+	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:48:42 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 20:12:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 22:11:22 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ int	is_builtin(char *cmd)
 	return (NO);
 }
 
-int	execute_builtin(t_cmd_token *cmd, char **envp)
+int	execute_builtin(t_cmd_token *cmd, char ***envp)
 {
 	if (ft_strcmp(cmd->cmd_with_args[0], "echo") == 0)
 		return (builtin_echo(cmd->cmd_with_args));
 	if (ft_strcmp(cmd->cmd_with_args[0], "cd") == 0)
-		return (builtin_cd(cmd->cmd_with_args));
+		return (builtin_cd(cmd->cmd_with_args, envp));
 	if (ft_strcmp(cmd->cmd_with_args[0], "pwd") == 0)
 		return (builtin_pwd());
 	if (ft_strcmp(cmd->cmd_with_args[0], "export") == 0)
-		return (builtin_export(cmd->cmd_with_args, &envp));
+		return (builtin_export(cmd->cmd_with_args, envp));
 	if (ft_strcmp(cmd->cmd_with_args[0], "unset") == 0)
-		return (builtin_unset(cmd->cmd_with_args, &envp));
+		return (builtin_unset(cmd->cmd_with_args, envp));
 	if (ft_strcmp(cmd->cmd_with_args[0], "env") == 0)
-		return (builtin_env(envp));
+		return (builtin_env(*envp));
 	if (ft_strcmp(cmd->cmd_with_args[0], "exit") == 0)
 		return (builtin_exit(cmd->cmd_with_args));
-	return (NO);
+	return (FAILURE);
 }
 
 static int	env_key_matches(char *env_var, char *key, int key_len)

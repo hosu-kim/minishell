@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 20:13:31 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 23:04:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static t_token	*create_new_token(void)
 
 static int	process_tokenizing(const char **input_ptr, t_token *new_token)
 {
-	if (is_double_char_operator(&input_ptr, new_token)
-		|| is_single_char_operator(&input_ptr, new_token)
-		|| text_tokenizer(&input_ptr, new_token))
+	if (is_double_char_operator(input_ptr, new_token)
+		|| is_single_char_operator(input_ptr, new_token)
+		|| text_tokenizer(input_ptr, new_token))
 		return (YES);
 	return (NO);
 }
@@ -65,6 +65,8 @@ t_token	*tokenizer(const char *input)
 	{
 		if (skip_whitespaces(input_ptr) == FAILURE)
 			break ;
+		if (**input_ptr == '\0')
+			break;
 		new_token = create_new_token();
 		if (!new_token)
 			return (free_tokens(start), NULL);

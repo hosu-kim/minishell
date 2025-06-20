@@ -6,16 +6,37 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:39:04 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:45:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 22:08:10 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	builtin_cd(char **args)
+static int	update_pwd_env(char ***env, char *old_pwd, char *new_pwd)
+{
+	char	**temp_env;
+
+	temp_env = add_env_var(*env, "OLDPWD", old_pwd);
+	if (!temp_env)
+		return (1);
+	free_environment(*env);
+	*env = temp_env;
+	temp_env = add_env_var(*env, "PWD", new_pwd);
+	if (!temp_env)
+		return (FAILURE);
+	free_environment(*env);
+	*env = temp_env;
+	return (SUCCESS);
+}
+
+int	builtin_cd(char **args, char ***env)
 {
 	char	*path;
+	char	old_pwd[PATH_MAX];
+	char	new_pwd[PATH_MAX];
 
+	if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
+		return (FAILURE);
 	if (!args[1])
 	{
 		path = getenv("HOME");
@@ -32,5 +53,7 @@ int	builtin_cd(char **args)
 		printf("cd: %s: %s\n", path, strerror(errno));
 		return (1);
 	}
-	return (0);
+	if (getcwd(new_pwd, sizeof(new_pwd)) == NULL)
+		return (FAILURE);
+	return (update_pwd_env(env, old_pwd, new_pwd));
 }

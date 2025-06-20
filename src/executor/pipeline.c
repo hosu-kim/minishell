@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 17:35:29 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 22:44:46 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd, char *
 	pipe_fd[0] = -1;
 	pipe_fd[1] = -1;
 	setup_pipes(pipe_fd, in_fd, out_fd);
-	execute_command(cmd, envp);
+	execute_in_child(cmd, envp);
 	exit(0);
 }
 

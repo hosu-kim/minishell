@@ -6,15 +6,15 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 20:05:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 20:31:14 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <minishell.h>
 # include "lexer.h"
+# include "minishell.h"
 
 typedef enum e_arg_type
 {
