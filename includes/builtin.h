@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 12:55:55 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 22:43:29 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:45:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**add_env_var(char **env, char *key, char *value);
 
 /* Individual builtin commands */
 int		builtin_echo(char **args);
-int		builtin_cd(char **args, char **env);
+int		builtin_cd(char **args);
 int		builtin_pwd(void);
 int		builtin_export(char **args, char ***env);
 int		builtin_unset(char **args, char ***env);

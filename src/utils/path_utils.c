@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 22:40:29 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:17:06 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*extract_path_segment(char *path, int start, int end)
 	return (segment);
 }
 
-static char	**ft_split_path(char *path)
+char	**ft_split_path(char *path)
 {
 	char	**paths;
 	int		count;

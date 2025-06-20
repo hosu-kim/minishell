@@ -6,26 +6,24 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 21:13:37 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 20:04:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "minishell.h"
-
 /**
  * @brief Token types stored in the linked list.
  * @details
  * - enum: used to represent a fixed set of named constants.
  * - Heredoc(<<): Accepts multi-line input until it meets the delimiter
- * 				  provided on the right of the operator initionally.
+ * 				  provided on the right of the operator initially.
  */
 typedef enum e_token_type
 {
 	T_WORD,			// words or arguments
-	T_Q_WORD,		// words in sigle quotes
+	T_Q_WORD,		// words in single quotes
 	T_D_Q_WORD,		// words in double quotes
 	T_PIPE,			// |
 	T_REDIR_IN,		// <
@@ -45,10 +43,14 @@ typedef struct s_token
 }	t_token;
 
 /* lexer.c */
-// Split the input line int a linked list of tokens.
+// Split the input line into a linked list of tokens.
 t_token	*tokenizer(const char *input);
 
-/* lexer_utils.h */
+/* lexer_operators.c */
+int	is_single_char_operator(const char ***input, t_token *new_token);
+int	is_double_char_operator(const char ***input, t_token *new_token);
+
+/* lexer_utils.c */
 // Skip whitespaces
 int		skip_whitespaces(const char **input);
 // Free all tokens in the list.
@@ -56,6 +58,6 @@ void	free_tokens(t_token *token);
 
 /* word_tokens.c */
 // Make word tokens
-int	text_tokenizer(const char ***input, t_token *new_node);
+int		text_tokenizer(const char ***input, t_token *new_node);
 
 #endif

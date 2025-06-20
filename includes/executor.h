@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/19 22:51:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 17:14:40 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <sys/wait.h>
 
 /* Executor functions */
-int	executor(t_cmd_token *tokens, char **envp);
-int	execute_pipeline(t_cmd_token *cmds, char **envp);
+int		executor(t_cmd_token *tokens, char **envp);
+int		execute_pipeline(t_cmd_token *cmds, char **envp);
+void	execute_command(t_cmd_token *cmd, char **envp);
 
 /* Redirection functions */
 void	apply_redirections(t_cmd_token *cmd);

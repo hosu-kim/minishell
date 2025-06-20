@@ -6,11 +6,12 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 23:11:38 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/17 21:36:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 20:03:17 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "minishell.h"
 
 /**
  * @brief Deallocates every value in a node and node itself.
@@ -37,6 +38,6 @@ int	skip_whitespaces(const char **input)
 	while (**input == ' ' || (**input >= '\t' && **input <= '\r'))
 		(*input)++;
 	if (**input == '\0')
-		return (0);
-	return (1);
+		return (FAILURE);
+	return (SUCCESS);
 }

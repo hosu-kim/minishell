@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/16 12:04:42 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:49:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static ssize_t	readline_heredoc(char **line_buffer, size_t *line_buffer_size)
 static void	process_unquoted(int std_fd, char *line)
 {
 	t_cmd_token	temp;
-	char	*dup = ft_strdup(line);
-	char	*args[2] = { dup, NULL };
-	int		types[2] = { UNQUOTED, 0 };
+	char		*dup = ft_strdup(line);
+	char		*args[2] = { dup, NULL };
+	t_arg_type	types[2] = { UNQUOTED, 0 };
 
 	temp.cmd_with_args = args;
 	temp.arg_types = types;

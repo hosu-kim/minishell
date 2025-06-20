@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:26:04 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:28:09 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:43:46 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	handle_tokenization_error(void)
 
 void	handle_parsing_error(t_token *tokens)
 {
-	ft_putendl_fd("minishell: syntax error", STDERR_FILENO);
+	write(STDERR_FILENO, "minishell: syntax error", 24);
 	free_tokens(tokens);
 }

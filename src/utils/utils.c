@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 20:57:37 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:34:48 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	result[i] = '\0';
 	return (result);
 }
+
 
 

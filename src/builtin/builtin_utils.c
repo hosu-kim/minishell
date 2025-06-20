@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:48:42 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 14:04:06 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 19:16:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,18 @@ int	execute_builtin(t_cmd_token *cmd, char **envp)
 	return (NO);
 }
 
+static int	env_key_matches(char *env_var, char *key, int key_len)
+{
+	int	i;
+
+	i = 0;
+	while (i < key_len && env_var[i] && key[i] == env_var[i])
+		i++;
+	if (i == key_len && env_var[i] == '=')
+		return (1);
+	return (0);
+}
+
 char	*get_env_value(char *key, char **env)
 {
 	int	i;
@@ -78,16 +90,4 @@ int	count_env_vars(char **env)
 	while (env[count])
 		count++;
 	return (count);
-}
-
-static int	env_key_matches(char *env_var, char *key, int key_len)
-{
-	int	i;
-
-	i = 0;
-	while (i < key_len && env_var[i] && key[i] == env_var[i])
-		i++;
-	if (i == key_len && env_var[i] == '=')
-		return (1);
-	return (0);
 }

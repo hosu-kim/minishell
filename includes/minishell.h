@@ -6,12 +6,15 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 15:33:37 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 20:04:50 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _POSIX_C_SOURCE 200809L
+# define _GNU_SOURCE
 
 /* Common includes */
 # include <stdio.h>
@@ -25,13 +28,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+/* Forward declarations */
+typedef struct s_token t_token;
+typedef struct s_cmd_token t_cmd_token;
+typedef struct s_redirection t_redirection;
+
 /* Module-specific headers */
 # include "lexer.h"
 # include "parser.h"
 # include "expander.h"
 # include "executor.h"
 # include "builtin.h"
-# include "signal_handler.h"
 # include "utils.h"
 
 /* Common macros */
@@ -40,6 +47,9 @@
 # define YES 1
 # define NO 0
 # define BUFFER_SIZE 1024
+
+/* External declarations */
+extern char	**environ;
 
 /* Main shell stucture */
 typedef struct s_shell
@@ -70,5 +80,7 @@ void	handle_parsing_error(t_token *tokens);
 
 /* Resource cleanup functions */
 void	cleanup_parsing_resources(t_token *tokens, t_cmd_token *commands);
+
+void	setup_signal_handlers(void);
 
 #endif
