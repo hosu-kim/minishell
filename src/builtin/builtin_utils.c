@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:48:42 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:16:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 20:12:52 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute_builtin(t_cmd_token *cmd, char **envp)
 	if (ft_strcmp(cmd->cmd_with_args[0], "echo") == 0)
 		return (builtin_echo(cmd->cmd_with_args));
 	if (ft_strcmp(cmd->cmd_with_args[0], "cd") == 0)
-		return (builtin_cd(cmd->cmd_with_args, envp));
+		return (builtin_cd(cmd->cmd_with_args));
 	if (ft_strcmp(cmd->cmd_with_args[0], "pwd") == 0)
 		return (builtin_pwd());
 	if (ft_strcmp(cmd->cmd_with_args[0], "export") == 0)
