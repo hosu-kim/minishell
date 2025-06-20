@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:39:02 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/19 20:57:37 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,35 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
 /**
  * @brief Copies provided string to the duplicate and return it.
  */
 char	*ft_strdup(const char *s)
 {
-	int		str_len;
-	int		i;
 	char	*dup;
+	int		len;
+	int		i;
 
-	str_len = ft_strlen(s);
-	dup = (char *)malloc((str_len + 1) * sizeof(char));
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	dup = malloc(len + 1);
 	if (!dup)
 		return (NULL);
 	i = 0;
-	while (i < str_len)
+	while (i < len)
 	{
 		dup[i] = s[i];
 		i++;
@@ -50,23 +64,43 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-int	ft_strcmp(const char *str1, const char *str2)
+char	*ft_strchr(const char *s, int c)
 {
-	int	i;
-	
-	i = 0;
-	while (str1[i] || str2[i])
+	while (*s)
 	{
-		if (str1[i] != str2[i])
-			return (1);
-		i++;
+		if (*s == c)
+			return ((char *)s);
+		s++;
 	}
-	return (0);
+	if (c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
 
-void	ft_putendl_fd(char *s, int fd)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
+	char	*result;
+	int		len1;
+	int		len2;
+	int		i;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	result = malloc(len1 + len2 + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (*s2)
+		result[i++] = *s2++;
+	result[i] = '\0';
+	return (result);
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/16 18:58:44 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/19 22:55:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ static void	setup_signal_handlers(void)
 
 static void	run_external(char **argv, char **envp)
 {
-	execve(argv[0], argv, envp);
-	execvp(argv[0], argv);
+	if (ft_strchr(argv[0], '/'))
+		execve(argv[0], argv, envp);
+	else
+		my_execvp(argv[0], argv, envp);
 	perror(argv[0]);
 	exit(EXIT_FAILURE);
 }
@@ -53,6 +55,8 @@ int	executor(t_cmd_token *tokens, char **envp)
 	pid_t	pid;
 	int		status;
 
+	if (tokens && !tokens->next_cmd_token && is_builtin(tokens->cmd_with_args[0]))
+		return (execute_builtin(tokens, envp));
 	setup_signal_handlers();
 	while (tokens)
 	{

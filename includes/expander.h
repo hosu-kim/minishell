@@ -6,14 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:55 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/15 14:38:50 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/19 21:13:21 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-#include "../parser/parser.h"
+#include "parser.h"
 
 // Make expander for $
 void	expand_token(t_cmd_token *token);
