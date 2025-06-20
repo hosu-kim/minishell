@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:29:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 21:57:38 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 14:09:40 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ static int	is_numeric(char *str)
 	int	i;
 
 	if (!str)
-		return (0);
+		return (NO);
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	if (!str[i])
-		return (0);
+		return (NO);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (NO);
 		i++;
 	}
-	return (1);
+	return (YES);
 }
 
 static int	ft_atoi(char *str)
@@ -71,7 +71,7 @@ int	builtin_exit(char **args)
 	if (args[2])
 	{
 		printf("minishell: exit: too many arguments\n");
-		return (1);
+		return (FAILURE);
 	}
 	exit_code = ft_atoi(args[1]);
 	exit(exit_code % 256);

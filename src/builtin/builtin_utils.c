@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:48:42 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 22:29:38 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 14:04:06 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (0);
+		return (NO);
 	if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "export") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "env") == 0)
-		return (1);
+		return (YES);
 	if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	return (0);
+		return (YES);
+	return (NO);
 }
 
 int	execute_builtin(t_cmd_token *cmd, char **envp)
@@ -49,19 +49,7 @@ int	execute_builtin(t_cmd_token *cmd, char **envp)
 		return (builtin_env(envp));
 	if (ft_strcmp(cmd->cmd_with_args[0], "exit") == 0)
 		return (builtin_exit(cmd->cmd_with_args));
-	return (1);
-}
-
-static int	env_key_matches(char *env_var, char *key, int key_len)
-{
-	int	i;
-
-	i = 0;
-	while (i < key_len && env_var[i] && key[i] == env_var[i])
-		i++;
-	if (i == key_len && env_var[i] == '=')
-		return (1);
-	return (0);
+	return (NO);
 }
 
 char	*get_env_value(char *key, char **env)
@@ -92,3 +80,14 @@ int	count_env_vars(char **env)
 	return (count);
 }
 
+static int	env_key_matches(char *env_var, char *key, int key_len)
+{
+	int	i;
+
+	i = 0;
+	while (i < key_len && env_var[i] && key[i] == env_var[i])
+		i++;
+	if (i == key_len && env_var[i] == '=')
+		return (1);
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:34:53 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 15:29:49 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ extern char **environ;
 /* Common macros */
 # define SUCCESS 0
 # define FAILURE 1
+# define YES 1
+# define NO 0
 # define BUFFER_SIZE 1024
 
 /* Main shell stucture */

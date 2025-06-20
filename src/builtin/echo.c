@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:22:57 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 22:08:42 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 14:01:35 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	is_n_flag(char *arg)
 	int	i;
 
 	if (!arg || arg[0] != '-' || arg[1] != 'n')
-		return (0);
+		return (NO);
 	i = 2;
 	while (arg[i])
 	{
 		if (arg[i] != 'n')
-			return (0);
+			return (NO);
 		i++;
 	}
-	return (1);
+	return (YES);
 }
 
 static void	print_args(char **args, int start_index, int newline)
@@ -52,7 +52,7 @@ int	builtin_echo(char **args)
 	if (!args[1])
 	{
 		printf("\n");
-		return (0);
+		return (SUCCESS);
 	}
 	newline = 1;
 	i = 1;
@@ -62,5 +62,5 @@ int	builtin_echo(char **args)
 		i++;
 	}
 	print_args(args, i, newline);
-	return (0);
+	return (SUCCESS);
 }

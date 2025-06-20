@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 23:02:10 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 13:31:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,3 @@ static void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
 	if (pipe_fd[1] != -1)
 		close(pipe_fd[1]);
 }
-
-static 

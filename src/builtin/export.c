@@ -6,19 +6,19 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:06:25 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/19 21:58:53 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 14:35:35 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static char	*extract_key(char *arg, char *eq_pos)
+static char	*extract_key(char *arg, char *address_of_equal_sign)
 {
 	char	*key;
 	int		key_len;
 	int		i;
 
-	key_len = eq_pos - arg;
+	key_len = address_of_equal_sign - arg;
 	key = malloc(key_len + 1);
 	if (!key)
 		return (NULL);
@@ -34,7 +34,7 @@ static char	*extract_key(char *arg, char *eq_pos)
 
 int	builtin_export(char **args, char ***env)
 {
-	char	*eq_pos;
+	char	*address_of_equal_sign;
 	char	*key;
 	char	*value;
 	int		i;
@@ -44,13 +44,13 @@ int	builtin_export(char **args, char ***env)
 	i = 1;
 	while (args[i])
 	{
-		eq_pos = ft_strchr(args[i], '=');
-		if (eq_pos)
+		address_of_equal_sign = ft_strchr(args[i], '=');
+		if (address_of_equal_sign)
 		{
-			key = extract_key(args[i], eq_pos);
+			key = extract_key(args[i], address_of_equal_sign);
 			if (key)
 			{
-				value = ft_strdup(eq_pos + 1);
+				value = ft_strdup(address_of_equal_sign + 1);
 				*env = add_env_var(*env, key, value);
 				free(key);
 				free(value);
@@ -58,5 +58,5 @@ int	builtin_export(char **args, char ***env)
 		}
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
