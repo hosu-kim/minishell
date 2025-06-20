@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 15:29:49 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/20 15:33:37 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-/* Imports all environment variables on the current process. */
-extern char **environ;
 
 /* Module-specific headers */
 # include "lexer.h"
@@ -47,15 +44,15 @@ extern char **environ;
 /* Main shell stucture */
 typedef struct s_shell
 {
-	char	**env;         /* Environment variables */
-	int		exit_status;   /* Last command exit status */
-	char	*input;        /* Current input line */
-	int		stdin_backup;  /* Backup of original stdin */
+	char	**env; /* Environment variables */
+	int		exit_status; /* Last command exit status */
+	char	*input; /* Current input line */
+	int		stdin_backup; /* Backup of original stdin */
 	int		stdout_backup; /* Backup of original stdout */
 }	t_shell;
 
 /* Global variable - ONLY ONE for signal handling */
-extern int g_signal_received; /* Stores only the signal number */
+extern int	g_signal_received; /* Stores only the signal number */
 
 /* Main functions */
 int		initialize_shell(t_shell *shell);
