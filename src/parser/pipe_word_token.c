@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 01:20:03 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:54:51 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	is_text_token(t_token *lex_start, t_token **lex_token,
 		t_cmd_token *new_token)
 {
 	int	i;
-	
+
 	i = 0;
-	while (*lex_token && ((*lex_token)->type == T_WORD
-		|| (*lex_token)->type == T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
+	while (*lex_token && ((*lex_token)->type == T_WORD || (*lex_token)->type \
+				== T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
 	{
 		i++;
 		*lex_token = (*lex_token)->next;
@@ -51,7 +51,8 @@ int	is_text_token(t_token *lex_start, t_token **lex_token,
 	*lex_token = lex_start;
 	i = 0;
 	while (*lex_token && ((*lex_token)->type == T_WORD
-		|| (*lex_token)->type == T_Q_WORD || (*lex_token)->type == T_D_Q_WORD))
+			|| (*lex_token)->type == T_Q_WORD
+			|| (*lex_token)->type == T_D_Q_WORD))
 	{
 		new_token->cmd_with_args[i] = ft_strdup((*lex_token)->value);
 		new_token->arg_types[i] = get_args_type((*lex_token)->type);

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 02:12:42 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:05:35 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	handle_signal(int sig)
 void	setup_signal_handlers(void)
 {
 	struct sigaction	sa;
-	
+
 	sa.sa_handler = handle_signal;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

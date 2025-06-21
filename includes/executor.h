@@ -6,14 +6,15 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 02:11:29 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:06:30 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
-#define EXECUTOR_H
+# define EXECUTOR_H
 
 # include "minishell.h"
+# include "parser.h"
 # include <sys/wait.h>
 
 /* Executor functions */

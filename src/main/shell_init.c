@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:31:03 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:17:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:31:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,3 @@ int	initialize_shell(t_shell *shell)
 		return (0);
 	return (1);
 }
-
-
-

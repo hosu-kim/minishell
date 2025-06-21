@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:37:37 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 23:04:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:16:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*tokenizer(const char *input)
 		if (skip_whitespaces(input_ptr) == FAILURE)
 			break ;
 		if (**input_ptr == '\0')
-			break;
+			break ;
 		new_token = create_new_token();
 		if (!new_token)
 			return (free_tokens(start), NULL);

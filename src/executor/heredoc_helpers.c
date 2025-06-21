@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 01:29:02 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:10:06 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,15 @@ static ssize_t	readline_heredoc(char **line_buffer, size_t *line_buffer_size)
 static void	process_unquoted(int std_fd, char *line)
 {
 	t_cmd_token	temp;
-	char		*dup = ft_strdup(line);
-	char		*args[2] = { dup, NULL };
-	t_arg_type	types[2] = { UNQUOTED, 0 };
+	char		*dup;
+	char		*args[2];
+	t_arg_type	types[2];
 
+	dup = ft_strdup(line);
+	args[0] = dup;
+	args[1] = NULL;
+	types[0] = UNQUOTED;
+	types[1] = 0;
 	temp.cmd_with_args = args;
 	temp.arg_types = types;
 	temp.input_redirs = NULL;
@@ -62,10 +67,12 @@ static void	process_quoted(int fd, char *line)
 
 int	write_heredoc_lines(int out_fd, t_redirection *redir)
 {
-	char	*line_buffer = NULL;
-	size_t	buffer_size = 0;
+	char	*line_buffer;
+	size_t	buffer_size;
 	ssize_t	bytes_read;
 
+	line_buffer = NULL;
+	buffer_size = 0;
 	while ((bytes_read = readline_heredoc(&line_buffer, &buffer_size)) > 0)
 	{
 		if (ft_strcmp(line_buffer, redir->target) == 0)

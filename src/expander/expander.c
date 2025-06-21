@@ -6,26 +6,11 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:03:54 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:59:23 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-static int	find_var_end(char *arg, int start)
-{
-	int	i;
-
-	i = start + 1;
-	if (arg[i] == '?' || arg[i] == '$')
-		i++;
-	else
-	{
-		while (is_valid_var_char(arg[i]))
-			i++;
-	}
-	return (i);
-}
 
 static char	*environment_variable(char *arg, int j)
 {
@@ -35,7 +20,8 @@ static char	*environment_variable(char *arg, int j)
 	return (extract_var_name(arg, j, end));
 }
 
-static int	handle_null_variable(t_cmd_token **token, int i, int j, char **env, char **start)
+static int	handle_null_variable(t_cmd_token **token, int i, int j, char **env,
+								char **start)
 {
 	if ((*token)->arg_types[i] < SKIP_PRINT)
 	{
@@ -91,47 +77,4 @@ char	*get_variable_value(char *env, int exit_status)
 		return (ft_strdup(exit_status_str));
 	}
 	return (getenv(env));
-}
-
-char	*start_of_env(char *arg)
-{
-	int		i;
-	int		j;
-	char	*ptr;
-
-	i = 0;
-	while (arg[i] != '$')
-		i++;
-	ptr = malloc((i + 1) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	j = 0;
-	while (j < i)
-	{
-		ptr[j] = arg[j];
-		j++;
-	}
-	ptr[j] = '\0';
-	return (ptr);
-}
-
-char	*extract_var_name(char *arg, int start, int end)
-{
-	char	*ptr;
-	int		k;
-	int		j;
-
-	ptr = malloc((end - start) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	k = 0;
-	j = start + 1;
-	while (j < end)
-	{
-		ptr[k] = arg[j];
-		k++;
-		j++;
-	}
-	ptr[k] = '\0';
-	return (ptr);
 }

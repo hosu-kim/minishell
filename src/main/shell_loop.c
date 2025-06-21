@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:27:15 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:29:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:31:20 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,3 @@ void	run_shell_loop(t_shell *shell)
 		free(input_line);
 	}
 }
-
-
-
-

@@ -6,14 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 02:01:42 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:52:05 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-// Initializes t_command pointers to NULL and returns lex_start, the initial token from the lexer.
-static t_token	*initialize_t_command_pointers(t_token *lex_start, t_cmd_token **start,
+static t_token	*initialize_t_command_pointers(
+				t_token *lex_start, t_cmd_token **start,
 				t_cmd_token **current, t_cmd_token **new_token)
 {
 	(*start) = NULL;
@@ -44,7 +44,8 @@ static void	make_token_list(t_cmd_token **start, t_cmd_token *new_token,
 	(*current) = new_token;
 }
 
-static int	process_token_types(t_token **lexed_token, t_cmd_token *new_parsed_token)
+static int	process_token_types(
+			t_token **lexed_token, t_cmd_token *new_parsed_token)
 {
 	if (is_text_token(*lexed_token, lexed_token, new_parsed_token)
 		|| is_redirection_token(lexed_token, new_parsed_token)
@@ -60,7 +61,8 @@ t_cmd_token	*parser(t_token *lex_start)
 	t_cmd_token	*current;
 	t_cmd_token	*new_parsed_token;
 
-	lexed_token = initialize_t_command_pointers(lex_start, &start, &current, &new_parsed_token);
+	lexed_token = initialize_t_command_pointers(lex_start, &start,
+			&current, &new_parsed_token);
 	while (lexed_token)
 	{
 		new_parsed_token = malloc(sizeof(t_cmd_token));

@@ -6,12 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:38:18 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 11:36:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:10:27 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
+
+#include "minishell.h"
 
 # include <stdlib.h>
 
@@ -32,5 +34,7 @@ char	*extract_path_segment(char *path, int start, int end);
 /* Character utility functions */
 int		is_valid_var_char(char c);
 void	free_var(char **env, char **var);
+
+int		skip_whitespaces(const char **input);
 
 #endif

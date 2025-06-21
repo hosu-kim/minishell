@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 20:04:50 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:10:01 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # include <readline/history.h>
 
 /* Forward declarations */
-typedef struct s_token t_token;
-typedef struct s_cmd_token t_cmd_token;
-typedef struct s_redirection t_redirection;
+typedef struct s_token			t_token;
+typedef struct s_cmd_token		t_cmd_token;
+typedef struct s_redirection	t_redirection;
 
 /* Module-specific headers */
 # include "lexer.h"
@@ -41,15 +41,18 @@ typedef struct s_redirection t_redirection;
 # include "builtin.h"
 # include "utils.h"
 
+/* External declarations */
+extern char						**environ;
+
+/* Global variable - ONLY ONE for signal handling */
+extern int						g_signal_received;
+
 /* Common macros */
 # define SUCCESS 0
 # define FAILURE 1
 # define YES 1
 # define NO 0
 # define BUFFER_SIZE 1024
-
-/* External declarations */
-extern char	**environ;
 
 /* Main shell stucture */
 typedef struct s_shell
@@ -61,22 +64,18 @@ typedef struct s_shell
 	int		stdout_backup; /* Backup of original stdout */
 }	t_shell;
 
-/* Global variable - ONLY ONE for signal handling */
-extern int	g_signal_received; /* Stores only the signal number */
-
 /* Main functions */
 int		initialize_shell(t_shell *shell);
 void	run_shell_loop(t_shell *shell);
 void	execute_input_line(t_shell *shell, char *input);
 void	cleanup_shell(t_shell *shell);
 
+void	handle_tokenization_error(void);
+void	handle_parsing_error(t_token *tokens);
+
 /* Environment management functions */
 int		copy_environment_variables(char **new_env, int count);
 void	free_environment(char **env);
-
-/* Error handling functions */
-void	handle_tokenization_error(void);
-void	handle_parsing_error(t_token *tokens);
 
 /* Resource cleanup functions */
 void	cleanup_parsing_resources(t_token *tokens, t_cmd_token *commands);

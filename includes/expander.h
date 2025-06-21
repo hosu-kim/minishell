@@ -6,14 +6,16 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:55 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 02:08:06 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:00:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-#include "parser.h"
+# include "parser.h"
+
+int		find_var_end(char *arg, int start);
 
 // Make expander for $
 void	expand_token(t_cmd_token *token, int exit_status);

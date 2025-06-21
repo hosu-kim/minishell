@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 02:16:44 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:12:19 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	is_parent_builtin(const char *cmd)
 		|| ft_strcmp(cmd, "export") == 0
 		|| ft_strcmp(cmd, "unset") == 0
 		|| ft_strcmp(cmd, "exit") == 0)
-			return (YES);
-		return (NO);
+		return (YES);
+	return (NO);
 }
 
 static void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
@@ -42,7 +42,8 @@ static void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
 		close(pipe_fd[1]);
 }
 
-static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd, char **envp)
+static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
+								char **envp)
 {
 	int	pipe_fd[2];
 
@@ -52,7 +53,8 @@ static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd, char *
 	execute_in_child(cmd, envp);
 }
 
-static int	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd, char **envp)
+static int	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
+								char **envp)
 {
 	pid_t	pid;
 	int		out_fd;

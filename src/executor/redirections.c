@@ -6,12 +6,11 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 01:51:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:14:19 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
 
 /**
  * @brief Redirects standard input to read from a file, making the file's
@@ -79,7 +78,7 @@ int	output_redirection(t_redirection *redir)
 		perror("Error: invalid redirection argument");
 		return (1);
 	}
-	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
+	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror(redir->target);
@@ -108,7 +107,7 @@ int	output_redirection(t_redirection *redir)
 int	append_redirection(t_redirection *redir)
 {
 	int	fd;
-	
+
 	if (redir == NULL || redir->target == NULL)
 	{
 		perror("Error: Invalid redir argument");
@@ -138,7 +137,7 @@ int	heredoc_redirection(t_redirection *redir)
 {
 	int	pipefd[2];
 
-	if(!redir || !redir->target)
+	if (!redir || !redir->target)
 	{
 		perror("invalid heredoc");
 		return (1);
@@ -180,7 +179,8 @@ void	apply_redirections(t_cmd_token *cmd)
 	{
 		if (redir->type == T_REDIR_OUT && output_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
-		else if (redir->type == T_REDIR_APPEND && append_redirection(redir) != 0)
+		else if (redir->type == T_REDIR_APPEND
+			&& append_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
 		redir = redir->next;
 	}

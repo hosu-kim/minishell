@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 20:31:14 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:40:11 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_cmd_token
 {
 	char				**cmd_with_args; // args and command on 0 position
 	int					argc; // amount of arguments
-	t_arg_type			*arg_types; // types of words (quotes - 0, double quotes - 2, no quotes - 1)
+	//*arg_types: types of words (quotes - 0, double quotes - 2, no quotes - 1)
+	t_arg_type			*arg_types;
 	t_redirection		*input_redirs; // list of input redirections
 	t_redirection		*output_redirs; // list of output redirections
 	int					has_pipe; // 1 pipe, 0 no pipe
@@ -49,7 +50,7 @@ t_cmd_token	*parser(t_token *start);
 
 // make word tokens for execution
 int			is_text_token(t_token *lex_start, t_token **lex_token,
-		t_cmd_token *new_token);
+				t_cmd_token *new_token);
 
 // make pipe tokens for execution
 int			is_pipe_token(t_token **lex_token, t_cmd_token *new_token);
@@ -61,6 +62,5 @@ int			is_redirection_token(t_token **lex_token, t_cmd_token *new_token);
 void		free_cmd_tokens(t_cmd_token *start);
 
 int			get_args_type(int type);
-
 
 #endif

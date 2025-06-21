@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 00:21:03 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:03:54 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:15:54 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ void	process_token_args(t_cmd_token *token, int exit_status)
 	while (token->cmd_with_args && token->cmd_with_args[i] != NULL)
 	{
 		j = 0;
-		while (token->cmd_with_args[i][j] != '$' && token->cmd_with_args[i][j] != '\0'
-				&& (token->arg_types[i] == UNQUOTED || token->arg_types[i] == DQUOTED))
+		while (token->cmd_with_args[i][j] != '$'
+				&& token->cmd_with_args[i][j] != '\0'
+				&& (token->arg_types[i] == UNQUOTED
+				|| token->arg_types[i] == DQUOTED))
 			j++;
 		if (token->cmd_with_args[i][j] == '$' && token->arg_types[i] != QUOTED)
 		{
-			if (token->cmd_with_args[i][j + 1] == '?' || token->cmd_with_args[i][j + 1] == '$' ||
+			if (token->cmd_with_args[i][j + 1] == '?'
+				|| token->cmd_with_args[i][j + 1] == '$' ||
 				is_valid_var_char(token->cmd_with_args[i][j + 1]))
 			{
 				if (make_env(&token, i, j, exit_status) == 1)

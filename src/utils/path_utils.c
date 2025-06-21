@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 11:36:57 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:29:33 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	count_paths(char *path)
 	return (count);
 }
 
-static int	process_path_segment(char **paths, char *path, int *count, int start, int end)
+static int	process_path_segment(char **paths, char *path,
+								int *count, int start, int end)
 {
 	paths[*count] = extract_path_segment(path, start, end);
 	if (!paths[*count])

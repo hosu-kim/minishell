@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 11:55:46 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:18:39 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ static int	calculate_word_length(const char **input, int *sq, int *dq)
 	return (total_len);
 }
 
-static void	extract_quote_content(const char **input, int *pos, char **temp_pos, char quote_char)
+static void	extract_quote_content(const char **input, int *pos,
+									char **temp_pos, char quote_char)
 {
 	(*pos)++;
-	while (*pos < (int)ft_strlen(*input) && (*input)[*pos] != quote_char 
+	while (*pos < (int)ft_strlen(*input) && (*input)[*pos] != quote_char
 		&& (*input)[*pos] != '\0')
 		*(*temp_pos)++ = (*input)[(*pos)++];
 	if ((*input)[*pos] == quote_char)
@@ -61,7 +62,8 @@ static char	*extract_word(const char **input, int total_len)
 	return (word_value);
 }
 
-static void	set_token_type(t_token *new_node, int has_single_quotes, int has_double_quotes)
+static void	set_token_type(t_token *new_node, int has_single_quotes,
+							int has_double_quotes)
 {
 	if (has_single_quotes && !has_double_quotes)
 		new_node->type = T_Q_WORD;
@@ -82,7 +84,7 @@ int	text_tokenizer(const char **input, t_token *new_node)
 
 	has_single_quotes = 0;
 	has_double_quotes = 0;
-	total_len = calculate_word_length(input, &has_single_quotes, 
+	total_len = calculate_word_length(input, &has_single_quotes,
 			&has_double_quotes);
 	if (total_len <= 0)
 		return (FAILURE);

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:33:51 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 19:18:35 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:51:10 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	check_type(t_token ***lex_token)
 {
 	if ((**lex_token) && (**lex_token)->type != T_PIPE
 		&& ((**lex_token)->type == T_REDIR_IN
-		|| (**lex_token)->type == T_REDIR_OUT
-		|| (**lex_token)->type == T_REDIR_APPEND
-		|| (**lex_token)->type == T_HEREDOC))
+			|| (**lex_token)->type == T_REDIR_OUT
+			|| (**lex_token)->type == T_REDIR_APPEND
+			|| (**lex_token)->type == T_HEREDOC))
 		return (1);
 	return (0);
 }
@@ -70,12 +70,12 @@ int	is_redirection_token(t_token **lex_token, t_cmd_token *new_token)
 {
 	t_redirection	*new_redir;
 	t_redirection	*current;
-	
+
 	while (check_type(&lex_token))
 	{
 		if ((*lex_token)->next == NULL || ((*lex_token)->next->type != T_WORD
-			&& (*lex_token)->next->type != T_Q_WORD
-			&& (*lex_token)->next->type != T_D_Q_WORD))
+				&& (*lex_token)->next->type != T_Q_WORD
+				&& (*lex_token)->next->type != T_D_Q_WORD))
 			return (printf("Syntax error\n"), 1);
 		new_redir = malloc(sizeof(t_redirection));
 		if (!new_redir)
