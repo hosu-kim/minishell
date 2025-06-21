@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 22:41:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:12:42 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,6 @@ void	execute_in_child(t_cmd_token *cmd, char **envp)
 	run_external(cmd->cmd_with_args, envp);
 }
 
-static int	is_parent_builtin(const char *cmd)
-{
-	if (!cmd)
-		return (NO);
-	if (ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "exit") == 0)
-			return (YES);
-		return (NO);
-}
-
 int	executor(t_cmd_token *tokens, char ***envp)
 {
 	pid_t	pid;
@@ -88,20 +76,13 @@ int	executor(t_cmd_token *tokens, char ***envp)
 	setup_signal_handlers();
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("fork");
-		return (1);
-	}
+		return (perror("fork"), 1);
 	if (pid == 0)
 		execute_in_child(tokens, *envp);
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			tokens->exit_code = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			tokens->exit_code = 128 + WTERMSIG(status);
-		return (tokens->exit_code);
-	}
-	return (1);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		tokens->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		tokens->exit_code = 128 + WTERMSIG(status);
+	return (tokens->exit_code);
 }

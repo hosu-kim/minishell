@@ -6,71 +6,50 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 19:36:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:08:06 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static char	*start_of_env(char *arg)
+static int	find_var_end(char *arg, int start)
 {
-	int		i;
-	int		j;
-	char	*ptr;
+	int	i;
 
-	i = 0;
-	while (arg[i] != '$')
+	i = start + 1;
+	if (arg[i] == '?' || arg[i] == '$')
 		i++;
-	ptr = malloc((i + 1) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	j = 0;
-	while (j < i)
+	else
 	{
-		ptr[j] = arg[j];
-		j++;
+		while (is_valid_var_char(arg[i]))
+			i++;
 	}
-	ptr[j] = '\0';
-	return (ptr);
+	return (i);
 }
 
 static char	*environment_variable(char *arg, int j)
 {
-	int		i;
-	int		k;
-	int		l;
-	char	*ptr;
+	int	end;
 
-	i = j;
-	i++;
-	while ((arg[i] >= '0' && arg[i] <= '9') || (arg[i] >= 'a' && arg[i] <= 'z')
-		|| (arg[i] >= 'A' && arg[i] <= 'Z') || arg[i] == '_')
-		i++;
-	l = i - j;
-	ptr = malloc((l) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	k = 0;
-	j++;
-	while (j < i)
-	{
-		ptr[k] = arg[j];
-		k++;
-		j++;
-	}
-	ptr[k] = '\0';
-	return (ptr);
+	end = find_var_end(arg, j);
+	return (extract_var_name(arg, j, end));
 }
 
-static void	free_var(char **env, char **var)
+static int	handle_null_variable(t_cmd_token **token, int i, int j, char **env, char **start)
 {
-	if (*env)
-		free(*env);
-	if (*var)
-		free(*var);
+	if ((*token)->arg_types[i] < SKIP_PRINT)
+	{
+		update_token(&(*token)->cmd_with_args[i], *start, j);
+		if ((*token)->cmd_with_args[i][0] == '\0')
+			(*token)->arg_types[i] = SKIP_PRINT;
+		free_var(env, start);
+		return (1);
+	}
+	free_var(env, start);
+	return (0);
 }
 
-static int	make_env(t_cmd_token **token, int i, int j)
+int	make_env(t_cmd_token **token, int i, int j, int exit_status)
 {
 	char	*env;
 	char	*var;
@@ -78,46 +57,21 @@ static int	make_env(t_cmd_token **token, int i, int j)
 
 	start = start_of_env((*token)->cmd_with_args[i]);
 	env = environment_variable((*token)->cmd_with_args[i], j);
-	var = getenv(env);
-	if (var == NULL && (*token)->arg_types[i] < SKIP_PRINT)
-	{
-		update_token(&(*token)->cmd_with_args[i], start, j);
-		if ((*token)->cmd_with_args[i][0] == '\0')
-			(*token)->arg_types[i] = SKIP_PRINT;
-		free_var(&env, &start);
-		return (1);
-	}
-	else if (var)
-	{
-		remake_token(&(*token)->cmd_with_args[i], start, var, j);
-		free_var(&env, &start);
-		return (1);
-	}
+	var = get_variable_value(env, exit_status);
+	if (var == NULL)
+		return (handle_null_variable(token, i, j, &env, &start));
+	remake_token(&(*token)->cmd_with_args[i], start, var, j);
+	if (ft_strcmp(env, "?") == 0 || ft_strcmp(env, "$") == 0)
+		free(var);
 	free_var(&env, &start);
-	return (0);
+	return (1);
 }
 
-void	expand_token(t_cmd_token *token)
+void	expand_token(t_cmd_token *token, int exit_status)
 {
-	int	i;
-	int	j;
-	
 	while (token)
 	{
-		i = 0;
-		while (token->cmd_with_args && token->cmd_with_args[i] != NULL)
-		{
-			j = 0;
-			while (token->cmd_with_args[i][j] != '$' && token->cmd_with_args[i][j] != '\0'
-					&& (token->arg_types[i] == UNQUOTED || token->arg_types[i] == DQUOTED))
-				j++;
-			if (token->cmd_with_args[i][j] == '$' && token->arg_types[i] != QUOTED)
-			{
-				if (make_env(&token, i, j) == 1)
-					continue ;
-			}
-			i++;
-		}
+		process_token_args(token, exit_status);
 		token = token->next_cmd_token;
 	}
 }

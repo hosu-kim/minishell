@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:49:09 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 01:29:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	process_unquoted(int std_fd, char *line)
 	temp.output_redirs = NULL;
 	temp.has_pipe = 0;
 	temp.next_cmd_token = NULL;
-	expand_token(&temp);
+	expand_token(&temp, 0);
 	write(std_fd, temp.cmd_with_args[0], strlen(temp.cmd_with_args[0]));
 	write(std_fd, "\n", 1);
 	free(temp.cmd_with_args[0]);

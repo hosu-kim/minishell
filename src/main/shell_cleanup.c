@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:51:09 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/17 21:36:19 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 00:54:58 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 void	cleanup_parsing_resources(t_token *tokens, t_cmd_token *commands)
 {
 	if (tokens)
+	{
 		free_tokens(tokens);
+	}
 	if (commands)
+	{
 		free_cmd_tokens(commands);
+	}
 }
 
 static void	restore_file_descriptor(int *backup_fd, int standard_fd)

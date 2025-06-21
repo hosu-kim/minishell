@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 17:30:22 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 01:51:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,24 +164,24 @@ void	apply_redirections(t_cmd_token *cmd)
 {
 	t_redirection	*redir;
 
-	if (cmd == NULL)
+	if (!cmd)
 		return ;
 	redir = cmd->input_redirs;
 	while (redir)
 	{
-		if (redir->type == T_REDIR_IN)
-			input_redirection(redir);
-		else if (redir->type == T_HEREDOC)
-			heredoc_redirection(redir);
+		if (redir->type == T_REDIR_IN && input_redirection(redir) != 0)
+			exit(EXIT_FAILURE);
+		else if (redir->type == T_HEREDOC && heredoc_redirection(redir) != 0)
+			exit(EXIT_FAILURE);
 		redir = redir->next;
 	}
 	redir = cmd->output_redirs;
 	while (redir)
 	{
-		if (redir->type == T_REDIR_OUT)
-			output_redirection(redir);
-		else if (redir->type == T_REDIR_APPEND)
-			append_redirection(redir);
+		if (redir->type == T_REDIR_OUT && output_redirection(redir) != 0)
+			exit(EXIT_FAILURE);
+		else if (redir->type == T_REDIR_APPEND && append_redirection(redir) != 0)
+			exit(EXIT_FAILURE);
 		redir = redir->next;
 	}
 }

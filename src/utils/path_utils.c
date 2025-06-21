@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:17:06 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 11:36:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ void	free_paths(char **paths)
 	free(paths);
 }
 
-static void	copy_substring(char *dest, const char *src, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len && src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-}
-
 static int	count_paths(char *path)
 {
 	int	count;
@@ -56,32 +43,24 @@ static int	count_paths(char *path)
 	return (count);
 }
 
-static char	*extract_path_segment(char *path, int start, int end)
+static int	process_path_segment(char **paths, char *path, int *count, int start, int end)
 {
-	char	*segment;
-	int		len;
-
-	len = end - start;
-	segment = malloc(len + 1);
-	if (!segment)
-		return (NULL);
-	copy_substring(segment, &path[start], len);
-	return (segment);
+	paths[*count] = extract_path_segment(path, start, end);
+	if (!paths[*count])
+	{
+		free_paths(paths);
+		return (0);
+	}
+	(*count)++;
+	return (1);
 }
 
-char	**ft_split_path(char *path)
+static char	**split_path_loop(char **paths, char *path)
 {
-	char	**paths;
-	int		count;
-	int		i;
-	int		start;
+	int	i;
+	int	start;
+	int	count;
 
-	if (!path)
-		return (NULL);
-	count = count_paths(path);
-	paths = malloc(sizeof(char *) * (count + 1));
-	if (!paths)
-		return (NULL);
 	i = 0;
 	count = 0;
 	start = 0;
@@ -89,23 +68,28 @@ char	**ft_split_path(char *path)
 	{
 		if (path[i] == ':')
 		{
-			paths[count] = extract_path_segment(path, start, i);
-			if (!paths[count])
-			{
-				free_paths(paths);
+			if (!process_path_segment(paths, path, &count, start, i))
 				return (NULL);
-			}
-			count++;
 			start = i + 1;
 		}
 		i++;
 	}
-	paths[count] = extract_path_segment(path, start, i);
-	if (!paths[count])
-	{
-		free_paths(paths);
+	if (!process_path_segment(paths, path, &count, start, i))
 		return (NULL);
-	}
-	paths[count + 1] = NULL;
+	paths[count] = NULL;
 	return (paths);
+}
+
+char	**ft_split_path(char *path)
+{
+	char	**paths;
+	int		count;
+
+	if (!path)
+		return (NULL);
+	count = count_paths(path);
+	paths = malloc(sizeof(char *) * (count + 1));
+	if (!paths)
+		return (NULL);
+	return (split_path_loop(paths, path));
 }

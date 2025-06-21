@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/20 22:32:48 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:11:29 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 int		executor(t_cmd_token *tokens, char ***envp);
 int		execute_pipeline(t_cmd_token *cmds, char **envp);
 void	execute_in_child(t_cmd_token *cmd, char **envp);
+int		is_parent_builtin(const char *cmd);
+void	setup_signal_handlers(void);
 
 /* Redirection functions */
 void	apply_redirections(t_cmd_token *cmd);

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:38:18 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:42:24 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 11:36:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,10 @@ char	**ft_split_path(char *path);
 void	free_paths(char **paths);
 char	*find_executable(char *cmd);
 void	my_execvp(char *cmd, char **args, char **env);
+char	*extract_path_segment(char *path, int start, int end);
+
+/* Character utility functions */
+int		is_valid_var_char(char c);
+void	free_var(char **env, char **var);
 
 #endif

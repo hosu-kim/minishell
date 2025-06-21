@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 20:23:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 11:45:40 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	is_double_char_operator(const char **input, t_token *new_token);
 int		skip_whitespaces(const char **input);
 // Free all tokens in the list.
 void	free_tokens(t_token *token);
+// Helper functions for text tokenizing
+int		is_word_boundary(char c);
+int		handle_single_quote(const char **input, int *pos, int *len);
+int		handle_double_quote(const char **input, int *pos, int *len);
+int		process_quote_char(const char **input, int *pos, int *total_len, int *sq, int *dq);
 
 /* word_tokens.c */
 // Make word tokens

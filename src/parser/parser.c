@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:06:16 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:01:42 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ static void	make_token_list(t_cmd_token **start, t_cmd_token *new_token,
 	(*current) = new_token;
 }
 
+static int	process_token_types(t_token **lexed_token, t_cmd_token *new_parsed_token)
+{
+	if (is_text_token(*lexed_token, lexed_token, new_parsed_token)
+		|| is_redirection_token(lexed_token, new_parsed_token)
+		|| is_pipe_token(lexed_token, new_parsed_token))
+		return (1);
+	return (0);
+}
+
 t_cmd_token	*parser(t_token *lex_start)
 {
 	t_token		*lexed_token;
@@ -58,12 +67,9 @@ t_cmd_token	*parser(t_token *lex_start)
 		if (!new_parsed_token)
 			return (free_cmd_tokens(start), NULL);
 		initialize_new_token_members(new_parsed_token);
-		if (is_text_token(lexed_token, &lexed_token, new_parsed_token)
-			|| is_redirection_token(&lexed_token, new_parsed_token)
-			|| is_pipe_token(&lexed_token, new_parsed_token))
+		if (process_token_types(&lexed_token, new_parsed_token))
 		{
-			if (new_parsed_token)
-				free_cmd_tokens(new_parsed_token);
+			free(new_parsed_token);
 			if (start)
 				free_cmd_tokens(start);
 			return (NULL);

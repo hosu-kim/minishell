@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:49:21 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 23:04:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 01:51:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 static void	execute_parsed_commands(t_shell *shell, t_token *tokens, t_cmd_token *commands)
 {
-	expand_token(commands);
-	/* Backup STDIN/STDOUT */
+	expand_token(commands, shell->exit_status);
 	shell->stdin_backup = dup(STDIN_FILENO);
 	shell->stdout_backup = dup(STDOUT_FILENO);
 	shell->exit_status = executor(commands, &shell->env);
-	/* Restore STDIN/STDOUT */
 	if (shell->stdin_backup != -1)
 	{
 		dup2(shell->stdin_backup, STDIN_FILENO);

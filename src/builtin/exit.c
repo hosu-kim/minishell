@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:29:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 14:09:40 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 01:51:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ static int	is_numeric(char *str)
 		i++;
 	}
 	return (YES);
+}
+
+static int	check_special_cases(char *arg)
+{
+	if (!arg)
+		return (0);
+	if (arg[0] == '-' && arg[1] == '"')
+		return (1);
+	if (arg[0] == '+' && arg[1] == '"')
+		return (1);
+	return (0);
 }
 
 static int	ft_atoi(char *str)
@@ -63,6 +74,11 @@ int	builtin_exit(char **args)
 	printf("exit\n");
 	if (!args[1])
 		exit(0);
+	if (check_special_cases(args[1]))
+	{
+		printf("minishell: exit: %c: numeric argument required\n", args[1][0]);
+		exit(2);
+	}
 	if (!is_numeric(args[1]))
 	{
 		printf("minishell: exit: %s: numeric argument required\n", args[1]);

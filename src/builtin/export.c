@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:06:25 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 14:35:35 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:01:42 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,36 @@ static char	*extract_key(char *arg, char *address_of_equal_sign)
 	return (key);
 }
 
-int	builtin_export(char **args, char ***env)
+static void	process_export_arg(char *arg, char ***env)
 {
 	char	*address_of_equal_sign;
 	char	*key;
 	char	*value;
-	int		i;
+
+	address_of_equal_sign = ft_strchr(arg, '=');
+	if (address_of_equal_sign)
+	{
+		key = extract_key(arg, address_of_equal_sign);
+		if (key)
+		{
+			value = ft_strdup(address_of_equal_sign + 1);
+			*env = add_env_var(*env, key, value);
+			free(key);
+			free(value);
+		}
+	}
+}
+
+int	builtin_export(char **args, char ***env)
+{
+	int	i;
 
 	if (!args[1])
 		return (builtin_env(*env));
 	i = 1;
 	while (args[i])
 	{
-		address_of_equal_sign = ft_strchr(args[i], '=');
-		if (address_of_equal_sign)
-		{
-			key = extract_key(args[i], address_of_equal_sign);
-			if (key)
-			{
-				value = ft_strdup(address_of_equal_sign + 1);
-				*env = add_env_var(*env, key, value);
-				free(key);
-				free(value);
-			}
-		}
+		process_export_arg(args[i], env);
 		i++;
 	}
 	return (SUCCESS);

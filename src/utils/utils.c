@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:37:14 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/20 19:34:48 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 02:08:06 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,20 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		result[i++] = *s2++;
 	result[i] = '\0';
 	return (result);
+}
+
+int	is_valid_var_char(char c)
+{
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+		(c >= '0' && c <= '9') || c == '_');
+}
+
+void	free_var(char **env, char **var)
+{
+	if (*env)
+		free(*env);
+	if (*var)
+		free(*var);
 }
 
 
