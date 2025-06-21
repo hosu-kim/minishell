@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:10:06 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:23:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	write_heredoc_lines(int out_fd, t_redirection *redir)
 
 	line_buffer = NULL;
 	buffer_size = 0;
-	while ((bytes_read = readline_heredoc(&line_buffer, &buffer_size)) > 0)
+	bytes_read = readline_heredoc(&line_buffer, &buffer_size);
+	while (bytes_read > 0)
 	{
 		if (ft_strcmp(line_buffer, redir->target) == 0)
 			break ;

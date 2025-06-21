@@ -6,16 +6,15 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:38:18 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:19:43 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:24:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "minishell.h"
-
 # include <stdlib.h>
+# include "minishell.h"
 
 /* String utility functions */
 char	*ft_strdup(const char *s);
