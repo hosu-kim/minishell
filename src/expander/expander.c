@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 02:08:06 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 12:03:54 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,64 @@ void	expand_token(t_cmd_token *token, int exit_status)
 		process_token_args(token, exit_status);
 		token = token->next_cmd_token;
 	}
+}
+
+char	*get_variable_value(char *env, int exit_status)
+{
+	char	exit_status_str[12];
+
+	if (ft_strcmp(env, "?") == 0)
+	{
+		snprintf(exit_status_str, sizeof(exit_status_str), "%d", exit_status);
+		return (ft_strdup(exit_status_str));
+	}
+	else if (ft_strcmp(env, "$") == 0)
+	{
+		snprintf(exit_status_str, sizeof(exit_status_str), "%d", getpid());
+		return (ft_strdup(exit_status_str));
+	}
+	return (getenv(env));
+}
+
+char	*start_of_env(char *arg)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	i = 0;
+	while (arg[i] != '$')
+		i++;
+	ptr = malloc((i + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		ptr[j] = arg[j];
+		j++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
+}
+
+char	*extract_var_name(char *arg, int start, int end)
+{
+	char	*ptr;
+	int		k;
+	int		j;
+
+	ptr = malloc((end - start) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	k = 0;
+	j = start + 1;
+	while (j < end)
+	{
+		ptr[k] = arg[j];
+		k++;
+		j++;
+	}
+	ptr[k] = '\0';
+	return (ptr);
 }
