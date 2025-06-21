@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   text_tokenizer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 13:37:13 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 18:21:52 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ int	text_tokenizer(const char **input, t_token *new_node)
 	total_len = calculate_word_length(input, &has_single_quotes,
 			&has_double_quotes);
 	if (total_len <= 0)
-		return (FAILURE);
+		return (NO);
 	word_value = extract_word(input, total_len);
 	if (!word_value)
-		return (FAILURE);
+		return (NO);
 	set_token_type(new_node, has_single_quotes, has_double_quotes);
 	new_node->value = word_value;
 	new_node->next = NULL;
