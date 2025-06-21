@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 23:11:38 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 13:25:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,17 @@ int	handle_double_quote(const char **input, int *pos, int *len)
 	return (0);
 }
 
-int	process_quote_char(const char **input, int *pos, int *total_len, int *sq,
-						int *dq)
+int	process_quote_char(const char **input, int *pos, int *total_len, int *flags)
 {
 	if ((*input)[*pos] == '\'')
 	{
-		*sq = 1;
+		*flags |= 1;
 		if (!handle_single_quote(input, pos, total_len))
 			return (0);
 	}
 	else if ((*input)[*pos] == '"')
 	{
-		*dq = 1;
+		*flags |= 2;
 		if (!handle_double_quote(input, pos, total_len))
 			return (0);
 	}

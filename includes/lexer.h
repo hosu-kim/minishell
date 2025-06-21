@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:09:01 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		is_word_boundary(char c);
 int		handle_single_quote(const char **input, int *pos, int *len);
 int		handle_double_quote(const char **input, int *pos, int *len);
 int		process_quote_char(
-			const char **input, int *pos, int *total_len, int *sq, int *dq);
+			const char **input, int *pos, int *total_len, int *flags);
 
 /* word_tokens.c */
 // Make word tokens

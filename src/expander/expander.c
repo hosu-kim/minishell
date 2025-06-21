@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:59:23 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ static char	*environment_variable(char *arg, int j)
 	return (extract_var_name(arg, j, end));
 }
 
-static int	handle_null_variable(t_cmd_token **token, int i, int j, char **env,
-								char **start)
+static int	handle_null_variable(t_cmd_token **token, int i, int j, char **vars)
 {
 	if ((*token)->arg_types[i] < SKIP_PRINT)
 	{
-		update_token(&(*token)->cmd_with_args[i], *start, j);
+		update_token(&(*token)->cmd_with_args[i], vars[1], j);
 		if ((*token)->cmd_with_args[i][0] == '\0')
 			(*token)->arg_types[i] = SKIP_PRINT;
-		free_var(env, start);
+		free_var(&vars[0], &vars[1]);
 		return (1);
 	}
-	free_var(env, start);
+	free_var(&vars[0], &vars[1]);
 	return (0);
 }
 
@@ -40,12 +39,17 @@ int	make_env(t_cmd_token **token, int i, int j, int exit_status)
 	char	*env;
 	char	*var;
 	char	*start;
+	char	*vars[2];
 
 	start = start_of_env((*token)->cmd_with_args[i]);
 	env = environment_variable((*token)->cmd_with_args[i], j);
 	var = get_variable_value(env, exit_status);
 	if (var == NULL)
-		return (handle_null_variable(token, i, j, &env, &start));
+	{
+		vars[0] = env;
+		vars[1] = start;
+		return (handle_null_variable(token, i, j, vars));
+	}
 	remake_token(&(*token)->cmd_with_args[i], start, var, j);
 	if (ft_strcmp(env, "?") == 0 || ft_strcmp(env, "$") == 0)
 		free(var);

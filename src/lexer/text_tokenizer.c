@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:30:02 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:18:39 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ static int	calculate_word_length(const char **input, int *sq, int *dq)
 {
 	int	pos;
 	int	total_len;
+	int	flags;
 
 	pos = 0;
 	total_len = 0;
+	flags = 0;
 	while (pos < (int)ft_strlen(*input) && !is_word_boundary((*input)[pos]))
 	{
-		if (!process_quote_char(input, &pos, &total_len, sq, dq))
+		if (!process_quote_char(input, &pos, &total_len, &flags))
 			return (-1);
 	}
+	*sq = (flags & 1) ? 1 : 0;
+	*dq = (flags & 2) ? 1 : 0;
 	return (total_len);
 }
 
