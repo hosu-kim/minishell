@@ -6,11 +6,11 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:29:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:17:02 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 void	free_paths(char **paths)
 {

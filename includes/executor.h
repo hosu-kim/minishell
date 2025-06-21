@@ -6,16 +6,18 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 13:06:30 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:20:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "minishell.h"
-# include "parser.h"
 # include <sys/wait.h>
+# include <minishell.h>
+
+typedef struct s_cmd_token		t_cmd_token;
+typedef struct s_redirection	t_redirection;
 
 /* Executor functions */
 int		executor(t_cmd_token *tokens, char ***envp);

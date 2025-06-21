@@ -6,11 +6,11 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:56:35 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:29:51 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:16:57 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 char	*extract_path_segment(char *path, int start, int end)
 {

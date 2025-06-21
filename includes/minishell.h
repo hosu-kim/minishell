@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:10:01 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:11:38 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-/* Forward declarations */
-typedef struct s_token			t_token;
-typedef struct s_cmd_token		t_cmd_token;
-typedef struct s_redirection	t_redirection;
 
 /* Module-specific headers */
 # include "lexer.h"
