@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:27:15 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:31:20 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 15:51:28 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	run_shell_loop(t_shell *shell)
 			break ;
 		if (is_valid_input(input_line))
 			execute_input_line(shell, input_line);
-		free(input_line);
+		if (input_line)
+			free(input_line);
 	}
 }

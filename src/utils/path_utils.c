@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:37:18 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 15:05:11 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	count_paths(char *path)
 	return (count);
 }
 
-static int	process_path_segment(char **paths, char *path, int *count, int *range)
+static int	process_path_segment(char **paths, char *path, int *count,
+		int *range)
 {
 	paths[*count] = extract_path_segment(path, range[0], range[1]);
 	if (!paths[*count])

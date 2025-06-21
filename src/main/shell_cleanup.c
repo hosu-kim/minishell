@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cleanup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:51:09 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 00:54:58 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 15:59:11 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ void	free_shell_resources(t_shell *shell)
 {
 	if (shell->env)
 		free_environment(shell->env);
-	if (shell->input)
-	{
-		free(shell->input);
-		shell->input = NULL;
-	}
+	shell->input = NULL;
 }
 
 void	cleanup_shell(t_shell *shell)
