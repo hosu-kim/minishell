@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:42:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/21 13:37:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ static int	process_path_segment(char **paths, char *path, int *count, int *range
 	return (1);
 }
 
-static char	**split_path_loop(char **paths, char *path)
+static int	process_colon_segments(char **paths, char *path, int *count)
 {
 	int	i;
 	int	start;
-	int	count;
 	int	range[2];
 
 	i = 0;
-	count = 0;
 	start = 0;
 	while (path[i])
 	{
@@ -71,24 +69,22 @@ static char	**split_path_loop(char **paths, char *path)
 		{
 			range[0] = start;
 			range[1] = i;
-			if (!process_path_segment(paths, path, &count, range))
-				return (NULL);
+			if (!process_path_segment(paths, path, count, range))
+				return (0);
 			start = i + 1;
 		}
 		i++;
 	}
 	range[0] = start;
 	range[1] = i;
-	if (!process_path_segment(paths, path, &count, range))
-		return (NULL);
-	paths[count] = NULL;
-	return (paths);
+	return (process_path_segment(paths, path, count, range));
 }
 
 char	**ft_split_path(char *path)
 {
 	char	**paths;
 	int		count;
+	int		segment_count;
 
 	if (!path)
 		return (NULL);
@@ -96,5 +92,9 @@ char	**ft_split_path(char *path)
 	paths = malloc(sizeof(char *) * (count + 1));
 	if (!paths)
 		return (NULL);
-	return (split_path_loop(paths, path));
+	segment_count = 0;
+	if (!process_colon_segments(paths, path, &segment_count))
+		return (NULL);
+	paths[segment_count] = NULL;
+	return (paths);
 }
