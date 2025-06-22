@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:40:11 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 13:57:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ int			is_pipe_token(t_token **lex_token, t_cmd_token *new_token);
 
 // make redir tokens for execution
 int			is_redirection_token(t_token **lex_token, t_cmd_token *new_token);
+
+// process single redirection at current position
+int			process_redirection_at_position(t_token **lex_token, t_cmd_token *new_token);
+
+// parser utility functions
+int			count_args_in_command(t_token *token);
+int			process_command_tokens(t_token **lexed_token, t_cmd_token *new_token, int argc);
+t_token		*initialize_parser(t_token *start, t_cmd_token **cmd_start,
+				t_cmd_token **current, t_cmd_token **new_token);
 
 // free parsed tokens in parser
 void		free_cmd_tokens(t_cmd_token *start);
