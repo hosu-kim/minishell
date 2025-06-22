@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
+#    By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/06/22 19:58:44 by hoskim           ###   ########seoul.kr   #
+#    Updated: 2025/06/22 22:01:44 by jaandras         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS = $(addprefix $(SRCS_DIR)/, \
     parser/parser_redir_utils.c \
     parser/parser_utils.c \
     parser/pipe_word_token.c \
+	utils/ft_itoa.c \
     utils/path_utils2.c \
     utils/path_utils3.c \
     utils/path_utils.c \
