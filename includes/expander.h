@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:55 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 17:44:33 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 22:00:46 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*get_variable_value(char *env, int exit_status);
 void	process_token_args(t_cmd_token *token, int exit_status);
 void	update_token(char **arg, char *start, int j);
 void	remake_token(char **arg, char *start, char *var, int j);
+char	*ft_itoa(int n);
 
 #endif
