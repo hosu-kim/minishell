@@ -6,59 +6,42 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:24 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:05:35 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 15:17:24 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	handle_signal(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void	setup_signal_handlers(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_signal;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-static void	run_external(char **argv, char **envp)
-{
-	if (ft_strchr(argv[0], '/'))
-		execve(argv[0], argv, envp);
-	else
-		my_execvp(argv[0], argv, envp);
-	perror(argv[0]);
-	exit(EXIT_FAILURE);
-}
-
 void	execute_in_child(t_cmd_token *cmd, char **envp)
 {
-	int	exit_code;
+	int		exit_code;
+	char	**filtered_args;
+	char	**original_args;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	apply_redirections(cmd);
 	if (!cmd->cmd_with_args || !cmd->cmd_with_args[0])
 		exit(EXIT_SUCCESS);
-	if (is_builtin(cmd->cmd_with_args[0]))
+	filtered_args = create_filtered_args(cmd);
+	if (!filtered_args)
+		exit(EXIT_SUCCESS);
+	if (check_empty_command(filtered_args) != 0)
 	{
+		free(filtered_args);
+		exit(EXIT_SUCCESS);
+	}
+	if (is_builtin(filtered_args[0]))
+	{
+		original_args = cmd->cmd_with_args;
+		cmd->cmd_with_args = filtered_args;
 		exit_code = execute_builtin(cmd, &envp);
+		cmd->cmd_with_args = original_args;
+		free(filtered_args);
 		exit(exit_code);
 	}
-	run_external(cmd->cmd_with_args, envp);
+	run_external(filtered_args, envp);
+	free(filtered_args);
 }
 
 int	executor(t_cmd_token *tokens, char ***envp)

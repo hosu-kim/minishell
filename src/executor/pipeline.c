@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:12:19 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,36 +24,7 @@ int	is_parent_builtin(const char *cmd)
 	return (NO);
 }
 
-static void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
-{
-	if (in_fd != STDIN_FILENO)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (out_fd != STDOUT_FILENO)
-	{
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
-	}
-	if (pipe_fd[0] != -1)
-		close(pipe_fd[0]);
-	if (pipe_fd[1] != -1)
-		close(pipe_fd[1]);
-}
-
-static void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
-								char **envp)
-{
-	int	pipe_fd[2];
-
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
-	setup_pipes(pipe_fd, in_fd, out_fd);
-	execute_in_child(cmd, envp);
-}
-
-static int	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
+static pid_t	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 								char **envp)
 {
 	pid_t	pid;
@@ -76,7 +47,23 @@ static int	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 		close(in_fd);
 	if (out_fd != STDOUT_FILENO)
 		close(out_fd);
-	return (pipe_fd[0]);
+	return (pid);
+}
+
+static pid_t	handle_pipe_setup(t_cmd_token *current, int in_fd, 
+					int *pipe_fd, char **envp)
+{
+	pid_t	pid;
+
+	pipe_fd[0] = -1;
+	pipe_fd[1] = -1;
+	pid = execute_single_pipe(current, in_fd, pipe_fd, envp);
+	if (pipe_fd[0] != -1)
+	{
+		if (in_fd != STDIN_FILENO)
+			close(in_fd);
+	}
+	return (pid);
 }
 
 int	execute_pipeline(t_cmd_token *cmds, char **envp)
@@ -84,18 +71,20 @@ int	execute_pipeline(t_cmd_token *cmds, char **envp)
 	t_cmd_token	*current;
 	int			in_fd;
 	int			pipe_fd[2];
-	int			status;
+	pid_t		last_pid;
+	pid_t		pid;
 
 	current = cmds;
 	in_fd = STDIN_FILENO;
+	last_pid = -1;
 	while (current)
 	{
-		pipe_fd[0] = -1;
-		pipe_fd[1] = -1;
-		in_fd = execute_single_pipe(current, in_fd, pipe_fd, envp);
+		pid = handle_pipe_setup(current, in_fd, pipe_fd, envp);
+		if (!current->next_cmd_token)
+			last_pid = pid;
+		if (pipe_fd[0] != -1)
+			in_fd = pipe_fd[0];
 		current = current->next_cmd_token;
 	}
-	while (wait(&status) > 0)
-		;
-	return (WEXITSTATUS(status));
+	return (wait_for_pipeline_completion(last_pid));
 }

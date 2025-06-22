@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 12:55:55 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:05:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,12 @@ char	*get_env_value(char *key, char **env);
 int		count_env_vars(char **env);
 char	**add_env_var(char **env, char *key, char *value);
 int		builtin_exit(char **args);
+
+/* Export utility functions */
+int		is_valid_identifier(const char *str);
+char	*extract_key(char *arg, char *address_of_equal_sign);
+int		handle_export_error(char *arg);
+int		handle_export_with_value(char *arg, char *equal_sign, char ***env);
+int		handle_export_without_value(char *arg, char ***env);
 
 #endif

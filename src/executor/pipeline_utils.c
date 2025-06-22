@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 15:40:00 by hoskim            #+#    #+#             */
+/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "executor.h"
+
+void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
+{
+	if (in_fd != STDIN_FILENO)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (out_fd != STDOUT_FILENO)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
+	if (pipe_fd[0] != -1)
+		close(pipe_fd[0]);
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
+}
+
+void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
+		char **envp)
+{
+	int	pipe_fd[2];
+
+	pipe_fd[0] = -1;
+	pipe_fd[1] = -1;
+	setup_pipes(pipe_fd, in_fd, out_fd);
+	execute_in_child(cmd, envp);
+}
+
+int	wait_for_pipeline_completion(pid_t last_pid)
+{
+	int		status;
+	pid_t	finished_pid;
+
+	while ((finished_pid = wait(&status)) > 0)
+	{
+		if (finished_pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				return (WEXITSTATUS(status));
+			else if (WIFSIGNALED(status))
+				return (128 + WTERMSIG(status));
+		}
+	}
+	return (0);
+}

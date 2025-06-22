@@ -1,42 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   file_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 21:06:25 by hoskim            #+#    #+#             */
+/*   Created: 2025/06/22 15:30:00 by hoskim            #+#    #+#             */
 /*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "executor.h"
+#include <sys/stat.h>
+#include <errno.h>
 
-static int	process_export_arg(char *arg, char ***env)
+static void	check_file_status(char *path)
 {
-	char	*address_of_equal_sign;
+	struct stat	st;
 
-	address_of_equal_sign = ft_strchr(arg, '=');
-	if (address_of_equal_sign)
-		return (handle_export_with_value(arg, address_of_equal_sign, env));
+	if (stat(path, &st) == 0)
+	{
+		if (S_ISDIR(st.st_mode))
+		{
+			perror(path);
+			exit(126);
+		}
+		if (access(path, X_OK) != 0)
+		{
+			perror(path);
+			exit(126);
+		}
+	}
 	else
-		return (handle_export_without_value(arg, env));
+	{
+		perror(path);
+		exit(127);
+	}
 }
 
-int	builtin_export(char **args, char ***env)
+void	execute_with_path(char **argv, char **envp)
 {
-	int	i;
-	int	exit_code;
-
-	if (!args[1])
-		return (builtin_env(*env));
-	exit_code = 0;
-	i = 1;
-	while (args[i])
-	{
-		if (process_export_arg(args[i], env) == 1)
-		exit_code = 1;
-		i++;
-	}
-	return (exit_code);
+	check_file_status(argv[0]);
+	execve(argv[0], argv, envp);
+	perror(argv[0]);
+	exit(EXIT_FAILURE);
 }

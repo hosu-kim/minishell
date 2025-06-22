@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 13:32:07 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 15:17:24 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	make_env(t_cmd_token **token, int i, int j, int exit_status)
 		return (handle_null_variable(token, i, j, vars));
 	}
 	remake_token(&(*token)->cmd_with_args[i], start, var, j);
+	if ((*token)->cmd_with_args[i][0] == '\0')
+		(*token)->arg_types[i] = SKIP_PRINT;
 	if (ft_strcmp(env, "?") == 0 || ft_strcmp(env, "$") == 0)
 		free(var);
 	free_var(&env, &start);
