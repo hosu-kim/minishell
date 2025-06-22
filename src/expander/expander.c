@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
+/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 20:34:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 21:08:54 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,100 @@ void	expand_token(t_cmd_token *token, int exit_status)
 	}
 }
 
+static char	*str_cpy(char *dst, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+static int	get_num_len(int n)
+{
+	int	num_len;
+
+	num_len = 0;
+	if (n <= 0)
+		num_len++;
+	while (n)
+	{
+		n /= 10;
+		num_len++;
+	}
+	return (num_len);
+}
+
+static char	*convert_number(int n, int num_len)
+{
+	char	*ptr;
+	int		i;
+
+	i = num_len - 1;
+	ptr = (char *)malloc((num_len + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	ptr[num_len] = '\0';
+	if (n == 0)
+		ptr[0] = '0';
+	if (n < 0)
+	{
+		ptr[0] = '-';
+		n = -n;
+	}
+	while (n)
+	{
+		ptr[i] = (n % 10) + '0';
+		n /= 10;
+		i--;
+	}
+	return (ptr);
+}
+
+char	*ft_itoa(int n)
+{
+	int		num_len;
+	char	*result;
+
+	if (n == -2147483648)
+	{
+		result = malloc(12 * sizeof(char));
+		if (!result)
+			return (NULL);
+		return (str_cpy(result, "-2147483648"));
+	}
+	num_len = get_num_len(n);
+	result = convert_number(n, num_len);
+	return (result);
+}
+
 char	*get_variable_value(char *env, int exit_status)
 {
-	char	exit_status_str[12];
 	char	*value;
+	char	*exit_code;
+	char	*result;
 
-	(void)exit_status;
+	exit_code = ft_itoa(exit_status);
 	if (ft_strcmp(env, "?") == 0)
 	{
 		write(STDERR_FILENO, "Error\n", 6);
-		return (ft_strdup(exit_status_str));
+		result = ft_strdup(exit_code);
+		free(exit_code);
+		return (result);
 	}
 	else if (ft_strcmp(env, "$") == 0)
 	{
 		write(STDERR_FILENO, "Error\n", 6);
-		return (ft_strdup(exit_status_str));
+		result = ft_strdup(exit_code);
+		free(exit_code);
+		return (result);
 	}
-
+	free(exit_code);
 	value = getenv(env);
 	if (value == NULL)
 		return (ft_strdup(""));
