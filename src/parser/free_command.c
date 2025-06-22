@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:29:59 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:22:13 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 16:56:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ void	free_cmd_tokens(t_cmd_token *start)
 		redir = start->output_redirs;
 		if (redir)
 			free_output_redir(redir);
+		redir = start->all_redirs;
+		if (redir)
+			free_input_redir(redir);
 		free(start);
 		start = cmd;
 	}

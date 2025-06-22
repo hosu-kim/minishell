@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:30 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 13:57:18 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 16:56:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	*initialize_new_token_members(t_cmd_token *new_token)
 	new_token->arg_types = NULL;
 	new_token->input_redirs = NULL;
 	new_token->output_redirs = NULL;
+	new_token->all_redirs = NULL;
 	new_token->has_pipe = 0;
 	new_token->next_cmd_token = NULL;
 	return (new_token);
@@ -34,7 +35,8 @@ static void	make_token_list(t_cmd_token **start, t_cmd_token *new_token,
 	(*current) = new_token;
 }
 
-static int	process_single_command(t_token **lexed_token, t_cmd_token *new_token)
+static int	process_single_command(t_token **lexed_token,
+		t_cmd_token *new_token)
 {
 	int	argc;
 
@@ -60,7 +62,8 @@ t_cmd_token	*parser(t_token *lex_start)
 	t_cmd_token	*current;
 	t_cmd_token	*new_parsed_token;
 
-	lexed_token = initialize_parser(lex_start, &start, &current, &new_parsed_token);
+	lexed_token = initialize_parser(lex_start, &start, &current,
+			&new_parsed_token);
 	while (lexed_token)
 	{
 		new_parsed_token = malloc(sizeof(t_cmd_token));

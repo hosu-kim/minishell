@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:00:00 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 13:57:18 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 16:56:18 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_args_in_command(t_token *token)
 	count = 0;
 	while (token && token->type != T_PIPE)
 	{
-		if (token->type == T_WORD || token->type == T_Q_WORD 
+		if (token->type == T_WORD || token->type == T_Q_WORD
 			|| token->type == T_D_Q_WORD)
 			count++;
 		else if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT
@@ -53,7 +53,29 @@ static int	process_word_token(t_token **token, t_cmd_token *cmd, int *arg_idx)
 	return (0);
 }
 
-int	process_command_tokens(t_token **lexed_token, t_cmd_token *new_token, int argc)
+static int	handle_token_processing(t_token **lexed_token,
+		t_cmd_token *new_token, int *arg_index)
+{
+	if ((*lexed_token)->type == T_WORD || (*lexed_token)->type == T_Q_WORD
+		|| (*lexed_token)->type == T_D_Q_WORD)
+	{
+		process_word_token(lexed_token, new_token, arg_index);
+	}
+	else if ((*lexed_token)->type == T_REDIR_IN
+		|| (*lexed_token)->type == T_REDIR_OUT
+		|| (*lexed_token)->type == T_REDIR_APPEND
+		|| (*lexed_token)->type == T_HEREDOC)
+	{
+		if (process_redirection_at_position(lexed_token, new_token))
+			return (1);
+	}
+	else
+		*lexed_token = (*lexed_token)->next;
+	return (0);
+}
+
+int	process_command_tokens(t_token **lexed_token, t_cmd_token *new_token,
+		int argc)
 {
 	int	arg_index;
 
@@ -62,30 +84,10 @@ int	process_command_tokens(t_token **lexed_token, t_cmd_token *new_token, int ar
 	arg_index = 0;
 	while (*lexed_token && (*lexed_token)->type != T_PIPE)
 	{
-		if ((*lexed_token)->type == T_WORD || (*lexed_token)->type == T_Q_WORD 
-			|| (*lexed_token)->type == T_D_Q_WORD)
-		{
-			process_word_token(lexed_token, new_token, &arg_index);
-		}
-		else if ((*lexed_token)->type == T_REDIR_IN || (*lexed_token)->type == T_REDIR_OUT
-			|| (*lexed_token)->type == T_REDIR_APPEND || (*lexed_token)->type == T_HEREDOC)
-		{
-			if (process_redirection_at_position(lexed_token, new_token))
-				return (1);
-		}
-		else
-			*lexed_token = (*lexed_token)->next;
+		if (handle_token_processing(lexed_token, new_token, &arg_index))
+			return (1);
 	}
 	new_token->cmd_with_args[argc] = NULL;
 	new_token->argc = argc;
 	return (0);
-}
-
-t_token	*initialize_parser(t_token *start, t_cmd_token **cmd_start,
-		t_cmd_token **current, t_cmd_token **new_token)
-{
-	(*cmd_start) = NULL;
-	(*current) = NULL;
-	(*new_token) = NULL;
-	return (start);
 }

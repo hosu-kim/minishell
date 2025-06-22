@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:03:22 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:14:19 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 16:38:45 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,22 +165,18 @@ void	apply_redirections(t_cmd_token *cmd)
 
 	if (!cmd)
 		return ;
-	redir = cmd->input_redirs;
+	
+	// Process all redirections in original order
+	redir = cmd->all_redirs;
 	while (redir)
 	{
 		if (redir->type == T_REDIR_IN && input_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
 		else if (redir->type == T_HEREDOC && heredoc_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
-		redir = redir->next;
-	}
-	redir = cmd->output_redirs;
-	while (redir)
-	{
-		if (redir->type == T_REDIR_OUT && output_redirection(redir) != 0)
+		else if (redir->type == T_REDIR_OUT && output_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
-		else if (redir->type == T_REDIR_APPEND
-			&& append_redirection(redir) != 0)
+		else if (redir->type == T_REDIR_APPEND && append_redirection(redir) != 0)
 			exit(EXIT_FAILURE);
 		redir = redir->next;
 	}

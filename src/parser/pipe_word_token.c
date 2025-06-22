@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 13:38:08 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/21 12:54:51 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 16:12:52 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ int	is_pipe_token(t_token **lex_token, t_cmd_token *new_token)
 		return (printf("Syntax error\n"), 1);
 	if ((*lex_token)->next->type != T_WORD
 		&& (*lex_token)->next->type != T_Q_WORD
-		&& (*lex_token)->next->type != T_D_Q_WORD)
+		&& (*lex_token)->next->type != T_D_Q_WORD
+		&& (*lex_token)->next->type != T_REDIR_IN
+		&& (*lex_token)->next->type != T_REDIR_OUT
+		&& (*lex_token)->next->type != T_REDIR_APPEND
+		&& (*lex_token)->next->type != T_HEREDOC)
 		return (printf("Syntax error\n"), 1);
 	(*lex_token) = (*lex_token)->next;
 	new_token->has_pipe = 1;
