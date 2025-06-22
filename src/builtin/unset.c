@@ -6,32 +6,11 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:12:03 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 19:34:34 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 15:30:14 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-static int	is_valid_identifier(const char *str)
-{
-	int	i;
-
-	if (!str || !*str)
-		return (NO);
-	if (!((*str >= 'a' && *str <= 'z') || (*str >= 'A' && *str <= 'Z'))
-		&& *str != '_')
-		return (NO);
-	i = 1;
-	while (str[i])
-	{
-		if (!((str[i] >= 'a' && str[i] <= 'z') 
-			|| (str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= '0' && str[i] <= '9')) && str[i] != '_')
-			return (NO);
-		i++;
-	}
-	return (YES);
-}
 
 static int	key_matches(char *env_var, char *key)
 {
