@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:29:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 01:51:59 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 13:28:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ int	builtin_exit(char **args)
 		exit(0);
 	if (check_special_cases(args[1]))
 	{
-		printf("minishell: exit: %c: numeric argument required\n", args[1][0]);
+		write(STDERR_FILENO, "minishell: exit: numeric argument required\n", 43);
 		exit(2);
 	}
 	if (!is_numeric(args[1]))
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+		write(STDERR_FILENO, "minishell: exit: numeric argument required\n", 43);
 		exit(2);
 	}
 	if (args[2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 36);
 		return (FAILURE);
 	}
 	exit_code = ft_atoi(args[1]);
