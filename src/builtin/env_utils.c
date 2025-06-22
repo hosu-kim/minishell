@@ -6,7 +6,7 @@
 /*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 22:25:54 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:46:24 by jaandras         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:45:09 by jaandras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_compare(const void *s1, const void *s2)
 	unsigned char	*str2;
 	size_t			i;
 
-	str1 = (void *) s1;
-	str2 = (void *) s2;
+	str1 = (void *)s1;
+	str2 = (void *)s2;
 	i = 0;
 	while (str1[i] != '=')
 	{
@@ -44,6 +44,32 @@ int	ft_compare(const void *s1, const void *s2)
 		i++;
 	}
 	return (0);
+}
+
+int	update_new_env(char *env, char *key, char *value, char **new_env)
+{
+	int	update;
+
+	update = 0;
+	if (!ft_compare(env, key))
+	{
+		*new_env = create_env_string(key, value);
+		update = 1;
+	}
+	else
+		*new_env = ft_strdup(env);
+	return (update);
+}
+
+void	free_env(char **env, int i)
+{
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
 char	**add_env_var(char **env, char *key, char *value)
@@ -60,15 +86,7 @@ char	**add_env_var(char **env, char *key, char *value)
 		return (NULL);
 	i = -1;
 	while (++i < count)
-	{
-		if (!ft_compare(env[i], key))
-		{
-			new_env[i] = create_env_string(key, value);
-			update = 1;
-		}
-		else
-			new_env[i] = ft_strdup(env[i]);
-	}
+		update |= update_new_env(env[i], key, value, &new_env[i]);
 	if (!update)
 	{
 		new_env[i] = create_env_string(key, value);
@@ -76,5 +94,6 @@ char	**add_env_var(char **env, char *key, char *value)
 	}
 	else
 		new_env[i] = NULL;
+	free_env(env, i);
 	return (new_env);
 }
