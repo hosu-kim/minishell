@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+         #
+#    By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 20:19:48 by hoskim            #+#    #+#              #
-#    Updated: 2025/06/22 19:46:29 by jaandras         ###   ########.fr        #
+#    Updated: 2025/06/22 19:58:44 by hoskim           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDES = -Iincludes
 
 SRCS_DIR = src

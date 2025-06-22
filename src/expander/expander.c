@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 15:17:24 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 19:37:45 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,27 @@ void	expand_token(t_cmd_token *token, int exit_status)
 	}
 }
 
+// char	*get_variable_value(char *env, int exit_status)
+// {
+// 	char	exit_status_str[12];
+
+// 	if (ft_strcmp(env, "?") == 0)
+// 	{
+// 		snprintf(exit_status_str, sizeof(exit_status_str), "%d", exit_status);
+// 		return (ft_strdup(exit_status_str));
+// 	}
+// 	else if (ft_strcmp(env, "$") == 0)
+// 	{
+// 		snprintf(exit_status_str, sizeof(exit_status_str), "%d", getpid());
+// 		return (ft_strdup(exit_status_str));
+// 	}
+// 	return (getenv(env));
+// }
+
 char	*get_variable_value(char *env, int exit_status)
 {
 	char	exit_status_str[12];
+	char	*value;
 
 	if (ft_strcmp(env, "?") == 0)
 	{
@@ -82,5 +100,9 @@ char	*get_variable_value(char *env, int exit_status)
 		snprintf(exit_status_str, sizeof(exit_status_str), "%d", getpid());
 		return (ft_strdup(exit_status_str));
 	}
-	return (getenv(env));
+
+	value = getenv(env);
+	if (value == NULL)
+		return (ft_strdup(""));
+	return (ft_strdup(value));
 }

@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:29:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 18:38:25 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 19:07:26 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int	builtin_exit(char **args)
 		return (FAILURE);
 	}
 	exit_code = ft_atoi(args[1]);
-	return (EXIT_SHELL + (exit_code % 256));
+	exit_code = ((exit_code % 256) + 256) % 256;
+	return (EXIT_SHELL + exit_code);
 }
