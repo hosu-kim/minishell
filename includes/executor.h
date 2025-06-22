@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 17:18:32 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 22:13:28 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 
 typedef struct s_cmd_token		t_cmd_token;
 typedef struct s_redirection	t_redirection;
+
+typedef struct s_pipe_info
+{
+	int	pipe_fd[2];
+	int	in_fd;
+	int	out_fd;
+}	t_pipe_info;
 
 /* Executor functions */
 int		executor(t_cmd_token *tokens, char ***envp);
@@ -46,7 +53,7 @@ int		redirect_stdin_from_fd(int in_fd);
 
 /* Pipeline utility functions */
 void	setup_pipes(int *pipe_fd, int in_fd, int out_fd);
-void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
+void	create_child_process(int *in_out_fd, int *pipe_fd, t_cmd_token *cmd,
 			char **envp);
 int		wait_for_pipeline_completion(pid_t last_pid);
 

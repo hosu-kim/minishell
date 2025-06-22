@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 21:08:54 by jaandras         ###   ########.fr       */
+/*   Updated: 2025/06/22 21:24:00 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,14 +148,14 @@ char	*get_variable_value(char *env, int exit_status)
 	exit_code = ft_itoa(exit_status);
 	if (ft_strcmp(env, "?") == 0)
 	{
-		write(STDERR_FILENO, "Error\n", 6);
+		// write(STDERR_FILENO, "Error\n", 6);
 		result = ft_strdup(exit_code);
 		free(exit_code);
 		return (result);
 	}
 	else if (ft_strcmp(env, "$") == 0)
 	{
-		write(STDERR_FILENO, "Error\n", 6);
+		// write(STDERR_FILENO, "Error\n", 6);
 		result = ft_strdup(exit_code);
 		free(exit_code);
 		return (result);

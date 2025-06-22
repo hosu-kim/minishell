@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:40:00 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:45:15 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 22:15:54 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,10 @@ void	setup_pipes(int *pipe_fd, int in_fd, int out_fd)
 		close(pipe_fd[1]);
 }
 
-void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
+void	create_child_process(int *in_out, int *pipe_fd, t_cmd_token *cmd,
 		char **envp)
 {
-	int	pipe_fd[2];
-
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
-	setup_pipes(pipe_fd, in_fd, out_fd);
+	setup_pipes(pipe_fd, in_out[0], in_out[1]);
 	execute_in_child(cmd, envp);
 }
 
