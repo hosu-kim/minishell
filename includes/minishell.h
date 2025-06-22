@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:25:12 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 18:38:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ extern int						g_signal_received;
 # define YES 1
 # define NO 0
 # define BUFFER_SIZE 1024
-# define EXIT_SHELL 42
+# define EXIT_SHELL 1000
 
 /* Main shell stucture */
 typedef struct s_shell

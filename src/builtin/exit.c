@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:29:24 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:31:54 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 18:38:25 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int	builtin_exit(char **args)
 	{
 		write(STDERR_FILENO, "minishell: exit: numeric argument required\n",
 			43);
-		return (EXIT_SHELL | (2 << 8));
+		return (EXIT_SHELL + 2);
 	}
 	if (!is_numeric(args[1]))
 	{
 		write(STDERR_FILENO, "minishell: exit: numeric argument required\n",
 			43);
-		return (EXIT_SHELL | (2 << 8));
+		return (EXIT_SHELL + 2);
 	}
 	if (args[2])
 	{
@@ -92,5 +92,5 @@ int	builtin_exit(char **args)
 		return (FAILURE);
 	}
 	exit_code = ft_atoi(args[1]);
-	return (EXIT_SHELL | ((exit_code % 256) << 8));
+	return (EXIT_SHELL + (exit_code % 256));
 }

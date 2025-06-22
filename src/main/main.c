@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:14:47 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:25:12 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 18:37:48 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	if (!initialize_shell(&shell))
 	{
-		printf("minishell: initialization failed");
+		write(STDERR_FILENO, "minishell: initialization failed\n", 33);
 		return (EXIT_FAILURE);
 	}
 	setup_signal_handlers();
