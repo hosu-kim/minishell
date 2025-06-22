@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:37 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 19:37:45 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 20:34:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	make_env(t_cmd_token **token, int i, int j, int exit_status)
 	remake_token(&(*token)->cmd_with_args[i], start, var, j);
 	if ((*token)->cmd_with_args[i][0] == '\0')
 		(*token)->arg_types[i] = SKIP_PRINT;
-	if (ft_strcmp(env, "?") == 0 || ft_strcmp(env, "$") == 0)
-		free(var);
+	free(var);
 	free_var(&env, &start);
 	return (1);
 }
@@ -68,36 +67,20 @@ void	expand_token(t_cmd_token *token, int exit_status)
 	}
 }
 
-// char	*get_variable_value(char *env, int exit_status)
-// {
-// 	char	exit_status_str[12];
-
-// 	if (ft_strcmp(env, "?") == 0)
-// 	{
-// 		snprintf(exit_status_str, sizeof(exit_status_str), "%d", exit_status);
-// 		return (ft_strdup(exit_status_str));
-// 	}
-// 	else if (ft_strcmp(env, "$") == 0)
-// 	{
-// 		snprintf(exit_status_str, sizeof(exit_status_str), "%d", getpid());
-// 		return (ft_strdup(exit_status_str));
-// 	}
-// 	return (getenv(env));
-// }
-
 char	*get_variable_value(char *env, int exit_status)
 {
 	char	exit_status_str[12];
 	char	*value;
 
+	(void)exit_status;
 	if (ft_strcmp(env, "?") == 0)
 	{
-		snprintf(exit_status_str, sizeof(exit_status_str), "%d", exit_status);
+		write(STDERR_FILENO, "Error\n", 6);
 		return (ft_strdup(exit_status_str));
 	}
 	else if (ft_strcmp(env, "$") == 0)
 	{
-		snprintf(exit_status_str, sizeof(exit_status_str), "%d", getpid());
+		write(STDERR_FILENO, "Error\n", 6);
 		return (ft_strdup(exit_status_str));
 	}
 

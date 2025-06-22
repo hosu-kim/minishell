@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:39:04 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 19:52:50 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 20:17:59 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ static int	update_pwd_env(char ***env, char *old_pwd, char *new_pwd)
 	temp_env = add_env_var(*env, "OLDPWD", old_pwd);
 	if (!temp_env)
 		return (1);
-	free_environment(*env);
 	*env = temp_env;
 	temp_env = add_env_var(*env, "PWD", new_pwd);
 	if (!temp_env)
 		return (FAILURE);
-	free_environment(*env);
 	*env = temp_env;
 	return (SUCCESS);
 }
