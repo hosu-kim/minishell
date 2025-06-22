@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 22:14:56 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 22:26:29 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static pid_t	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 								char **envp)
 {
 	pid_t	pid;
-	int		out_fd;
 	int		in_out[2];
 
 	in_out[0] = in_fd;
@@ -39,7 +38,7 @@ static pid_t	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 		in_out[1] = pipe_fd[1];
 	}
 	else
-		out_fd = STDOUT_FILENO;
+		in_out[1] = STDOUT_FILENO;
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"), -1);
@@ -47,8 +46,8 @@ static pid_t	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 		create_child_process(in_out, pipe_fd, cmd, envp);
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
-	if (out_fd != STDOUT_FILENO)
-		close(out_fd);
+	if (in_out[1] != STDOUT_FILENO)
+		close(in_out[1]);
 	return (pid);
 }
 
