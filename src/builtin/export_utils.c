@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:00:00 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:25:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	is_valid_identifier(const char *str)
 	while (str[i])
 	{
 		if (!((str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i]<= 'Z')
-			|| (str[i] >= '0' && str[i] <= '9')) && str[i] != '_')
+				|| (str[i] >= 'A' && str[i] <= 'Z')
+				|| (str[i] >= '0' && str[i] <= '9')) && str[i] != '_')
 			return (NO);
 		i++;
 	}

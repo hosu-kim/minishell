@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:07:30 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 16:56:18 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:26:41 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,39 +48,42 @@ typedef struct s_cmd_token
 }	t_cmd_token;
 
 // prepare lexed tokens for execution
-t_cmd_token	*parser(t_token *start);
+t_cmd_token		*parser(t_token *start);
 
 // make word tokens for execution
-int			is_text_token(t_token *lex_start, t_token **lex_token,
-				t_cmd_token *new_token);
+int				is_text_token(t_token *lex_start, t_token **lex_token,
+					t_cmd_token *new_token);
 
 // make pipe tokens for execution
-int			is_pipe_token(t_token **lex_token, t_cmd_token *new_token);
+int				is_pipe_token(t_token **lex_token, t_cmd_token *new_token);
 
 // make redir tokens for execution
-int			is_redirection_token(t_token **lex_token, t_cmd_token *new_token);
+int				is_redirection_token(t_token **lex_token,
+					t_cmd_token *new_token);
 
 // process single redirection at current position
-int			process_redirection_at_position(t_token **lex_token, t_cmd_token *new_token);
+int				process_redirection_at_position(t_token **lex_token,
+					t_cmd_token *new_token);
 
 // parser utility functions
-int			count_args_in_command(t_token *token);
-int			process_command_tokens(t_token **lexed_token, t_cmd_token *new_token, int argc);
-t_token		*initialize_parser(t_token *start, t_cmd_token **cmd_start,
-				t_cmd_token **current, t_cmd_token **new_token);
+int				count_args_in_command(t_token *token);
+int				process_command_tokens(t_token **lexed_token,
+					t_cmd_token *new_token, int argc);
+t_token			*initialize_parser(t_token *start, t_cmd_token **cmd_start,
+					t_cmd_token **current, t_cmd_token **new_token);
 
 // free parsed tokens in parser
-void		free_cmd_tokens(t_cmd_token *start);
+void			free_cmd_tokens(t_cmd_token *start);
 
 // redirection utility functions
-void		add_to_input_list(t_cmd_token *new_token, t_redirection *new_redir,
-				t_redirection **current);
-void		add_to_output_list(t_cmd_token *new_token, t_redirection *new_redir,
-				t_redirection **current);
-void		add_to_all_redirs(t_cmd_token *new_token, t_redirection *new_redir);
+void			add_to_input_list(t_cmd_token *new_token,
+					t_redirection *new_redir, t_redirection **current);
+void			add_to_output_list(t_cmd_token *new_token,
+					t_redirection *new_redir, t_redirection **current);
+void			add_to_all_redirs(t_cmd_token *new_token,
+					t_redirection *new_redir);
 t_redirection	*create_redir_copy(t_redirection *original);
-void		add_redir_to_all_list(t_cmd_token *token, t_redirection *copy);
-
-int			get_args_type(int type);
+void			add_redir_to_all_list(t_cmd_token *token, t_redirection *copy);
+int				get_args_type(int type);
 
 #endif

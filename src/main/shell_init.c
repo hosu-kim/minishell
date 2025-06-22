@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:31:03 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:31:07 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:11:48 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	init_shell_members(t_shell *shell)
 	shell->input = NULL;
 	shell->stdin_backup = -1;
 	shell->stdout_backup = -1;
+	shell->should_exit = 0;
 }
 
 int	initialize_shell(t_shell *shell)

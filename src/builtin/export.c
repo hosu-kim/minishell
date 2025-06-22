@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:06:25 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:19:23 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_export(char **args, char ***env)
 	while (args[i])
 	{
 		if (process_export_arg(args[i], env) == 1)
-		exit_code = 1;
+			exit_code = 1;
 		i++;
 	}
 	return (exit_code);

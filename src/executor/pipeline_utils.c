@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:40:00 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:27:35 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	wait_for_pipeline_completion(pid_t last_pid)
 	int		status;
 	pid_t	finished_pid;
 
-	while ((finished_pid = wait(&status)) > 0)
+	finished_pid = wait(&status);
+	while (finished_pid > 0)
 	{
 		if (finished_pid == last_pid)
 		{

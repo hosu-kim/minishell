@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:05:12 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:25:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static pid_t	execute_single_pipe(t_cmd_token *cmd, int in_fd, int *pipe_fd,
 	return (pid);
 }
 
-static pid_t	handle_pipe_setup(t_cmd_token *current, int in_fd, 
+static pid_t	handle_pipe_setup(t_cmd_token *current, int in_fd,
 					int *pipe_fd, char **envp)
 {
 	pid_t	pid;

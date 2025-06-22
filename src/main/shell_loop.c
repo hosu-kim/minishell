@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:27:15 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 15:51:28 by jaandras         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:11:48 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	run_shell_loop(t_shell *shell)
 {
 	char	*input_line;
 
-	while (1)
+	while (!shell->should_exit)
 	{
 		process_pending_signals(shell);
 		input_line = read_user_input();

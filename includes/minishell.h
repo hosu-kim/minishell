@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:51:08 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 15:08:46 by jaandras         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:25:12 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ extern int						g_signal_received;
 # define YES 1
 # define NO 0
 # define BUFFER_SIZE 1024
+# define EXIT_SHELL 42
 
 /* Main shell stucture */
 typedef struct s_shell
@@ -57,6 +58,7 @@ typedef struct s_shell
 	char	*input; /* Current input line */
 	int		stdin_backup; /* Backup of original stdin */
 	int		stdout_backup; /* Backup of original stdout */
+	int		should_exit; /* Flag to indicate shell should exit */
 }	t_shell;
 
 /* Main functions */

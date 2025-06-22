@@ -6,19 +6,14 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:49:21 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 12:31:43 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:18:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	execute_parsed_commands(t_shell *shell, t_token *tokens,
-									t_cmd_token *commands)
+static void	restore_file_descriptors(t_shell *shell)
 {
-	expand_token(commands, shell->exit_status);
-	shell->stdin_backup = dup(STDIN_FILENO);
-	shell->stdout_backup = dup(STDOUT_FILENO);
-	shell->exit_status = executor(commands, &shell->env);
 	if (shell->stdin_backup != -1)
 	{
 		dup2(shell->stdin_backup, STDIN_FILENO);
@@ -31,6 +26,25 @@ static void	execute_parsed_commands(t_shell *shell, t_token *tokens,
 		close(shell->stdout_backup);
 		shell->stdout_backup = -1;
 	}
+}
+
+static void	execute_parsed_commands(t_shell *shell, t_token *tokens,
+									t_cmd_token *commands)
+{
+	int	result;
+
+	expand_token(commands, shell->exit_status);
+	shell->stdin_backup = dup(STDIN_FILENO);
+	shell->stdout_backup = dup(STDOUT_FILENO);
+	result = executor(commands, &shell->env);
+	if (result & EXIT_SHELL)
+	{
+		shell->should_exit = 1;
+		shell->exit_status = (result >> 8) & 0xFF;
+	}
+	else
+		shell->exit_status = result;
+	restore_file_descriptors(shell);
 	cleanup_parsing_resources(tokens, commands);
 }
 

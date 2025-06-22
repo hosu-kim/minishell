@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 17:02:50 by jakand            #+#    #+#             */
-/*   Updated: 2025/06/22 15:26:41 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:18:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int		redirect_stdin_from_fd(int in_fd);
 
 /* Pipeline utility functions */
 void	setup_pipes(int *pipe_fd, int in_fd, int out_fd);
-void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd, char **envp);
+void	create_child_process(int in_fd, int out_fd, t_cmd_token *cmd,
+			char **envp);
 int		wait_for_pipeline_completion(pid_t last_pid);
 
 #endif

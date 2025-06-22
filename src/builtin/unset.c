@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 21:12:03 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:30:14 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:18:32 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ static void	free_env_array(char **env)
 	free(env);
 }
 
-static char	**remove_env_var(char **env, char *key)
+static char	**create_new_env_array(char **env, char *key)
 {
 	char	**new_env;
 	int		count;
 	int		i;
 	int		j;
 
-	if (!is_valid_identifier(key))
-		return (env);
 	count = count_env_vars(env);
 	new_env = malloc(sizeof(char *) * (count + 1));
 	if (!new_env)
@@ -60,16 +58,24 @@ static char	**remove_env_var(char **env, char *key)
 		{
 			new_env[j] = ft_strdup(env[i]);
 			if (!new_env[j])
-			{
-				free_env_array(new_env);
-				return (env);
-			}
+				return (free_env_array(new_env), env);
 			j++;
 		}
 		i++;
 	}
 	new_env[j] = NULL;
-	free_env_array(env);
+	return (new_env);
+}
+
+static char	**remove_env_var(char **env, char *key)
+{
+	char	**new_env;
+
+	if (!is_valid_identifier(key))
+		return (env);
+	new_env = create_new_env_array(env, key);
+	if (new_env != env)
+		free_env_array(env);
 	return (new_env);
 }
 

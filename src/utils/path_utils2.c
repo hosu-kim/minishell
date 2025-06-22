@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:56:35 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 15:17:24 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:29:09 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,34 +80,4 @@ char	*find_executable(char *cmd)
 	result = search_in_paths(paths, cmd);
 	free_paths(paths);
 	return (result);
-}
-
-int	my_execvp(char *cmd, char **args, char **env)
-{
-	char	*path;
-
-	if (!cmd || !args || cmd[0] == '\0')
-		return (127);
-	if (ft_strchr(cmd, '/'))
-	{
-		execve(cmd, args, env);
-		perror(cmd);
-		if (errno == EACCES)
-			return (126);
-		if (errno == ENOENT)
-			return (127);
-		return (EXIT_FAILURE);
-	}
-	path = find_executable(cmd);
-	if (path)
-	{
-		execve(path, args, env);
-		perror(path);
-		free(path);
-		if (errno == EACCES)
-			return (126);
-		return (EXIT_FAILURE);
-	}
-	perror(cmd);
-	return (127);
 }
