@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:40:00 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 17:27:35 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/22 17:45:15 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	wait_for_pipeline_completion(pid_t last_pid)
 			else if (WIFSIGNALED(status))
 				return (128 + WTERMSIG(status));
 		}
+		finished_pid = wait(&status);
 	}
 	return (0);
 }
