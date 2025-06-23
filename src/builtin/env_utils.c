@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 22:25:54 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/22 20:12:52 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/23 11:41:31 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ char	**add_env_var(char **env, char *key, char *value)
 		return (NULL);
 	i = -1;
 	while (++i < count)
-		update |= update_new_env(env[i], key, value, &new_env[i]);
+	{
+		if (update_new_env(env[i], key, value, &new_env[i]))
+			update = 1;
+	}
 	if (!update)
 	{
 		new_env[i] = create_env_string(key, value);

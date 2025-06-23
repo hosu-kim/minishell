@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cleanup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaandras <jaandras@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:51:09 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 15:59:11 by jaandras         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:59:54 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 void	cleanup_parsing_resources(t_token *tokens, t_cmd_token *commands)
 {
 	if (tokens)
-	{
 		free_tokens(tokens);
-	}
 	if (commands)
-	{
 		free_cmd_tokens(commands);
-	}
 }
 
 static void	restore_file_descriptor(int *backup_fd, int standard_fd)

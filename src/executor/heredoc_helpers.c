@@ -6,7 +6,7 @@
 /*   By: hoskim <hoskim@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:02:26 by hoskim            #+#    #+#             */
-/*   Updated: 2025/06/21 13:23:09 by hoskim           ###   ########seoul.kr  */
+/*   Updated: 2025/06/23 12:32:37 by hoskim           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@
  * 		   (excluding the stripped newline).
  * 		   On EOF or error, returns -1.
  */
-static ssize_t	readline_heredoc(char **line_buffer, size_t *line_buffer_size)
+static ssize_t	readline_heredoc(char **line_buffer)
 {
-	ssize_t	bytes_read;
+	char	*line;
+	ssize_t	len;
 
-	if (write(STDOUT_FILENO, "> ", 2) < 0)
-		perror("prompt");
-	bytes_read = getline(line_buffer, line_buffer_size, stdin);
-	if (bytes_read > 0 && (*line_buffer)[bytes_read - 1] == '\n')
-		(*line_buffer)[bytes_read - 1] = '\0';
-	return (bytes_read);
+	line = readline("> ");
+	if (!line)
+		return (-1);
+	len = (ssize_t)ft_strlen(line);
+	*line_buffer = line;
+	return (len);
 }
 
 static void	process_unquoted(int std_fd, char *line)
@@ -56,7 +57,6 @@ static void	process_unquoted(int std_fd, char *line)
 	write(std_fd, temp.cmd_with_args[0], strlen(temp.cmd_with_args[0]));
 	write(std_fd, "\n", 1);
 	free(temp.cmd_with_args[0]);
-	free(dup);
 }
 
 static void	process_quoted(int fd, char *line)
@@ -68,22 +68,24 @@ static void	process_quoted(int fd, char *line)
 int	write_heredoc_lines(int out_fd, t_redirection *redir)
 {
 	char	*line_buffer;
-	size_t	buffer_size;
 	ssize_t	bytes_read;
 
-	line_buffer = NULL;
-	buffer_size = 0;
-	bytes_read = readline_heredoc(&line_buffer, &buffer_size);
-	while (bytes_read > 0)
+	while (1)
 	{
+		bytes_read = readline_heredoc(&line_buffer);
+		if (bytes_read < 0)
+			break;
 		if (ft_strcmp(line_buffer, redir->target) == 0)
+		{
+			free(line_buffer);
 			break ;
+		}
 		if (redir->target_types == UNQUOTED)
 			process_unquoted(out_fd, line_buffer);
 		else
 			process_quoted(out_fd, line_buffer);
+		free(line_buffer);
 	}
-	free(line_buffer);
 	return (0);
 }
 
